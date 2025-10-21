@@ -16,7 +16,6 @@ public class SheetImporterMenu : MonoBehaviour
 
     private static bool isEnabled = true;
 
-    // public static GlobalConfig globalConfig { get; private set; }
 
     private void Awake()
     {
@@ -26,23 +25,16 @@ public class SheetImporterMenu : MonoBehaviour
     }
 
 
-    // public static void ImportMenu()
-    // {
-    //     Debug.Log("Import menu called");
-    //     Import();
-    // }
     [MenuItem("SheetImporter/Import sheet")]
     public static async Task Import()
     {
-        // Debug.Log("Import called");
         GoogleSheetsImporter.logParsedItems = isEnabled;
         var sheetsImporter = new GoogleSheetsImporter(CREDENTIALS_PATH, SPREADSHEET_ID);
         var globalConfig = new GlobalConfig();
 
-        // Берём все публичные поля GlobalConfig типа List<>, где элемент реализует IConfig
+
         var fields = typeof(GlobalConfig).GetFields(BindingFlags.Public | BindingFlags.Instance);
-        // Debug.Log($"FIELDS LENGTH: {fields.Length}");
-        // Debug.Log($"field 1: {fields[1].Name}");
+
         foreach (var field in fields)
         {
             if (!field.FieldType.IsGenericType) continue;
@@ -54,7 +46,6 @@ public class SheetImporterMenu : MonoBehaviour
             var sheetName = field.Name; // имя листа = имя поля
             try
             {
-                // Создаём ConfigParser<T> и приводим к ISheetParser
                 var parserType = typeof(ConfigParser<>).MakeGenericType(elementType);
                 var parserInstance = (ISheetParser)Activator.CreateInstance(parserType, globalConfig);
 

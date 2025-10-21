@@ -49,12 +49,11 @@ public class AudioManager : MonoBehaviour
         {
             musicSlider.value = musicDefaultVolume;
             sfxSlider.value = sfxDefaultVolume;
-            SaveMusicVolume();
-            SaveSfxVolume();
+            SaveVolumeValues();
         }
         else
         {
-            Load();
+            LoadVolumeValues();
         }
 
         PlayMusicList();
@@ -92,16 +91,16 @@ public class AudioManager : MonoBehaviour
     public void SetMusicVolume(float value)
     {
         audioMixer.SetFloat("musicVolume", Mathf.Log10(Mathf.Max(float.Epsilon, value)) * 20);
-        SaveMusicVolume();
+        SaveVolumeValues();
     }
 
     public void SetSfxVolume(float value)
     {
         audioMixer.SetFloat("soundEffectsVolume", Mathf.Log10(Mathf.Max(float.Epsilon, value)) * 20);
-        SaveSfxVolume();
+        SaveVolumeValues();
     }
 
-    private void Load()
+    private void LoadVolumeValues()
     {
         if (musicSlider == null || sfxSlider == null) return;
         musicSlider.value = PlayerPrefs.GetFloat(MUSIC_VOLUME_KEY);
@@ -111,13 +110,9 @@ public class AudioManager : MonoBehaviour
         // SetSfxVolume();
     }
 
-    private void SaveMusicVolume()
+    private void SaveVolumeValues()
     {
         PlayerPrefs.SetFloat(MUSIC_VOLUME_KEY, musicSlider.value);
-    }
-
-    private void SaveSfxVolume()
-    {
         PlayerPrefs.SetFloat(SFX_VOLUME_KEY, sfxSlider.value);
     }
 }

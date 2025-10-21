@@ -43,9 +43,7 @@ namespace GoogleSpreadsheets
         {
             TryLog($"Starting downloading sheet (${sheetName})...");
 
-            // Define the range of the table to download
             var range = $"{sheetName}!A1:Z";
-            // Make the request to Google Sheets API
             var request = _service.Spreadsheets.Values.Get(_spreadsheetId, range);
             ValueRange response;
             try
@@ -58,7 +56,6 @@ namespace GoogleSpreadsheets
                 return;
             }
 
-            // Parse the received data
             if (response != null && response.Values != null)
             {
                 var tableArray = response.Values;
@@ -70,15 +67,10 @@ namespace GoogleSpreadsheets
                 Debug.LogWarning($"Count: {x}");
                 for (var i = 0; i < x; i++)
                 {
-                    // Debug.LogWarning($"_{i}_");
-                    // Debug.LogWarning($"_{tableArray[0][i]}_");
                     _headers.Add(tableArray[0][i].ToString());
                     if (logParsedItems) Debug.Log(tableArray[0][i]);
                 }
 
-                // foreach (var cell in firstRow)
-                // {
-                // }
 
                 var rowsCount = tableArray.Count;
                 for (var i = 1; i < rowsCount; i++)
@@ -86,17 +78,6 @@ namespace GoogleSpreadsheets
                     var row = tableArray[i];
                     var rowLength = row.Count;
 
-                    // for (var j = 0; j < rowLength; j++)
-                    // {
-                    //     var cell = row[j];
-                    //     var header = _headers[j];
-                    //     if (string.IsNullOrWhiteSpace(cell.ToString()))
-                    //         continue;
-                    //     // Debug.Log("Row dump: " + header + " " + cell);
-                    //     parser.Parse(header, cell.ToString());
-                    //
-                    //     TryLog(cell.ToString());
-                    // }
                     for (var j = 0; j < _headers.Count; j++)
                     {
                         var header = _headers[j];

@@ -6,17 +6,9 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-
     public int currentPlotIndex = 1;
 
-    // public WayPointFollower player;
-    public OpenWindowButton slicerIcon;
-
     [SerializeField] private float openMinigameDelay;
-    public bool isLaptopOpen;
-
-
-    private bool waitsForPlayerToComeToPrinter;
 
     private static GlobalConfig _globalConfig;
 
@@ -65,22 +57,5 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         SaveManager.Save();
-    }
-
-
-    public event Action<bool> OnLaptopToggle;
-
-    public void ToggleLaptop(bool toggle)
-    {
-        if (toggle)
-        {
-            OnLaptopToggle?.Invoke(true);
-            isLaptopOpen = true;
-        }
-        else
-        {
-            OnLaptopToggle?.Invoke(false);
-            isLaptopOpen = false;
-        }
     }
 }

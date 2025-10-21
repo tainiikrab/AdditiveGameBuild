@@ -3,14 +3,14 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class SceneController : MonoBehaviour
+public class SceneSwitchManager : MonoBehaviour
 {
     [SerializeField] private GameObject loadingScreen;
     [SerializeField] private Animation loadingAnimation;
     [SerializeField] private Slider progressBar;
 
     // [SerializeField] private ReviewUI reviewUI;
-    public static SceneController instance { get; private set; }
+    public static SceneSwitchManager instance { get; private set; }
     public static bool isMinigameFinished = false;
 
     private void Awake()
@@ -58,16 +58,13 @@ public class SceneController : MonoBehaviour
 
         loadingScreen.SetActive(false);
 
-        if (isMinigameFinished == true)
-        {
-            isMinigameFinished = false;
-            // Debug.Log("Quality:" + OrderManager.currentOrderQuality.totalQuality.ToString());
-            // if (reviewUI != null)
-            // {
-            //     reviewUI.gameObject.SetActive(true);
-            //     reviewUI.Initialize(OrderManager.currentOrder);
-            // }
-        }
+        if (isMinigameFinished == true) isMinigameFinished = false;
+        // Debug.Log("Quality:" + OrderManager.currentOrderQuality.totalQuality.ToString());
+        // if (reviewUI != null)
+        // {
+        //     reviewUI.gameObject.SetActive(true);
+        //     reviewUI.Initialize(OrderManager.currentOrder);
+        // }
     }
 }
 

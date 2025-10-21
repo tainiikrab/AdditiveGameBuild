@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/MainScene.unity
     guid: 661642b56bf72d04896972e18bd3187c
   - enabled: 1
-    path: Assets/_Scenes/PostProcessMinigame.unity
+    path: Assets/Scenes/PostProcessMinigame.unity
     guid: 87a6ef05f5513564d9bf5bb203cb1dcd
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

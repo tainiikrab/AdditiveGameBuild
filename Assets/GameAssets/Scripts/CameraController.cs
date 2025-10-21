@@ -34,10 +34,11 @@ public class CameraController : MonoBehaviour
         gm = GameManager.Instance;
     }
 
-    private bool isMovementAvalilable = true;
+    private bool isMovementAvailable = true;
+
     private void Update()
     {
-        if (!isMovementAvalilable) return;
+        if (!isMovementAvailable) return;
         HandlePan();
         HandleZoom();
     }
@@ -108,6 +109,7 @@ public class CameraController : MonoBehaviour
         value = Input.GetAxis(axisName);
         return Math.Abs(value) >= 0.01f;
     }
+
 
     private void HandleZoom()
     {

@@ -16,7 +16,6 @@ namespace GoogleSpreadsheets
 
         public ConfigParser(GlobalConfig globalConfig)
         {
-            // Находим List<T> как поле или свойство
             var listObj = FindOrCreateList(globalConfig, out var assignBack);
             if (listObj == null)
             {
@@ -36,17 +35,14 @@ namespace GoogleSpreadsheets
             var h = Normalize(header);
             var v = cell?.Trim() ?? string.Empty;
 
-            // Special handling for the ID column — row start detection
             if (string.Equals(h, Normalize(idField), StringComparison.Ordinal))
             {
                 if (string.IsNullOrWhiteSpace(v))
                 {
-                    // Empty ID cell means: stop parsing until next valid ID
                     currentConfig = null;
                     return;
                 }
 
-                // Try to find an existing config with this ID
                 var existing = configs.FirstOrDefault(c => c.id == v);
                 if (existing != null)
                 {
@@ -54,10 +50,8 @@ namespace GoogleSpreadsheets
                 }
                 else
                 {
-                    // Create a new config
                     currentConfig = new T();
 
-                    // Set the ID via reflection so it works even if 'id' has a private setter
                     if (memberMap.TryGetValue(Normalize(idField), out var setter) &&
                         TryConvert(v, setter.Type, out var value))
                         setter.Set(currentConfig, value);
@@ -65,15 +59,12 @@ namespace GoogleSpreadsheets
                     configs.Add(currentConfig);
                 }
 
-                // Done with ID column — don't process it again below
                 return;
             }
 
-            // If we don't have a current config yet, skip this cell
             if (currentConfig == null)
                 return;
 
-            // Assign any other column via reflection
             if (memberMap.TryGetValue(h, out var otherSetter) &&
                 TryConvert(v, otherSetter.Type, out var otherValue))
                 otherSetter.Set(currentConfig, otherValue);
@@ -95,7 +86,6 @@ namespace GoogleSpreadsheets
         {
             var map = new Dictionary<string, MemberSetter>(StringComparer.Ordinal);
 
-            // Свойства
             foreach (var p in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance))
             {
                 if (!p.CanWrite) continue;
@@ -107,7 +97,6 @@ namespace GoogleSpreadsheets
                 map[keyN] = setter;
             }
 
-            // Поля
             foreach (var f in typeof(T).GetFields(BindingFlags.Public | BindingFlags.Instance))
             {
                 var key1 = f.Name;
@@ -123,15 +112,12 @@ namespace GoogleSpreadsheets
 
         private static bool TryConvert(string s, Type targetType, out object result)
         {
-            // Nullable<T>
             var isNullable = targetType.IsGenericType && targetType.GetGenericTypeDefinition() == typeof(Nullable<>);
             var underlying = isNullable ? Nullable.GetUnderlyingType(targetType) : targetType;
 
-            // Пустые значения
             if (string.IsNullOrWhiteSpace(s))
             {
                 result = isNullable || underlying == typeof(string) ? null : GetDefault(underlying);
-                // Возвращаем false, чтобы можно было оставить по умолчанию
                 return underlying == typeof(string);
             }
 
@@ -207,7 +193,6 @@ namespace GoogleSpreadsheets
                         return true;
                     }
 
-                // Последний шанс
                 result = Convert.ChangeType(s, underlying, CultureInfo.InvariantCulture);
                 return true;
             }
@@ -227,7 +212,6 @@ namespace GoogleSpreadsheets
         {
             assignBack = null;
 
-            // Пытаемся найти как поле
             var listField = typeof(GlobalConfig)
                 .GetFields(BindingFlags.Public | BindingFlags.Instance)
                 .FirstOrDefault(f => f.FieldType == typeof(List<T>));
@@ -238,7 +222,6 @@ namespace GoogleSpreadsheets
                 return listField.GetValue(cfg);
             }
 
-            // Или как свойство
             var listProp = typeof(GlobalConfig)
                 .GetProperties(BindingFlags.Public | BindingFlags.Instance)
                 .FirstOrDefault(p => p.CanRead && p.CanWrite && p.PropertyType == typeof(List<T>));
