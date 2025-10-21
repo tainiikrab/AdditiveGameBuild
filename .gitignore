@@ -2,7 +2,6 @@
 #
 # Get latest from https://github.com/github/gitignore/blob/main/Unity.gitignore
 #
-.utmp/
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
@@ -10,7 +9,7 @@
 /[Bb]uilds/
 /[Ll]ogs/
 /[Uu]ser[Ss]ettings/
-*.log
+/[Oo]ld/
 
 # MemoryCaptures can get excessive in size.
 # They also could contain extremely sensitive data
@@ -18,7 +17,8 @@
 
 # Recordings can get excessive in size
 /[Rr]ecordings/
-
+/Assets/Samples*
+/Assets/Samples/Recorder/
 # Uncomment this line if you wish to ignore the asset store tools plugin
 # /[Aa]ssets/AssetStoreTools*
 
@@ -27,7 +27,8 @@
 
 # Visual Studio cache directory
 .vs/
-
+.idea/
+SaveData/
 # Gradle cache directory
 .gradle/
 
@@ -61,8 +62,8 @@ sysinfo.txt
 *.apk
 *.aab
 *.unitypackage
-*.unitypackage.meta
 *.app
+*.zip
 
 # Crashlytics generated file
 crashlytics-build.properties
@@ -73,3 +74,13 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+/pohuzhe/Library
+/pohuzhe/Logs
+/pohuzhe/UserSettings
+
+#api key
+printer3dgame-881862586dbf.json
+
+#stupid fallback asset
+/[Aa]ssets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset
+Assets/TextMesh Pro/Resources/Fonts & Materials/LiberationSans SDF - Fallback.asset
