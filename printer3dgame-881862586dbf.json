@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "printer3dgame",
+  "private_key_id": "881862586dbf74d01a335761d077ab1d5f6618cc",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQC4YfwLk1ugUY5S\nB4Av1YsbR9j/p7Cyj+EGGxytXfBTOyyZRDWZG3SLX+bt+7a6pR0XZkqIWtuwyMHW\nq+qtNjp0LjYVFF4sndNW9unjfJCAwEVwasFF758gNgNyx1HFs9eoKRvGbU5Dynk/\nRLfyABGwfgHCHn1COo0eFPnKvcmZYeuCpFW9sWkC141JSqlaZjBb21PkXimzvmkN\n07U+YvAmPfB238HYAMG20pOv9DH0eGMnY/T5STRlwYSADx4YKUha0g/umoi+K+e3\n9sbvcgLa8UAx8aPbCCpgViT8hFlSllRJznN0oSPn9n+yB7G/w1hXL/1wvAAatV9H\nr/arYkuzAgMBAAECggEAF4XgqvVkxiJBfvOYBgI/Wf6jj5IsN8ulUKsa0H9gjq3I\n9dC+6caX6sQUaR4o5Mz11itlrNmyl241VJbgPLLjaDkRC0Vq8lQ8Ryb/Fdepc9OT\nyFDGUY7NhUV+0SDerNNR2xFLitgdGQb2yvyQXx5lI1ggD0zmfBGOOV1BtPzbgGbH\nDKG/FyhbVfVkvs2bkBPXzShegA/tjVZlvQMH/yNifZEC1G7AiKNKMJ2/Q1jjc9mm\no0FxtLT2Evb7wCu49B6vMOs0XebPJUU2rfd0PjbSXlld5q2JZ3yMs7GnA1vhEtNY\nbSCDabWV+kIO6/vnbmN15CKKcc/bS6SQB7XJ+fInmQKBgQDsQf1pby6WCg+hkXId\nEWKMVHKOvWPJX+I0hSeKQ5dMwgwHnhTCv70rM++EmPCH30RuiIKlR06+ATdZUl4P\noGDoAqF6WxvJAragWT51nri9YSxM/AhlCCGV7EIkqjCKYfyKp8Cnyx0J6TXdE8DY\njDM19kEwSdlc66frPVha7og+lwKBgQDHykmrCAOPJHtKyDdFG3ETDRGEr/tmA7Pw\nlEiwSWllNP8prtP3+rkDutQe8oM5/z8V763vVaybUhsQOsgjkZrmCU4Hx4Ki03uG\nxmuU5nIJB6Haj7tgaVR+dkWU0fqDE52D7mMkmgXu0/pA4hoKhMQlc+7/ekfMExoz\nVeIaz9ybRQKBgGCdx/VDG4kOSkAni8QpZOTAcCzBdLpYdNhHj9jyNUCVpnfDBPhz\nkvfFAHF4Xf0iqAiP2OWgWKpJMwpbLc40Jw0ablDsS1uTuX2voWRWaXRA9e3xr7kp\nbxqxiIcX9kvRMIa/fYDhBloUPgvP1TB5fUPXFeeae8KNOJlx990P6TW3AoGAeQRG\nBSwwg7cUW2LVX63UmzaSQu4Z+FwL1ZDsSqPdDGnCmWwFhzK+eMzlCe3ZoPrEKrRo\nhg0+JULhk74XVrwuuGIwerPVpG03aJatuZ6wull+J5ZiaG7EuGlJknByLo1mHvD5\n6sTFDTonXr/WCEMNUKZdwTA/ZxS3DRtbfuQje4UCgYAYgpf9FyV/XKSw6Mh+vsHY\nGDJ91rzTP/f6dhFD9/o3gOjkNUrqkoqnwPN3CQHzF42NgQwBafg+SBHaXfbgcIUi\n2elMlA37yuGb1uEvXmgBD4qS+9Ip32a0qhaOQ7ICqy45XAjSIbhwYUryrnSfXHGR\nCp9ViCKD7lIsnE0Frh75vA==\n-----END PRIVATE KEY-----\n",
+  "client_email": "unityclient@printer3dgame.iam.gserviceaccount.com",
+  "client_id": "112932298633099223897",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/unityclient%40printer3dgame.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
