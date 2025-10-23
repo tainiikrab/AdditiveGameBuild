@@ -362,8 +362,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3853494023617666943}
-        m_TargetAssemblyTypeName: Hint, Assembly-CSharp
+      - m_Target: {fileID: 2837351554070139050}
+        m_TargetAssemblyTypeName: UIPopup, Assembly-CSharp
         m_MethodName: Hide
         m_Mode: 1
         m_Arguments:
@@ -509,8 +509,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3853494023617666943}
-        m_TargetAssemblyTypeName: Hint, Assembly-CSharp
+      - m_Target: {fileID: 2837351554070139050}
+        m_TargetAssemblyTypeName: UIPopup, Assembly-CSharp
         m_MethodName: Show
         m_Mode: 1
         m_Arguments:
@@ -732,9 +732,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7600102884772792530}
-  - component: {fileID: 3853494023617666943}
+  - component: {fileID: 2837351554070139050}
   m_Layer: 5
-  m_Name: Hint
+  m_Name: UIPopup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -761,7 +761,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &3853494023617666943
+--- !u!114 &2837351554070139050
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -770,10 +770,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 6628790859648385264}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c0207823880d3cd4aa1d4af17e473650, type: 3}
+  m_Script: {fileID: 11500000, guid: d4531f3aa5959e545881e3378f03899c, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Hint
-  hintBody: {fileID: 6127369891467244898}
+  m_EditorClassIdentifier: Assembly-CSharp::UIPopup
+  body: {fileID: 6127369891467244898}
 --- !u!1 &6881916633212355756
 GameObject:
   m_ObjectHideFlags: 0

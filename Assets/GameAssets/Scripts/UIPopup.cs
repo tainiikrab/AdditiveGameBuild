@@ -1,18 +1,19 @@
 using UnityEngine;
+using UnityEngine.UI;
 
-public class Hint : MonoBehaviour
+public class UIPopup : MonoBehaviour
 {
-    [SerializeField] private GameObject hintBody;
+    [SerializeField] private GameObject body;
 
     public void Show()
     {
-        hintBody.SetActive(true);
+        body.SetActive(true);
         AudioManager.Instance.PlayClickSound();
     }
 
     public void Hide()
     {
-        hintBody.SetActive(false);
+        body.SetActive(false);
         AudioManager.Instance.PlayClickSound();
     }
 }

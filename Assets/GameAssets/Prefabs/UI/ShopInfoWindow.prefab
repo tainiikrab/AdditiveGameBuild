@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 9021575488292740086}
   - component: {fileID: 8951717346767954973}
   m_Layer: 5
-  m_Name: _PurchaseWindow
+  m_Name: ShopInfoWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 577100591517246063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2209a393c8baec04a93b8c3b8c20aa98, type: 3}
+  m_Script: {fileID: 11500000, guid: 67a02333bf07723488a32e9ac7c0b24c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PurchaseWindow
   offerName: {fileID: 5086011834357165121}
@@ -481,7 +481,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5843940888927565559}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99992865
+  m_Size: 0.99883354
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1093,7 +1093,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00051601167}
+  m_AnchoredPosition: {x: 0, y: 0.00018474509}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &7166006563464263356
@@ -1576,10 +1576,14 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 36
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1749414881966670659, guid: 5569bbc253ae3504599350b6652481c4, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 960521523715251772, guid: 5569bbc253ae3504599350b6652481c4, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4677272002277666006}
   m_SourcePrefab: {fileID: 100100000, guid: 5569bbc253ae3504599350b6652481c4, type: 3}
 --- !u!114 &3821426485292085984 stripped
 MonoBehaviour:
@@ -1597,3 +1601,21 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2698233156166473685, guid: 5569bbc253ae3504599350b6652481c4, type: 3}
   m_PrefabInstance: {fileID: 7641377817702146723}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &7448907188351122591 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 960521523715251772, guid: 5569bbc253ae3504599350b6652481c4, type: 3}
+  m_PrefabInstance: {fileID: 7641377817702146723}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &4677272002277666006
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7448907188351122591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60be57ef4ed6a924ebcfd909c65aa62d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PointsLabel
+  pointsLabel: {fileID: 0}

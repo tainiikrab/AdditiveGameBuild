@@ -64,16 +64,17 @@ public class OrderConfig : IConfig
 
     public bool wasCalled { get; private set; }
 
-    // public CustomerConfig customerConfig
-    // {
-    //     get
-    //     {
-    //         if (_customer == null)
-    //             _customer = GameManager.globalConfig.Customers.Find(foundCustomer => foundCustomer.id == customerID);
-    //         return _customer;
-    //     }
-    //     private set => _customer = value;
-    // }
+    public CustomerConfig customerConfig
+    {
+        get
+        {
+            if (_customer == null)
+                _customer = GameManager.Instance.globalConfig.Customers.Find(foundCustomer =>
+                    foundCustomer.id == customerID);
+            return _customer;
+        }
+        private set => _customer = value;
+    }
 
     public Sprite icon
     {
@@ -97,27 +98,27 @@ public class OrderConfig : IConfig
         set => _mesh = value;
     }
 
-    // public List<ShopItemConfig> requiredItems
-    // {
-    //     get
-    //     {
-    //         if (_requiredItems == null)
-    //         {
-    //             var split = requirements.Split(',');
-    //             _requiredItems = new List<ShopItemConfig>();
-    //
-    //             foreach (var item in GameManager.globalConfig.ShopItems)
-    //             {
-    //                 var requiredItem = Array.Find(split, str => str == item.id);
-    //                 _requiredItems.Add(
-    //                     GameManager.globalConfig.ShopItems.Find(shopItem => requiredItem == shopItem.id));
-    //             }
-    //         }
-    //
-    //         return _requiredItems;
-    //     }
-    //     set => _requiredItems = value;
-    // }
+    public List<ShopItemConfig> requiredItems
+    {
+        get
+        {
+            if (_requiredItems == null)
+            {
+                var split = requirements.Split(',');
+                _requiredItems = new List<ShopItemConfig>();
+
+                foreach (var item in GameManager.Instance.globalConfig.ShopItems)
+                {
+                    var requiredItem = Array.Find(split, str => str == item.id);
+                    _requiredItems.Add(
+                        GameManager.Instance.globalConfig.ShopItems.Find(shopItem => requiredItem == shopItem.id));
+                }
+            }
+
+            return _requiredItems;
+        }
+        set => _requiredItems = value;
+    }
 
     public string id
     {

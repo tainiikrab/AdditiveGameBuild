@@ -417,13 +417,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9033957894589423908}
     m_Modifications:
+    - target: {fileID: 152462984040475712, guid: 83ab7ea2668ec664e858a51d0461b044, type: 3}
+      propertyPath: category
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 765620047431995859, guid: 83ab7ea2668ec664e858a51d0461b044, type: 3}
       propertyPath: m_MinHeight
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3233930523733858256, guid: 83ab7ea2668ec664e858a51d0461b044, type: 3}
       propertyPath: category
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3981411631399645399, guid: 83ab7ea2668ec664e858a51d0461b044, type: 3}
       propertyPath: m_Name
@@ -565,7 +569,8 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3233930523733858256, guid: 83ab7ea2668ec664e858a51d0461b044, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -731,7 +736,8 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3233930523733858256, guid: 83ab7ea2668ec664e858a51d0461b044, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -857,7 +863,8 @@ PrefabInstance:
       propertyPath: m_fontSize
       value: 48
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1749414881966670659, guid: 5569bbc253ae3504599350b6652481c4, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -886,13 +893,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9033957894589423908}
     m_Modifications:
+    - target: {fileID: 152462984040475712, guid: 83ab7ea2668ec664e858a51d0461b044, type: 3}
+      propertyPath: category
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 765620047431995859, guid: 83ab7ea2668ec664e858a51d0461b044, type: 3}
       propertyPath: m_MinHeight
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3233930523733858256, guid: 83ab7ea2668ec664e858a51d0461b044, type: 3}
       propertyPath: category
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3981411631399645399, guid: 83ab7ea2668ec664e858a51d0461b044, type: 3}
       propertyPath: m_Name
@@ -1034,7 +1045,8 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3233930523733858256, guid: 83ab7ea2668ec664e858a51d0461b044, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1052,13 +1064,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 9033957894589423908}
     m_Modifications:
+    - target: {fileID: 152462984040475712, guid: 83ab7ea2668ec664e858a51d0461b044, type: 3}
+      propertyPath: category
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 765620047431995859, guid: 83ab7ea2668ec664e858a51d0461b044, type: 3}
       propertyPath: m_MinHeight
       value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 3233930523733858256, guid: 83ab7ea2668ec664e858a51d0461b044, type: 3}
       propertyPath: category
-      value: 2
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3981411631399645399, guid: 83ab7ea2668ec664e858a51d0461b044, type: 3}
       propertyPath: m_Name
@@ -1200,7 +1216,8 @@ PrefabInstance:
       propertyPath: m_fontColor32.rgba
       value: 4294967295
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3233930523733858256, guid: 83ab7ea2668ec664e858a51d0461b044, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1655,14 +1672,14 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 100026, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 2495617985615548512}
+      addedObject: {fileID: 2214686271287289059}
   m_SourcePrefab: {fileID: 100100000, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
 --- !u!1 &7459515552420450689 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100026, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
   m_PrefabInstance: {fileID: 7459515552420353851}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2495617985615548512
+--- !u!114 &2214686271287289059
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1671,10 +1688,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 7459515552420450689}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 907cf3637667ae64c9b4372e86fec286, type: 3}
+  m_Script: {fileID: 11500000, guid: 7d798e3170a9cfa4babe971f9d0892a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::_Scripts.Shop.ShopUI
-  shop: {fileID: 3544743113051855067}
   offerCardPrefab: {fileID: 5946197328053603201, guid: d4ad3893bc580c443b5ef44cb21efe32, type: 3}
   offersContainer: {fileID: 2700879382021531299}
   playerBalance: {fileID: 4943777537776129731}

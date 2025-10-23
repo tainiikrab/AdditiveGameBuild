@@ -18,7 +18,7 @@ public class OpenWindowButton : MonoBehaviour
 
     public void OpenWindow()
     {
-        if (isWindowOpen) return;
+        if (isWindowOpen || windowAsset == null) return;
         isWindowOpen = true;
 
         var window = Instantiate(windowAsset, laptopParent);

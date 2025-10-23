@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 5122704674228660991}
   - component: {fileID: 6614077052192293072}
   - component: {fileID: 765620047431995859}
-  - component: {fileID: 3233930523733858256}
+  - component: {fileID: 152462984040475712}
   m_Layer: 5
   m_Name: ShopButton
   m_TagString: Untagged
@@ -155,7 +155,7 @@ MonoBehaviour:
   m_FlexibleWidth: -1
   m_FlexibleHeight: -1
   m_LayoutPriority: 1
---- !u!114 &3233930523733858256
+--- !u!114 &152462984040475712
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,7 +164,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3981411631399645399}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49750c5da65f217428871afe86c90921, type: 3}
+  m_Script: {fileID: 11500000, guid: af5132a971ecce84aa18879db8ba53c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopUIButton
   category: 0

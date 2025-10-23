@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 8561876921096963484}
   - component: {fileID: 3033090026904716623}
   - component: {fileID: 6164927742286114238}
-  - component: {fileID: 8639463030429925268}
+  - component: {fileID: 5614382391797797297}
   m_Layer: 6
   m_Name: desktopIcon
   m_TagString: Untagged
@@ -228,7 +228,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &8639463030429925268
+--- !u!114 &5614382391797797297
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -237,7 +237,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 5265248047661553802}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2bcbf7827e94a544a8ea55490c28296c, type: 3}
+  m_Script: {fileID: 11500000, guid: cdfbc7dd99024ed298d5ec420a016e85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::OpenWindowButton
   windowAsset: {fileID: 0}

@@ -272,7 +272,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2011089983977723924}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ShopCardUI, Assembly-CSharp
         m_MethodName: OnClickBuyButton
         m_Mode: 1
@@ -430,9 +430,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4513436483274883464}
   - component: {fileID: 435237662889220634}
-  - component: {fileID: 2011089983977723924}
+  - component: {fileID: 6677149997916978935}
   m_Layer: 5
-  m_Name: OfferCardPrefab
+  m_Name: ShopCardUI
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -470,7 +470,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5946197328053603201}
   m_CullTransparentMesh: 1
---- !u!114 &2011089983977723924
+--- !u!114 &6677149997916978935
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -479,10 +479,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 5946197328053603201}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddf94c638f127384bb7a8242a5304689, type: 3}
+  m_Script: {fileID: 11500000, guid: d13a2f47bd5b9084fa7256ea6bb94807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopCardUI
-  purchaseWindowPrefab: {fileID: 577100591517246063, guid: b5e2e3c0656d64d4b8877ce5763bc502, type: 3}
+  infoWindowPrefab: {fileID: 577100591517246063, guid: b5e2e3c0656d64d4b8877ce5763bc502, type: 3}
   offerIcon: {fileID: 6191322557462029491}
   offerName: {fileID: 4813219473594817255}
   offerPrice: {fileID: 7774299589198705451}
@@ -819,7 +819,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2011089983977723924}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ShopCardUI, Assembly-CSharp
         m_MethodName: OnClickQuestion
         m_Mode: 1

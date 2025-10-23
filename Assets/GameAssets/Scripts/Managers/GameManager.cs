@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        // Debug.Log("Instance of GameManager");
         Instance = this;
         globalConfig = SaveManager.GetGlobalConfig();
     }

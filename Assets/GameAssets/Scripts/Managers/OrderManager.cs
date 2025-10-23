@@ -16,7 +16,7 @@ public static class OrderManager
 
     private static GameManager gm => GameManager.Instance;
 
-    public static OrderConfig currentOrder { get; set; }
+    public static OrderConfig currentOrder { get; private set; }
     public static OrderQuality currentOrderQuality { get; set; }
 
     public static void SetCurrentOrder(OrderConfig order)
