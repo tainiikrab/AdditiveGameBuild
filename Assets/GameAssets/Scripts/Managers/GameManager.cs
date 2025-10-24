@@ -12,14 +12,14 @@ public class GameManager : MonoBehaviour
 
     private static GlobalConfig _globalConfig;
 
-    public GlobalConfig globalConfig
+    private GlobalConfig globalConfig
     {
         get
         {
-            if (_globalConfig == null) _globalConfig = SaveManager.GetGlobalConfig();
+            if (_globalConfig == null) _globalConfig = GlobalConfig.Instance;
             return _globalConfig;
         }
-        private set => _globalConfig = value;
+        set => _globalConfig = value;
     }
 
     private int _points;
@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
 
         // Debug.Log("Instance of GameManager");
         Instance = this;
-        globalConfig = SaveManager.GetGlobalConfig();
+        globalConfig = GlobalConfig.Instance;
     }
 
     private void OnDestroy()

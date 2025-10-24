@@ -69,7 +69,7 @@ public class OrderConfig : IConfig
         get
         {
             if (_customer == null)
-                _customer = GameManager.Instance.globalConfig.Customers.Find(foundCustomer =>
+                _customer = GlobalConfig.Instance.Customers.Find(foundCustomer =>
                     foundCustomer.id == customerID);
             return _customer;
         }
@@ -107,11 +107,11 @@ public class OrderConfig : IConfig
                 var split = requirements.Split(',');
                 _requiredItems = new List<ShopItemConfig>();
 
-                foreach (var item in GameManager.Instance.globalConfig.ShopItems)
+                foreach (var item in GlobalConfig.Instance.ShopItems)
                 {
                     var requiredItem = Array.Find(split, str => str == item.id);
                     _requiredItems.Add(
-                        GameManager.Instance.globalConfig.ShopItems.Find(shopItem => requiredItem == shopItem.id));
+                        GlobalConfig.Instance.ShopItems.Find(shopItem => requiredItem == shopItem.id));
                 }
             }
 

@@ -1315,7 +1315,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8556937795886206130}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c18dfdc42b8f46e488929c7899653880, type: 3}
+  m_Script: {fileID: 11500000, guid: 2a988bd43f1851e469daa8cd84005cec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ModelTurner
   layerName: RenderTexture
@@ -2842,7 +2842,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7468496398529532791}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06cfed42eea4f414d841b24e8bcafd89, type: 3}
+  m_Script: {fileID: 11500000, guid: a20b3c60697ea54408c0966264bc5ad0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Slicer
   layerHeight:

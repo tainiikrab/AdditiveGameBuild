@@ -55,10 +55,10 @@ public static class OrderManager
 
     public static OrderConfig GetPlotOrder(int plotIndex)
     {
-        foreach (var OrderConfig in gm.globalConfig.Orders)
+        foreach (var OrderConfig in GlobalConfig.Instance.Orders)
             Debug.Log($"Plot index: {OrderConfig.plotIndex}");
         var orderConfig =
-            gm.globalConfig.Orders.Find(order => order.plotIndex == plotIndex);
+            GlobalConfig.Instance.Orders.Find(order => order.plotIndex == plotIndex);
 
         if (orderConfig == null) Debug.LogError($"OrderConfig with plot index {plotIndex} is null");
         return orderConfig;
@@ -66,7 +66,7 @@ public static class OrderManager
 
     public static OrderConfig GetRandomAvailableOrder()
     {
-        var orderConfig = gm.globalConfig.Orders
+        var orderConfig = GlobalConfig.Instance.Orders
             .Where(o => o.isMail)
             .OrderBy(_ => Random.value)
             .FirstOrDefault();

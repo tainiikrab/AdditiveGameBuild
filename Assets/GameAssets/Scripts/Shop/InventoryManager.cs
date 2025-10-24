@@ -39,7 +39,7 @@ public class InventoryManager : MonoBehaviour
 
     private ShopItemConfig GetShopItemById(string id)
     {
-        var offer = gm.globalConfig.ShopItems
+        var offer = GlobalConfig.Instance.ShopItems
             .FirstOrDefault(o => o.id == id);
 
         // Debug.Log($"Got offer: {offer?.id}");

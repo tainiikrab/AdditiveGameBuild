@@ -7,7 +7,6 @@ using UnityEngine.SceneManagement;
 
 public class SaveManager
 {
-    private const string savedConfig = "savedConfig";
     private const string savedGameData = "savedGameData";
 
     private static SaveManager instance;
@@ -63,7 +62,10 @@ public class SaveManager
         gameData = new GameData();
         PlayerPrefs.DeleteKey(savedGameData);
         deleteSaves = true;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+#if UNITY_EDITOR
+        if (Application.isPlaying)
+#endif
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     // public static GlobalConfig GetGlobalConfig()
@@ -83,36 +85,7 @@ public class SaveManager
     //     // foreach (var order in globalConfig.Orders) Debug.Log(order.id);
     //     return globalConfig;
     // }
-    public static GlobalConfig GetGlobalConfig()
-    {
-#if UNITY_EDITOR
-        var jsonLoaded = PlayerPrefs.GetString(savedConfig, "");
-        if (!string.IsNullOrEmpty(jsonLoaded))
-        {
-            var path = Path.Combine(Application.dataPath, "Resources/config.json");
-            Directory.CreateDirectory(Path.GetDirectoryName(path));
-            File.WriteAllText(path, jsonLoaded);
-            return JsonUtility.FromJson<GlobalConfig>(jsonLoaded);
-        }
-        else
-        {
-            Debug.LogWarning("no editor config");
-            return new GlobalConfig();
-        }
-#else
-        TextAsset defaultConfig = Resources.Load<TextAsset>("config");
-        if (defaultConfig != null)
-        {
-            string json = defaultConfig.text;
-            return JsonUtility.FromJson<GlobalConfig>(json);
-        }
-        else
-        {
-            Debug.LogError("no json in resources");
-            return new GlobalConfig();
-        }
-#endif
-    }
+
 
     [Serializable]
     public class GameData

@@ -10,7 +10,7 @@ public class DebugTools : EditorWindow
     private void Update()
     {
         if (!EditorApplication.isPlaying) return;
-        
+
         if (Input.GetKey(KeyCode.Space))
         {
             if (!fastForwardActive)
@@ -34,43 +34,44 @@ public class DebugTools : EditorWindow
 
         // using (new EditorGUI.DisabledScope(!EditorApplication.isPlaying))
         // {
-            if (GUILayout.Button("Reload Scene   [R]")) ReloadScene();
+        if (GUILayout.Button("Reload Scene   [R]")) ReloadScene();
 
-            GUILayout.Space(10);
-            GUILayout.Label("Time Control", EditorStyles.boldLabel);
-            GUILayout.Label("Hold [Space] → x10 speed, release → normal");
+        GUILayout.Space(10);
+        GUILayout.Label("Time Control", EditorStyles.boldLabel);
+        GUILayout.Label("Hold [Space] → x10 speed, release → normal");
 
-            if (fastForwardActive)
-            {
-                GUI.color = Color.red;
-                GUILayout.Label("FAST FORWARD ACTIVE");
-                GUI.color = Color.white;
-            }
+        if (fastForwardActive)
+        {
+            GUI.color = Color.red;
+            GUILayout.Label("FAST FORWARD ACTIVE");
+            GUI.color = Color.white;
+        }
 
-            if (GUILayout.Button("Reset TimeScale   [Shift+Space]")) ResetTime();
+        if (GUILayout.Button("Reset TimeScale   [Shift+Space]")) ResetTime();
 
-            GUILayout.Space(10);
-            GUILayout.Label("Orders", EditorStyles.boldLabel);
-            if (GUILayout.Button("Create Regular Order   [O]")) OrderManager.CreateRegularOrder();
+        GUILayout.Space(10);
+        GUILayout.Label("Orders", EditorStyles.boldLabel);
+        if (GUILayout.Button("Create Regular Order   [O]")) OrderManager.CreateRegularOrder();
 
-            currentPlotIndex = EditorGUILayout.IntField("Plot Index", currentPlotIndex);
-            if (GUILayout.Button("Create Plot Order   [Shift+P]")) OrderManager.CreatePlotOrder(currentPlotIndex);
+        currentPlotIndex = EditorGUILayout.IntField("Plot Index", currentPlotIndex);
+        if (GUILayout.Button("Create Plot Order   [Shift+P]")) OrderManager.CreatePlotOrder(currentPlotIndex);
 
-            if (GUILayout.Button("Finish current order")) OrderManager.CompleteOrder();
+        if (GUILayout.Button("Finish current order")) OrderManager.CompleteOrder();
 
-            GUILayout.Space(10);
-            GUILayout.Label("Saves", EditorStyles.boldLabel);
-            if (GUILayout.Button("Delete saves"))
-            {
-                SaveManager.DeleteSaves();
-                OrderManager.CompleteOrder();
+        GUILayout.Space(10);
+        GUILayout.Label("Saves", EditorStyles.boldLabel);
+        if (GUILayout.Button("Delete saves"))
+        {
+            SaveManager.DeleteSaves();
+            OrderManager.CompleteOrder();
+            if (Application.isPlaying)
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-            }
+        }
 
-            GUILayout.Space(10);
-            GUILayout.Label("Perfomance", EditorStyles.boldLabel);
-            if (GUILayout.Button("Set max FPS to 30")) Application.targetFrameRate = 30;
-            if (GUILayout.Button("Reset max FPS")) Application.targetFrameRate = -1;
+        GUILayout.Space(10);
+        GUILayout.Label("Perfomance", EditorStyles.boldLabel);
+        if (GUILayout.Button("Set max FPS to 30")) Application.targetFrameRate = 30;
+        if (GUILayout.Button("Reset max FPS")) Application.targetFrameRate = -1;
         // }
     }
 

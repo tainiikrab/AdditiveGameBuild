@@ -179,7 +179,7 @@ public class MailUI : MonoBehaviour
 
     private OrderConfig GetOrderById(string id)
     {
-        var order = GameManager.Instance.globalConfig.Orders
+        var order = GlobalConfig.Instance.Orders
             .FirstOrDefault(o => o.id == id);
 
         // Debug.Log($"Got order: {order?.id}");

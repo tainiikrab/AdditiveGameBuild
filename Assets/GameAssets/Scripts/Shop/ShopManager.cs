@@ -78,7 +78,7 @@ namespace _Scripts.Shop
             // Debug.Log(gm);
             // Debug.Log(gm.globalConfig);
             // Debug.Log(gm.globalConfig.ShopItems);
-            var config = gm.globalConfig.ShopItems;
+            var config = GlobalConfig.Instance.ShopItems;
 
             var items = config ?? new List<ShopItemConfig>();
 
