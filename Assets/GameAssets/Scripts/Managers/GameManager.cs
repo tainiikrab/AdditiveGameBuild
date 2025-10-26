@@ -47,6 +47,7 @@ public class GameManager : MonoBehaviour
         // Debug.Log("Instance of GameManager");
         Instance = this;
         globalConfig = GlobalConfig.Instance;
+        _points = 2200;
     }
 
     private void OnDestroy()

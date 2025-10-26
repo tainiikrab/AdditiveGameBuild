@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.Linq;
-using _Scripts.Shop;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour

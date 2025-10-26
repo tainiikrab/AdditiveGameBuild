@@ -482,12 +482,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d13a2f47bd5b9084fa7256ea6bb94807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopCardUI
-  infoWindowPrefab: {fileID: 577100591517246063, guid: b5e2e3c0656d64d4b8877ce5763bc502, type: 3}
   offerIcon: {fileID: 6191322557462029491}
   offerName: {fileID: 4813219473594817255}
   offerPrice: {fileID: 7774299589198705451}
   buyButton: {fileID: 3461253373641241826}
   questionButton: {fileID: 5341953630034950540}
+  purchaseWindowPrefab: {fileID: 577100591517246063, guid: b5e2e3c0656d64d4b8877ce5763bc502, type: 3}
 --- !u!1 &7803912522123415662
 GameObject:
   m_ObjectHideFlags: 0

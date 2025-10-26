@@ -51,9 +51,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PurchaseWindow
   offerName: {fileID: 5086011834357165121}
-  offerDescription: {fileID: 8461990988174100054}
+  offerIcon: {fileID: 1837012777245793176}
+  buyButton: {fileID: 4514644720517130217}
   offerPrice: {fileID: 5663349530442179639}
-  offerImage: {fileID: 1837012777245793176}
+  offerDescription: {fileID: 8461990988174100054}
+  cancelButton: {fileID: 5044515922421489899}
   playerBalance: {fileID: 3821426485292085984}
 --- !u!1 &838884828101841568
 GameObject:
@@ -481,7 +483,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5843940888927565559}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99883354
+  m_Size: 0.99995965
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -771,7 +773,7 @@ GameObject:
   - component: {fileID: 2465060777294835430}
   - component: {fileID: 1837012777245793176}
   m_Layer: 5
-  m_Name: OfferImage
+  m_Name: OfferIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1093,7 +1095,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00018474509}
+  m_AnchoredPosition: {x: 0, y: 0.000045520028}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &7166006563464263356
@@ -1460,6 +1462,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b12af9cf2b58a6241b1b44ea04aeaa2a, type: 3}
+--- !u!114 &4514644720517130217 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7562331349738851097, guid: b12af9cf2b58a6241b1b44ea04aeaa2a, type: 3}
+  m_PrefabInstance: {fileID: 6221143715507350768}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
 --- !u!224 &4929903148617147606 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 1314903708133197862, guid: b12af9cf2b58a6241b1b44ea04aeaa2a, type: 3}
@@ -1618,4 +1631,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60be57ef4ed6a924ebcfd909c65aa62d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PointsLabel
-  pointsLabel: {fileID: 0}
+  pointsLabel: {fileID: 3821426485292085984}

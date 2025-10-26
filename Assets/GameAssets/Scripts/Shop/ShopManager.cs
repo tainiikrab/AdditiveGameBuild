@@ -3,105 +3,132 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace _Scripts.Shop
+
+public class ShopManager : MonoBehaviour
 {
-    public class ShopManager : MonoBehaviour
+    public enum Category
     {
-        public enum Category
+        Printers,
+        Materials,
+        Interior,
+        Tools,
+        None
+    }
+
+    private ShopUI shopUI;
+
+    private Dictionary<string, ShopItemConfig[]> _sortedOffers;
+    private SceneObject[] _sceneObjects;
+
+    private Category _currentCategory = Category.None;
+    private bool _parsed;
+
+    private GameManager gm;
+
+    public static event Action OnItemsStateChanged;
+
+    public static ShopManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        _sceneObjects = FindObjectsByType<SceneObject>(FindObjectsSortMode.None);
+
+        if (Instance != null)
         {
-            Printers,
-            Materials,
-            Interior,
-            Tools,
-            None
+            Destroy(gameObject);
+            return;
         }
+        Instance = this;
+    }
+    
+    private void OnPlayerPointsChanged(int newBalance)
+    {
+        OnItemsStateChanged?.Invoke();
+    }
 
-        private ShopUI shopUI;
+    private void Start()
+    {
+        gm = GameManager.Instance;
+        gm.OnPointsChanged += OnPlayerPointsChanged;
+        ParseOffers();
+    }
 
-        private Dictionary<string, ShopItemConfig[]> _sortedOffers;
-        private SceneObject[] _sceneObjects;
+    private void OnDestroy()
+    {
+        if (GameManager.Instance != null)
+            GameManager.Instance.OnPointsChanged -= OnPlayerPointsChanged;
+    }
 
-        private Category _currentCategory = Category.None;
-        private bool _parsed;
+    public void SetShopUI(ShopUI ui)
+    {
+        shopUI = ui;
+    }
 
-        private GameManager gm;
+    public void Purchase(ShopItemConfig offer)
+    {
+        if (InventoryManager.Instance.HasItem(offer)) return;
 
-        public static ShopManager Instance { get; private set; }
+        gm.points -= offer.price;
+        InventoryManager.Instance.AddToInventory(offer);
 
-        private void Awake()
+        if (offer.category == "Interior" || offer.category == "Printers")
         {
-            _sceneObjects = FindObjectsByType<SceneObject>(FindObjectsSortMode.None);
-
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            Instance = this;
+            var sceneObject = Array.Find(_sceneObjects, item => item.gameObject.name == offer.id);
+            sceneObject.gameObject.SetActive(true);
+            Debug.Log(sceneObject.gameObject.name);
         }
+        Debug.Log("Осталось " + gm.points);
+        SaveManager.gameData.purchasedOffers.Add(offer.id);
+        OnItemsStateChanged?.Invoke();
+    }
 
+    public static bool CanAfford(ShopItemConfig item)
+    {
+        return GameManager.Instance.points >= item.price;
+    }
 
-        private void Start()
+    public static bool IsPurchased(ShopItemConfig item)
+    {
+        return InventoryManager.Instance.HasItem(item);
+    }
+
+    public static void TryPurchase(ShopItemConfig item)
+    {
+        if (Instance != null)
         {
-            gm = GameManager.Instance;
-            ParseOffers();
+            Instance.Purchase(item);
         }
+    }
+    
+    private void ParseOffers()
+    {
+        //var config = SaveManager.LoadConfig();
+        // Debug.Log(gm);
+        // Debug.Log(gm.globalConfig);
+        // Debug.Log(gm.globalConfig.ShopItems);
+        var config = GlobalConfig.Instance.ShopItems;
 
-        public void SetShopUI(ShopUI ui)
-        {
-            shopUI = ui;
-        }
+        var items = config ?? new List<ShopItemConfig>();
 
-        public void Purchase(ShopItemConfig offer)
-        {
-            if (InventoryManager.Instance.HasItem(offer)) return;
+        _sortedOffers = items
+            .GroupBy(
+                i => i.category.Trim(),
+                StringComparer.OrdinalIgnoreCase)
+            .ToDictionary(
+                g => g.Key,
+                g => g.ToArray(), StringComparer.OrdinalIgnoreCase);
 
-            gm.points -= offer.price;
-            InventoryManager.Instance.AddToInventory(offer);
+        _sortedOffers[""] = items.ToArray();
+    }
 
-            if (offer.category == "Interior" || offer.category == "Printers")
-            {
-                var sceneObject = Array.Find(_sceneObjects, item => item.gameObject.name == offer.id);
-                sceneObject.gameObject.SetActive(true);
-                Debug.Log(sceneObject.gameObject.name);
-            }
+    public void SetCategory(Category category)
+    {
+        _currentCategory = category;
 
-            Debug.Log("Осталось " + gm.points);
-
-            SaveManager.gameData.purchasedOffers.Add(offer.id);
-        }
-
-        private void ParseOffers()
-        {
-            //var config = SaveManager.LoadConfig();
-            // Debug.Log(gm);
-            // Debug.Log(gm.globalConfig);
-            // Debug.Log(gm.globalConfig.ShopItems);
-            var config = GlobalConfig.Instance.ShopItems;
-
-            var items = config ?? new List<ShopItemConfig>();
-
-            _sortedOffers = items
-                .GroupBy(
-                    i => i.category.Trim(),
-                    StringComparer.OrdinalIgnoreCase)
-                .ToDictionary(
-                    g => g.Key,
-                    g => g.ToArray(), StringComparer.OrdinalIgnoreCase);
-
-            _sortedOffers[""] = items.ToArray();
-        }
-
-        public void SetCategory(Category category)
-        {
-            _currentCategory = category;
-
-            if (_sortedOffers == null || !_sortedOffers.TryGetValue(_currentCategory.ToString(), out var items))
-                items = Array.Empty<ShopItemConfig>();
-            Debug.Log(items[0].id);
-            shopUI.ShowOffers(items);
-            AudioManager.Instance.PlayClickSound();
-        }
+        if (_sortedOffers == null || !_sortedOffers.TryGetValue(_currentCategory.ToString(), out var items))
+            items = Array.Empty<ShopItemConfig>();
+        Debug.Log(items[0].id);
+        shopUI.ShowOffers(items);
+        AudioManager.Instance.PlayClickSound();
     }
 }

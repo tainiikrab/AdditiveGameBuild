@@ -1,4 +1,3 @@
-using _Scripts.Shop;
 using UnityEngine;
 using UnityEngine.UI;
 
