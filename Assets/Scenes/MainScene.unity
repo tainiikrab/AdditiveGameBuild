@@ -4310,9 +4310,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 268913457}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 10ad1d39a3b055c43b6789f6dfbcecac, type: 3}
+  m_Script: {fileID: 11500000, guid: 01ea2fda7b6d5fb4690c91cfd08892b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WayPointFollower
+  Paths:
+  - WayPoints:
+    - {fileID: 717189379}
+    - {fileID: 1783778088}
+    - {fileID: 2098369711}
+    needStop: 0
+  Speed: 3
+  RotationSpeed: 5
+  rotationOffsetEuler: {x: 0, y: 0, z: 0}
+  currentPathIndex: 0
+  currentWPIndex: 0
 --- !u!1 &274447751
 GameObject:
   m_ObjectHideFlags: 0
