@@ -28,6 +28,7 @@ public class OrderConfig : IConfig
     public string meshID;
     public int reward;
 
+
     [SerializeField] private string _id;
 
     private string[] _answerLines;
@@ -41,6 +42,10 @@ public class OrderConfig : IConfig
     private GameObject _mesh;
 
     private List<ShopItemConfig> _requiredItems;
+
+
+    public string rawPrinterTypeName;
+    public PrinterType printerType => PrinterData.Types[rawPrinterTypeName];
 
     public string[] dialogLines
     {
