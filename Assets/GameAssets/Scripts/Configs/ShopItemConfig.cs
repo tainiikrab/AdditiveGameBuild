@@ -4,7 +4,10 @@ using UnityEngine;
 [Serializable]
 public class ShopItemConfig : IConfig
 {
-    private const string SpritesPath = "Sprites/Shop/OfferIcons/";
+    private static string[] SpritesPaths =
+    {
+        "Sprites/Shop/OfferIcons/", "Sprites/SceneObjects/"
+    };
     private const string PrefabPath = "Models/Shop/";
     public string name;
     public string iconID;
@@ -22,8 +25,21 @@ public class ShopItemConfig : IConfig
     {
         get
         {
+            if (_icon != null) return _icon;
+            
+            foreach (var path in SpritesPaths)
+            {
+                var sprite = Resources.Load<Sprite>(path + iconID);
+                if (sprite == null) continue;
+                _icon = sprite;
+                break;
+            }
+            
             if (_icon == null)
-                _icon = Resources.Load<Sprite>(SpritesPath + iconID);
+            {
+                Debug.LogWarning($"Icon not found: {iconID} in any of the paths");
+            }
+            
             return _icon;
         }
         set => _icon = value;

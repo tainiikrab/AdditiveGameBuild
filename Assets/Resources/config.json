@@ -254,7 +254,7 @@
     "ShopItems": [
         {
             "name": "Prusa",
-            "iconID": "printer_01",
+            "iconID": "printer_prusa",
             "prefabID": "itemPrefab1",
             "price": 0,
             "category": "Printers",
@@ -263,7 +263,7 @@
         },
         {
             "name": "CoreXY",
-            "iconID": "printer_02",
+            "iconID": "printer_corexy",
             "prefabID": "itemPrefab2",
             "price": 3000,
             "category": "Printers",
@@ -272,7 +272,7 @@
         },
         {
             "name": "Delta",
-            "iconID": "printer_03",
+            "iconID": "printer_delta",
             "prefabID": "itemPrefab3",
             "price": 5000,
             "category": "Printers",
@@ -281,7 +281,7 @@
         },
         {
             "name": "PLA белый",
-            "iconID": "white_coil",
+            "iconID": "pla_white",
             "prefabID": "itemPrefab4",
             "price": 0,
             "category": "Materials",
@@ -290,7 +290,7 @@
         },
         {
             "name": "PLA розовый",
-            "iconID": "pink_coil",
+            "iconID": "pla_pink",
             "prefabID": "itemPrefab5",
             "price": 80,
             "category": "Materials",
@@ -299,7 +299,7 @@
         },
         {
             "name": "PLA голубой",
-            "iconID": "blue_coil",
+            "iconID": "pla_blue",
             "prefabID": "itemPrefab6",
             "price": 80,
             "category": "Materials",
@@ -308,7 +308,7 @@
         },
         {
             "name": "PLA фиолетовый",
-            "iconID": "violet_coil",
+            "iconID": "pla_violet",
             "prefabID": "itemPrefab7",
             "price": 80,
             "category": "Materials",
@@ -326,7 +326,7 @@
         },
         {
             "name": "Кусачки",
-            "iconID": "wire_cut",
+            "iconID": "nippers",
             "prefabID": "itemPrefab9",
             "price": 30,
             "category": "Tools",
@@ -335,7 +335,7 @@
         },
         {
             "name": "Куст",
-            "iconID": "pot_01",
+            "iconID": "bush",
             "prefabID": "itemPrefab10",
             "price": 120,
             "category": "Interior",
