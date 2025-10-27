@@ -4698,17 +4698,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad5484b77160434da416ffd09b39f12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  audioMixer: {fileID: 24100000, guid: aa58ca04a3e5edf438529aad2f86d699, type: 2}
   musicSlider: {fileID: 319078075}
   sfxSlider: {fileID: 213175660}
-  musicDefaultVolume: 0.222
-  sfxDefaultVolume: 0.227
-  audioMixer: {fileID: 24100000, guid: aa58ca04a3e5edf438529aad2f86d699, type: 2}
-  clickSounds:
-  - {fileID: 1496304088}
-  - {fileID: 1123981418}
-  delay: 0
-  musicPlaylist:
-  - {fileID: 9704331}
+  musicDefaultVolume: 0.6
+  sfxDefaultVolume: 0.5
+  clickSound: {fileID: 8300000, guid: 4155553cbaba88d459a69c82d3ef2210, type: 3}
+  musicClip: {fileID: 8300000, guid: 3b063188cb9628a4b896b7a2bf3865b6, type: 3}
 --- !u!1 &294164887
 GameObject:
   m_ObjectHideFlags: 0
@@ -14753,11 +14749,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1123948875}
   m_CullTransparentMesh: 1
---- !u!82 &1123981418 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 3680339108871521753, guid: 6d0bf125a8b829b4d882228bcd07133f, type: 3}
-  m_PrefabInstance: {fileID: 1009247570474172894}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1124648993
 GameObject:
   m_ObjectHideFlags: 0
@@ -19556,11 +19547,6 @@ Transform:
   - {fileID: 636099810}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!82 &1496304088 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 2020864930113509115, guid: 6d0bf125a8b829b4d882228bcd07133f, type: 3}
-  m_PrefabInstance: {fileID: 1009247570474172894}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1505269390
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,118 +1,101 @@
-using System.Collections;
+using System;
+using System.Globalization;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
-
-    [Header("Drag here the sliders from volume settings")] [Header("Music slider")] [SerializeField]
-    private Slider musicSlider;
-
-    [Header("SFX slider")] [SerializeField]
-    private Slider sfxSlider;
-
-    [Header("Default slider values")] [Range(0, 1)]
-    public float musicDefaultVolume;
-
-    [Range(0, 1)] public float sfxDefaultVolume;
-
-    public AudioMixer audioMixer;
-
-    // [Space(50)]
-    public AudioSource[] clickSounds;
-
-    // [Space(50)] 
-    public float delay;
-    public AudioSource[] musicPlaylist;
-    private int _currentMusicIndex;
-
-    private const string MUSIC_VOLUME_KEY = "musicVolume";
-    private const string SFX_VOLUME_KEY = "sfxVolume";
+    
+    [SerializeField] private AudioMixer audioMixer;
+    
+    [SerializeField] private Slider musicSlider;
+    [SerializeField] private Slider sfxSlider;
+    
+    [Range(float.Epsilon, 1), SerializeField] private float musicDefaultVolume;
+    [Range(float.Epsilon, 1), SerializeField] private float sfxDefaultVolume;
+    
+    [SerializeField] private AudioClip clickSound;
+    [SerializeField] private AudioClip musicClip;
+    
+    private event Action OnVolumeChange;
+    
+    private const string MusicMixerGroup = "MusicVolume";
+    private const string SfxMixerGroup = "soundEffectsVolume";
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
-
-        musicSlider.value = PlayerPrefs.GetFloat(MUSIC_VOLUME_KEY, 0.5f);
-        sfxSlider.value = PlayerPrefs.GetFloat(SFX_VOLUME_KEY, 0.5f);
+        
         musicSlider.onValueChanged.AddListener(SetMusicVolume);
         sfxSlider.onValueChanged.AddListener(SetSfxVolume);
-    }
 
-    public void Start()
-    {
-        if (Instance != this) return;
-
-        if (!PlayerPrefs.HasKey(MUSIC_VOLUME_KEY) || !PlayerPrefs.HasKey(SFX_VOLUME_KEY))
-        {
-            musicSlider.value = musicDefaultVolume;
-            sfxSlider.value = sfxDefaultVolume;
-            SaveVolumeValues();
-        }
+        OnVolumeChange += SaveVolumeSettings;
+        
+        if (SaveManager.gameData.volumeSettings.Count != 0) LoadVolumeSettings();
         else
         {
-            LoadVolumeValues();
+            SetMusicVolume(musicDefaultVolume);
+            SetSfxVolume(sfxDefaultVolume);
         }
+        
+        SaveVolumeSettings();
+    }
 
-        PlayMusicList();
+    private void Start()
+    {
+        PlayMusic();
+    }
+
+    private void OnDestroy()
+    {
+        OnVolumeChange -= SaveVolumeSettings;
     }
 
     public void PlayClickSound()
     {
-        if (clickSounds.Length == 0 || clickSounds == null) return;
-        var randomInt = Random.Range(0, clickSounds.Length);
-        clickSounds[randomInt].Play();
+        var sfxSource = this.AddComponent<AudioSource>();
+        sfxSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups(SfxMixerGroup)[1];
+        sfxSource.clip = clickSound;
+        sfxSource.loop = false;
+        sfxSource.Play();
     }
 
-    private void PlayMusicList()
+    private void PlayMusic()
     {
-        if (musicPlaylist.Length == 0 || musicPlaylist == null) return;
-        StartCoroutine(PlaySequence());
+        var musicSource = this.AddComponent<AudioSource>();
+        musicSource.outputAudioMixerGroup = audioMixer.FindMatchingGroups(MusicMixerGroup)[0];
+        musicSource.clip = musicClip;
+        musicSource.loop = true;
+        musicSource.Play();
+    }
+    
+    private void SetMusicVolume(float value)
+    {
+        audioMixer.SetFloat(MusicMixerGroup, Mathf.Log10(Mathf.Max(float.Epsilon, value)) * 20);
+        OnVolumeChange?.Invoke();
     }
 
-    private IEnumerator PlaySequence()
+    private void SetSfxVolume(float value)
     {
-        while (true)
-        {
-            var currentAudioSource = musicPlaylist[_currentMusicIndex];
-            //currentAudioSource.volume = musicSlider.value;
-            currentAudioSource.Play();
-
-            yield return new WaitForSeconds(musicPlaylist[_currentMusicIndex].clip.length);
-
-            yield return new WaitForSeconds(delay);
-
-            _currentMusicIndex = (_currentMusicIndex + 1) % musicPlaylist.Length;
-        }
+        audioMixer.SetFloat(SfxMixerGroup, Mathf.Log10(Mathf.Max(float.Epsilon, value)) * 20);
+        OnVolumeChange?.Invoke();
     }
 
-    public void SetMusicVolume(float value)
+    private void SaveVolumeSettings()
     {
-        audioMixer.SetFloat("musicVolume", Mathf.Log10(Mathf.Max(float.Epsilon, value)) * 20);
-        SaveVolumeValues();
+        if (SaveManager.gameData.volumeSettings.Count < 2) return;
+        SaveManager.gameData.volumeSettings.Clear();
+        SaveManager.gameData.volumeSettings.Add(musicSlider.value.ToString(CultureInfo.InvariantCulture));
+        SaveManager.gameData.volumeSettings.Add(sfxSlider.value.ToString(CultureInfo.InvariantCulture));
     }
 
-    public void SetSfxVolume(float value)
+    private void LoadVolumeSettings()
     {
-        audioMixer.SetFloat("soundEffectsVolume", Mathf.Log10(Mathf.Max(float.Epsilon, value)) * 20);
-        SaveVolumeValues();
-    }
-
-    private void LoadVolumeValues()
-    {
-        if (musicSlider == null || sfxSlider == null) return;
-        musicSlider.value = PlayerPrefs.GetFloat(MUSIC_VOLUME_KEY);
-        sfxSlider.value = PlayerPrefs.GetFloat(SFX_VOLUME_KEY);
-
-        // SetMusicVolume(musicSlider.value);
-        // SetSfxVolume();
-    }
-
-    private void SaveVolumeValues()
-    {
-        PlayerPrefs.SetFloat(MUSIC_VOLUME_KEY, musicSlider.value);
-        PlayerPrefs.SetFloat(SFX_VOLUME_KEY, sfxSlider.value);
+        musicSlider.value = SaveManager.gameData.volumeSettings.IndexOf(SaveManager.gameData.volumeSettings[0]);
+        sfxSlider.value = SaveManager.gameData.volumeSettings.IndexOf(SaveManager.gameData.volumeSettings[1]);
     }
 }
