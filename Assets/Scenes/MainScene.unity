@@ -2815,7 +2815,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1355568018680422820, guid: ca40287af6edd56478cf57058e2e624b, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1535538270391444528, guid: ca40287af6edd56478cf57058e2e624b, type: 3}
       propertyPath: m_StartAxis
@@ -4318,7 +4318,7 @@ MonoBehaviour:
     - {fileID: 717189379}
     - {fileID: 1783778088}
     - {fileID: 2098369711}
-    needStop: 0
+    needStop: 1
   Speed: 3
   RotationSpeed: 5
   rotationOffsetEuler: {x: 0, y: 0, z: 0}
