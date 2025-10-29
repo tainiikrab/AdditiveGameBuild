@@ -17,7 +17,7 @@ public class LaptopUI : MonoBehaviour
         canvasGroup = GetComponent<CanvasGroup>();
         closeButton.onClick.AddListener(() => ToggleVisibility(false));
         canvasGroup.alpha = 0f;
-        // ToggleVisibility(false);
+        ToggleVisibility(false);
     }
 
     private void Update()
