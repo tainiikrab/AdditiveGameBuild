@@ -2325,9 +2325,17 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1474700732912010675, guid: 852b79f0790d8a3418a04a1e44f6a17f, type: 3}
+      propertyPath: musicClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d2ef5ad250d293f44a599ed57e1e537c, type: 3}
+    - target: {fileID: 1474700732912010675, guid: 852b79f0790d8a3418a04a1e44f6a17f, type: 3}
       propertyPath: sfxSlider
       value: 
       objectReference: {fileID: 1997973124}
+    - target: {fileID: 1474700732912010675, guid: 852b79f0790d8a3418a04a1e44f6a17f, type: 3}
+      propertyPath: clickSound
+      value: 
+      objectReference: {fileID: 8300000, guid: 4155553cbaba88d459a69c82d3ef2210, type: 3}
     - target: {fileID: 1474700732912010675, guid: 852b79f0790d8a3418a04a1e44f6a17f, type: 3}
       propertyPath: musicSlider
       value: 

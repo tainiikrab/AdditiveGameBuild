@@ -94,5 +94,6 @@ public class SaveManager
         public List<string> completedOrders = new();
         public List<string> declinedOrders = new();
         public List<string> purchasedOffers = new();
+        public VolumeData volumeData = new();
     }
 }

@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
@@ -6,113 +7,92 @@ using UnityEngine.UI;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
-
-    [Header("Drag here the sliders from volume settings")] [Header("Music slider")] [SerializeField]
-    private Slider musicSlider;
-
-    [Header("SFX slider")] [SerializeField]
-    private Slider sfxSlider;
-
-    [Header("Default slider values")] [Range(0, 1)]
-    public float musicDefaultVolume;
-
-    [Range(0, 1)] public float sfxDefaultVolume;
-
-    public AudioMixer audioMixer;
-
-    // [Space(50)]
-    public AudioSource[] clickSounds;
-
-    // [Space(50)] 
-    public float delay;
-    public AudioSource[] musicPlaylist;
-    private int _currentMusicIndex;
-
-    private const string MUSIC_VOLUME_KEY = "musicVolume";
-    private const string SFX_VOLUME_KEY = "sfxVolume";
-
+    
+    [SerializeField] private AudioMixer audioMixer;
+    
+    [SerializeField] private AudioMixerGroup sfxGroup;
+    [SerializeField] private AudioMixerGroup musicGroup;
+    
+    [SerializeField] private Button resetButton;
+    
+    [SerializeField] private Slider sfxSlider;
+    [SerializeField] private Slider musicSlider;
+    
+    [SerializeField] private AudioClip clickSound;
+    [SerializeField] private AudioClip musicClip;
+    
+    private const string SfxMixerGroup = "soundEffectsVolume"; 
+    private const string MusicMixerGroup = "musicVolume";
+    
     private void Awake()
     {
         if (Instance == null) Instance = this;
-
-        musicSlider.value = PlayerPrefs.GetFloat(MUSIC_VOLUME_KEY, 0.5f);
-        sfxSlider.value = PlayerPrefs.GetFloat(SFX_VOLUME_KEY, 0.5f);
+        
+        sfxSlider.onValueChanged.AddListener(SetSfxVolume); 
         musicSlider.onValueChanged.AddListener(SetMusicVolume);
-        sfxSlider.onValueChanged.AddListener(SetSfxVolume);
+        resetButton.onClick.AddListener(ResetVolumeSettings);
     }
 
-    public void Start()
+    private void Start()
     {
-        if (Instance != this) return;
+        LoadVolumeSettings();
+        PlayMusic();
+    }
 
-        if (!PlayerPrefs.HasKey(MUSIC_VOLUME_KEY) || !PlayerPrefs.HasKey(SFX_VOLUME_KEY))
-        {
-            musicSlider.value = musicDefaultVolume;
-            sfxSlider.value = sfxDefaultVolume;
-            SaveVolumeValues();
-        }
-        else
-        {
-            LoadVolumeValues();
-        }
-
-        PlayMusicList();
+    private void OnDestroy()
+    {
+        sfxSlider.onValueChanged.RemoveListener(SetSfxVolume);
+        musicSlider.onValueChanged.RemoveListener(SetMusicVolume);
+        resetButton.onClick.RemoveListener(ResetVolumeSettings);
     }
 
     public void PlayClickSound()
     {
-        if (clickSounds.Length == 0 || clickSounds == null) return;
-        var randomInt = Random.Range(0, clickSounds.Length);
-        clickSounds[randomInt].Play();
+        StartCoroutine(ClickSound());
     }
 
-    private void PlayMusicList()
+    private IEnumerator ClickSound()
     {
-        if (musicPlaylist.Length == 0 || musicPlaylist == null) return;
-        StartCoroutine(PlaySequence());
+        var sfxSource = this.AddComponent<AudioSource>();
+        sfxSource.clip = clickSound;
+        sfxSource.loop = false;
+        sfxSource.outputAudioMixerGroup = sfxGroup;
+        sfxSource.Play();
+        yield return new WaitForSeconds(sfxSource.clip.length);
+        Destroy(sfxSource);
     }
 
-    private IEnumerator PlaySequence()
+    private void PlayMusic()
     {
-        while (true)
-        {
-            var currentAudioSource = musicPlaylist[_currentMusicIndex];
-            //currentAudioSource.volume = musicSlider.value;
-            currentAudioSource.Play();
-
-            yield return new WaitForSeconds(musicPlaylist[_currentMusicIndex].clip.length);
-
-            yield return new WaitForSeconds(delay);
-
-            _currentMusicIndex = (_currentMusicIndex + 1) % musicPlaylist.Length;
-        }
+        var musicSource = this.AddComponent<AudioSource>();
+        musicSource.clip = musicClip;
+        musicSource.loop = true;
+        musicSource.outputAudioMixerGroup = musicGroup;
+        musicSource.Play();
+    }
+    
+    private void SetMusicVolume(float value)
+    {
+        audioMixer.SetFloat(MusicMixerGroup, Mathf.Log10(Mathf.Max(float.Epsilon, value)) * 20);
+        SaveManager.gameData.volumeData.MusicVolume = value;
     }
 
-    public void SetMusicVolume(float value)
+    private void SetSfxVolume(float value)
     {
-        audioMixer.SetFloat("musicVolume", Mathf.Log10(Mathf.Max(float.Epsilon, value)) * 20);
-        SaveVolumeValues();
+        audioMixer.SetFloat(SfxMixerGroup, Mathf.Log10(Mathf.Max(float.Epsilon, value)) * 20);
+        SaveManager.gameData.volumeData.SfxVolume = value;
     }
 
-    public void SetSfxVolume(float value)
+    private void LoadVolumeSettings()
     {
-        audioMixer.SetFloat("soundEffectsVolume", Mathf.Log10(Mathf.Max(float.Epsilon, value)) * 20);
-        SaveVolumeValues();
+        musicSlider.value = SaveManager.gameData.volumeData.MusicVolume;
+        sfxSlider.value = SaveManager.gameData.volumeData.SfxVolume;
     }
 
-    private void LoadVolumeValues()
+    private void ResetVolumeSettings()
     {
-        if (musicSlider == null || sfxSlider == null) return;
-        musicSlider.value = PlayerPrefs.GetFloat(MUSIC_VOLUME_KEY);
-        sfxSlider.value = PlayerPrefs.GetFloat(SFX_VOLUME_KEY);
-
-        // SetMusicVolume(musicSlider.value);
-        // SetSfxVolume();
-    }
-
-    private void SaveVolumeValues()
-    {
-        PlayerPrefs.SetFloat(MUSIC_VOLUME_KEY, musicSlider.value);
-        PlayerPrefs.SetFloat(SFX_VOLUME_KEY, sfxSlider.value);
+        SaveManager.gameData.volumeData.Reset();
+        musicSlider.value = SaveManager.gameData.volumeData.MusicVolume;
+        sfxSlider.value = SaveManager.gameData.volumeData.SfxVolume;
     }
 }
