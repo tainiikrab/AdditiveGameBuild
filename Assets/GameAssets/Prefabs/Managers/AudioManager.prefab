@@ -44,8 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ad5484b77160434da416ffd09b39f12, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  musicSlider: {fileID: 0}
-  sfxSlider: {fileID: 0}
-  musicDefaultVolume: 0.7
-  sfxDefaultVolume: 0.6
   audioMixer: {fileID: 24100000, guid: aa58ca04a3e5edf438529aad2f86d699, type: 2}
+  sfxGroup: {fileID: 2147151945482809833, guid: aa58ca04a3e5edf438529aad2f86d699, type: 2}
+  musicGroup: {fileID: -3295945009703890252, guid: aa58ca04a3e5edf438529aad2f86d699, type: 2}
+  sfxSlider: {fileID: 0}
+  musicSlider: {fileID: 0}
+  sfxDefaultVolume: 0.7
+  musicDefaultVolume: 0.7
+  clickSound: {fileID: 0}
+  musicClip: {fileID: 0}
