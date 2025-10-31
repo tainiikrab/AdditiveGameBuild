@@ -10,31 +10,36 @@ public class SceneSwitchManager : MonoBehaviour
     [SerializeField] private Slider progressBar;
 
     // [SerializeField] private ReviewUI reviewUI;
-    public static SceneSwitchManager instance { get; private set; }
+    public static SceneSwitchManager Instance { get; private set; }
     public static bool isMinigameFinished = false;
 
     private void Awake()
     {
-        if (instance != null)
+        if (Instance != null)
         {
             Destroy(gameObject);
             return;
         }
 
         DontDestroyOnLoad(gameObject);
-        instance = this;
+        Instance = this;
     }
 
     public static void OpenScene(Scenes scene)
     {
-        if (instance != null)
-            instance.StartCoroutine(instance.LoadSceneAsync(scene));
-        else
-            SceneManager.LoadScene((int)scene);
+        if (Instance != null)
+        {
+            Instance.StartCoroutine(Instance.LoadSceneAsync(scene));
+            return;
+        }
+
+        Debug.Log("No instance for sceneswitchmanager");
+        SceneManager.LoadScene((int)scene);
     }
 
     private IEnumerator LoadSceneAsync(Scenes scene)
     {
+        Debug.Log("Loading async");
         loadingScreen.SetActive(true);
 
         if (loadingAnimation != null)

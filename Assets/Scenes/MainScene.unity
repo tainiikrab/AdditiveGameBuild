@@ -6560,6 +6560,7 @@ Transform:
   - {fileID: 1223048189}
   - {fileID: 122829997}
   - {fileID: 291108936}
+  - {fileID: 1166300804}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &520690392
@@ -7597,6 +7598,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 3f2587087b36d8e43a9d559542406f65, type: 3}
+    - target: {fileID: 1926105091304917086, guid: 256fa2a8d80010b47b39c6ca90ab5373, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2456026829589335305, guid: 256fa2a8d80010b47b39c6ca90ab5373, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -9365,7 +9370,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 999
   m_TargetDisplay: 0
 --- !u!1 &717189379
 GameObject:
@@ -13856,6 +13861,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   currentPlotIndex: 1
   openMinigameDelay: 0
+  isUIOpened: 0
 --- !u!1 &1037294037
 GameObject:
   m_ObjectHideFlags: 0
@@ -15233,6 +15239,52 @@ Transform:
   - {fileID: 85242461}
   m_Father: {fileID: 1384050024}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1166300803
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1166300804}
+  - component: {fileID: 1166300805}
+  m_Layer: 0
+  m_Name: MinigameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1166300804
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166300803}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 507440877}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1166300805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1166300803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 027b0fd170e543eca7d8362c8de83f3e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MinigameManager
+  slicerWindow: {fileID: 7468496398519854777, guid: 273ef5c6930de824ba5bb41ff56fa0da, type: 3}
+  laptopUI: {fileID: 814257470}
 --- !u!1 &1166590926
 GameObject:
   m_ObjectHideFlags: 0
@@ -20649,6 +20701,10 @@ PrefabInstance:
       propertyPath: m_Sprite
       value: 
       objectReference: {fileID: 21300000, guid: 33e8b88ce6ceb8f4eb42c14534054652, type: 3}
+    - target: {fileID: 1926105091304917086, guid: 256fa2a8d80010b47b39c6ca90ab5373, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2456026829589335305, guid: 256fa2a8d80010b47b39c6ca90ab5373, type: 3}
       propertyPath: m_LocalPosition.x
       value: -1.62

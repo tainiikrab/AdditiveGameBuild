@@ -60,7 +60,8 @@ public class Slicer : MonoBehaviour
         quality.layerHeight = 100 - Mathf.Pow(Mathf.Abs(layerHeight.value - order.layerHeight), 1f);
         quality.printSpeed = 100 - Mathf.Pow(Mathf.Abs(printSpeed.value - order.printSpeed), 1f);
         Debug.Log($"Order quality: {OrderManager.currentOrderQuality.totalQuality}");
-        // gm.StartPrinting();
+
+        MinigameManager.Instance.OpenMinigame(MinigameType.Postprocess);
 
         AudioManager.Instance.PlayClickSound();
     }

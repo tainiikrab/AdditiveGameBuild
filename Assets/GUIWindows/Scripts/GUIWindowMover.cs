@@ -42,7 +42,7 @@ namespace Rellac.Windows
         private void Start()
         {
             onPointerDown.AddListener(SetIsGrabbed);
-            canvas = UIWindow.GetCanvas(transform.parent);
+            canvas = LaptopUIWindow.GetCanvas(transform.parent);
         }
 
         // private void Update()

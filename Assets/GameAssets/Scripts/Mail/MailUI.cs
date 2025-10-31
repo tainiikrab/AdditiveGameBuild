@@ -44,7 +44,14 @@ public class MailUI : MonoBehaviour
         OrderManager.SetCurrentOrder(orderConfig);
         Instance.MoveHeaderToCategory(header, Category.Completed);
         SaveManager.gameData.completedOrders.Add(orderConfig.id);
-        Instance.OpenSlicer();
+        Instance.SetNextState(orderConfig);
+        AudioManager.Instance.PlayClickSound();
+    }
+
+    private void SetNextState(OrderConfig orderConfig)
+    {
+        MinigameManager.Instance.OpenMinigame(orderConfig.printerType.minigames[0]);
+        GetComponent<GUIWindow>().CloseWindow();
         AudioManager.Instance.PlayClickSound();
     }
 
@@ -216,13 +223,13 @@ public class MailUI : MonoBehaviour
         // ActivateHeader(orderHeader);
     }
 
-    public void OpenSlicer()
-    {
-        var window = Instantiate(slicerWindow, transform.parent);
-        GetComponent<GUIWindow>().CloseWindow();
-
-        AudioManager.Instance.PlayClickSound();
-    }
+    // public void OpenSlicer()
+    // {
+    //     var window = Instantiate(slicerWindow, transform.parent);
+    //     GetComponent<GUIWindow>().CloseWindow();
+    //
+    //     AudioManager.Instance.PlayClickSound();
+    // }
 // public void RemoveOrder(OrderConfig order)
 // {
 //     foreach (var header in headers)
