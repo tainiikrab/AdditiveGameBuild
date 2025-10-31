@@ -168,7 +168,8 @@
             "sandpapering": 4.0,
             "meshID": "",
             "reward": 150,
-            "_id": "phone_stand"
+            "_id": "phone_stand",
+            "rawPrinterTypeName": "FDM"
         },
         {
             "orderName": "Брелок-фигурка",
@@ -186,7 +187,8 @@
             "sandpapering": 0.0,
             "meshID": "",
             "reward": 230,
-            "_id": "keychain"
+            "_id": "keychain",
+            "rawPrinterTypeName": "FDM"
         },
         {
             "orderName": "Держатель для наушников",
@@ -204,7 +206,8 @@
             "sandpapering": 0.0,
             "meshID": "",
             "reward": 300,
-            "_id": "headphones_holder"
+            "_id": "headphones_holder",
+            "rawPrinterTypeName": "FDM"
         },
         {
             "orderName": "Учебный макет «Кристаллическая решётка»",
@@ -222,7 +225,8 @@
             "sandpapering": 0.0,
             "meshID": "",
             "reward": 600,
-            "_id": "crystal_lattice"
+            "_id": "crystal_lattice",
+            "rawPrinterTypeName": "SLA"
         }
     ],
     "Customers": [

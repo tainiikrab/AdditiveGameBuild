@@ -61,7 +61,7 @@ namespace Rellac.Windows
 
         private void Start()
         {
-            canvas = UIWindow.GetCanvas(transform.parent);
+            canvas = LaptopUIWindow.GetCanvas(transform.parent);
             canvasRect = canvas.GetComponent<RectTransform>();
             //register to pointer events
             onPointerDown.AddListener(SetIsGrabbed);

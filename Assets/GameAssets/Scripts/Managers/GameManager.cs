@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
 
     private static GlobalConfig _globalConfig;
 
+    public bool isUIOpened = false;
     private GlobalConfig globalConfig
     {
         get
