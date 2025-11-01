@@ -62,7 +62,7 @@ public class DebugTools : EditorWindow
         GUILayout.Label("Saves", EditorStyles.boldLabel);
         if (GUILayout.Button("Delete saves"))
         {
-            SaveManager.DeleteSaves();
+            SaveManager.ResetSaves();
             OrderManager.CompleteOrder();
             if (Application.isPlaying)
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);

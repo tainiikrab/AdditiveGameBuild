@@ -9,6 +9,8 @@ public class SceneSwitchManager : MonoBehaviour
     [SerializeField] private Animation loadingAnimation;
     [SerializeField] private Slider progressBar;
 
+    [SerializeField] private ReviewUI reviewUI;
+
     // [SerializeField] private ReviewUI reviewUI;
     public static SceneSwitchManager Instance { get; private set; }
     public static bool isMinigameFinished = false;
@@ -63,13 +65,16 @@ public class SceneSwitchManager : MonoBehaviour
 
         loadingScreen.SetActive(false);
 
-        if (isMinigameFinished == true) isMinigameFinished = false;
-        // Debug.Log("Quality:" + OrderManager.currentOrderQuality.totalQuality.ToString());
-        // if (reviewUI != null)
-        // {
-        //     reviewUI.gameObject.SetActive(true);
-        //     reviewUI.Initialize(OrderManager.currentOrder);
-        // }
+        if (isMinigameFinished)
+        {
+            isMinigameFinished = false;
+            Debug.Log("Quality:" + OrderManager.currentOrderQuality.totalQuality.ToString());
+            if (reviewUI != null)
+            {
+                reviewUI.gameObject.SetActive(true);
+                reviewUI.Initialize(OrderManager.currentOrder);
+            }
+        }
     }
 }
 

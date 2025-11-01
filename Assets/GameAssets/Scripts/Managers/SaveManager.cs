@@ -55,7 +55,7 @@ public class SaveManager
         }
     }
 
-    public static void DeleteSaves()
+    public static void ResetSaves()
     {
         // OrderManager.CompleteOrder();
         // OrderManager.availableOrders = new List<OrderConfig>();
