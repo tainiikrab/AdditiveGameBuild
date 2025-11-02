@@ -5,7 +5,7 @@ public class ModelTurner : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
 {
     private const string modelParentTag = "SlicedPrefabParent";
     private static Transform modelParent;
-    private static GameObject turningModel;
+    public static GameObject turningModel;
 
     [SerializeField] private string layerName = "RenderTexture";
     [SerializeField] private float rotationSpeed = 20f;

@@ -16,9 +16,11 @@ public class Slicer : MonoBehaviour
     private Action<OrderConfig> onCompletedHandler;
     private OrderConfig order;
 
+    [SerializeField] private Material slicerMaterial;
+
     private void Awake()
     {
-        gm = GameManager.Instance;
+        block = new MaterialPropertyBlock();
         SetupSlider(layerHeight);
         SetupSlider(fillDensity);
         SetupSlider(printSpeed);
@@ -35,6 +37,8 @@ public class Slicer : MonoBehaviour
         OrderManager.OnOrderCompleted -= onCompletedHandler;
     }
 
+    private MeshRenderer modelRenderer;
+
     private void SetOrder()
     {
         if (OrderManager.currentOrder == null)
@@ -47,6 +51,8 @@ public class Slicer : MonoBehaviour
         {
             order = OrderManager.currentOrder;
             modelTurner.SetModel(order.mesh);
+            modelRenderer = ModelTurner.turningModel.GetComponent<MeshRenderer>();
+            modelRenderer.material = slicerMaterial;
             printButton.onClick.AddListener(StartPrinting);
         }
 
@@ -76,6 +82,39 @@ public class Slicer : MonoBehaviour
         UpdateSlider(values, values.maxValue / 2);
     }
 
+
+    private MaterialPropertyBlock block;
+
+    [Header("Sliced material settings")] [SerializeField]
+    private float matLayerHeightMin = 0.01f;
+
+    [SerializeField] private float matLayerHeightMax = 0.05f;
+    [SerializeField] private float matPrintProgressMin = -8.3f;
+    [SerializeField] private float matPrintProgressMax = -7.3f;
+    [SerializeField] private float matMinDistortion = 0f;
+    [SerializeField] private float matMaxDistortion = 0.023f;
+    [SerializeField] private float matMinGap = 0.2f;
+    [SerializeField] private float matMaxGap = 0.75f;
+
+    private void UpdateModel()
+    {
+        if (modelRenderer == null)
+        {
+            Debug.LogError($"{nameof(modelRenderer)} is null");
+            return;
+        }
+
+        // block.SetFloat("_PrintProgress", Time.time % 10f);
+        block.SetFloat("_LayerHeight",
+            Map(layerHeight.value, layerHeight.minValue, layerHeight.maxValue, matLayerHeightMin, matLayerHeightMax));
+        block.SetFloat("_DistortionAmount",
+            Map(printSpeed.value, printSpeed.minValue, printSpeed.maxValue, matMinDistortion, matMaxDistortion));
+        block.SetFloat("_SliceGap",
+            Map(fillDensity.value, fillDensity.minValue, fillDensity.maxValue, matMaxGap, matMinGap));
+
+        modelRenderer.SetPropertyBlock(block);
+    }
+
     private void UpdateSlider(SliderValues values, float rawValue)
     {
         if (values.steps <= 0)
@@ -90,6 +129,8 @@ public class Slicer : MonoBehaviour
 
         values.slider.SetValueWithoutNotify(snapped);
         values.label.text = $"{values.labelPrefix}{snapped:F2}{values.labelPostfix}";
+
+        UpdateModel();
     }
 
     [Serializable]
@@ -123,5 +164,10 @@ public class Slicer : MonoBehaviour
                 return _labelPostfix;
             }
         }
+    }
+
+    public static float Map(float x, float a, float b, float c, float d)
+    {
+        return c + (x - a) * (d - c) / (b - a);
     }
 }

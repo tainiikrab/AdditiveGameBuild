@@ -2866,6 +2866,15 @@ MonoBehaviour:
   printButton: {fileID: 1830468301558603410}
   modelTurner: {fileID: 275584520024019201}
   qualityLabel: {fileID: 7101501351945230901}
+  slicerMaterial: {fileID: 2100000, guid: 7f755ebe2d304be41b134aa1ae527f09, type: 2}
+  matLayerHeightMin: 0.01
+  matLayerHeightMax: 0.05
+  matPrintProgressMin: -8.3
+  matPrintProgressMax: -7.3
+  matMinDistortion: 0
+  matMaxDistortion: 0.023
+  matMinGap: 0.2
+  matMaxGap: 0.75
 --- !u!224 &7468496398551833027 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 22400014, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
