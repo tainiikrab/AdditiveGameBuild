@@ -1768,6 +1768,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sounds
       objectReference: {fileID: 0}
+    - target: {fileID: 6967688313628785613, guid: 6d0bf125a8b829b4d882228bcd07133f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -2326,6 +2330,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 1474700732912010675, guid: 852b79f0790d8a3418a04a1e44f6a17f, type: 3}
+      propertyPath: sfxGroup
+      value: 
+      objectReference: {fileID: -3295945009703890252, guid: aa58ca04a3e5edf438529aad2f86d699, type: 2}
+    - target: {fileID: 1474700732912010675, guid: 852b79f0790d8a3418a04a1e44f6a17f, type: 3}
       propertyPath: musicClip
       value: 
       objectReference: {fileID: 8300000, guid: d2ef5ad250d293f44a599ed57e1e537c, type: 3}
@@ -2337,6 +2345,10 @@ PrefabInstance:
       propertyPath: clickSound
       value: 
       objectReference: {fileID: 8300000, guid: 4155553cbaba88d459a69c82d3ef2210, type: 3}
+    - target: {fileID: 1474700732912010675, guid: 852b79f0790d8a3418a04a1e44f6a17f, type: 3}
+      propertyPath: musicGroup
+      value: 
+      objectReference: {fileID: 2147151945482809833, guid: aa58ca04a3e5edf438529aad2f86d699, type: 2}
     - target: {fileID: 1474700732912010675, guid: 852b79f0790d8a3418a04a1e44f6a17f, type: 3}
       propertyPath: musicSlider
       value: 
@@ -3235,7 +3247,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1547201856834163583, guid: bc5d7756be192e741a06071a606c9cf9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1997973129}
   m_SourcePrefab: {fileID: 100100000, guid: bc5d7756be192e741a06071a606c9cf9, type: 3}
 --- !u!224 &1997973123 stripped
 RectTransform:
@@ -3275,6 +3290,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!1 &1997973127 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1547201856834163583, guid: bc5d7756be192e741a06071a606c9cf9, type: 3}
+  m_PrefabInstance: {fileID: 1997973122}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1997973128 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4598938448245423440, guid: bc5d7756be192e741a06071a606c9cf9, type: 3}
+  m_PrefabInstance: {fileID: 1997973122}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1997973129
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1997973127}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d4531f3aa5959e545881e3378f03899c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIPopup
+  body: {fileID: 1997973128}
 --- !u!1 &2001544153
 GameObject:
   m_ObjectHideFlags: 0
