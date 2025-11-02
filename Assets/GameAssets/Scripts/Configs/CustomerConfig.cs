@@ -6,7 +6,7 @@ using UnityEngine;
 public class CustomerConfig : IConfig
 {
     private const string spritesPath = "Sprites/Customers/";
-    private const string meshPath = "_StaticModels/Bears/";
+    private const string meshPath = "StaticModels/Bears/";
     public string name;
     public string iconID;
     public string modelID;

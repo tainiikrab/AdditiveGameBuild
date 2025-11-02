@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,12 +21,13 @@ public class DialogUI : MonoBehaviour
     public bool skipTextAnimation;
 
     private CanvasGroup canvasGroup;
-    private string[] currentDialogLines;
-    private int currentLineIndex;
+
+    private List<string[]> _dialogBlocks;
+    private List<List<string>> _answerBlocks;
+    private int _currentBlockIndex;
 
     private Coroutine textAnimationCoroutine;
 
-    public event Action<int> OnLineFinished;
     public event Action OnDialogClosed;
     public event Action OnOrderAccepted;
     public event Action OnOrderRejected;
@@ -44,31 +46,64 @@ public class DialogUI : MonoBehaviour
         canvasGroup.blocksRaycasts = isVisible;
     }
 
-    public void ShowDialog(string[] text, string name, Sprite dialogIcon = null)
+    public void StartDialog(string name, Sprite icon, string[] dialogLines, string[] answerLines)
     {
         gameObject.SetActive(true);
+        ToggleVisibility(true);
+
         CharactedDialogue.SetActive(true);
-        customerIcon.gameObject.SetActive(dialogIcon != null);
-        dialogText.gameObject.SetActive(true);
+        ImportantOrder.SetActive(false);
+
+        if (icon != null) customerIcon.sprite = icon;
+
         customerName.gameObject.SetActive(true);
-
-        if (dialogIcon != null)
-            customerIcon.sprite = dialogIcon;
-
         customerName.text = name;
-        currentDialogLines = text;
-        currentLineIndex = 0;
 
-        if (textAnimationCoroutine != null)
-            StopCoroutine(textAnimationCoroutine);
+        _dialogBlocks = SplitIntoBlocks(dialogLines);
+        Debug.Log(answerLines.Length);
+        _answerBlocks = new List<List<string>>();
+        foreach (var block in SplitIntoBlocks(answerLines))
+            _answerBlocks.Add(new List<string>(block));
 
-        StartCoroutine(AnimateCurrentLine());
+        _currentBlockIndex = 0;
+        ShowNextDialogBlock();
+        Debug.Log($"Диалогов: {_dialogBlocks.Count}, ответных блоков: {_answerBlocks.Count}");
+        for (int i = 0; i < _answerBlocks.Count; i++)
+        {
+            Debug.Log($"Ответный блок {i}: {string.Join(", ", _answerBlocks[i])}");
+        }
     }
 
-    private IEnumerator AnimateCurrentLine()
+    private void ShowNextDialogBlock()
     {
-        yield return StartCoroutine(AnimateText(currentDialogLines[currentLineIndex]));
-        OnLineFinished?.Invoke(currentLineIndex);
+        ClearAnswers();
+
+        if (_currentBlockIndex >= _dialogBlocks.Count)
+        {
+            EndDialog();
+            return;
+        }
+
+        string[] currentTextBlock = _dialogBlocks[_currentBlockIndex];
+        StartCoroutine(ShowDialogBlock(currentTextBlock));
+    }
+
+    private IEnumerator ShowDialogBlock(string[] lines)
+    {
+        foreach (var line in lines)
+        {
+            yield return StartCoroutine(AnimateText(line));
+            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+        }
+
+        bool hasAnswers = _currentBlockIndex < _answerBlocks.Count && _answerBlocks[_currentBlockIndex].Count > 0;
+        if (hasAnswers)
+            SpawnAnswerButtonsForCurrentBlock();
+        else
+        {
+            _currentBlockIndex++;
+            ShowNextDialogBlock();
+        }
     }
 
     private IEnumerator AnimateText(string text)
@@ -92,43 +127,81 @@ public class DialogUI : MonoBehaviour
         IsTextAnimating = false;
     }
 
-    public void NextLine()
+    private void SpawnAnswerButtonsForCurrentBlock()
     {
-        currentLineIndex++;
+        var answers = _answerBlocks[_currentBlockIndex];
 
-        if (currentLineIndex < currentDialogLines.Length)
+        foreach (var answer in answers)
         {
-            StartCoroutine(AnimateCurrentLine());
+            Button newButton = Instantiate(AnswerPref, answersField.transform);
+            newButton.gameObject.SetActive(true);
+            newButton.GetComponentInChildren<TextMeshProUGUI>().text = answer;
+
+            newButton.onClick.AddListener(() =>
+            {
+                Debug.Log($"?? Выбран ответ: {answer}");
+                HandleAnswerSelection(answer);
+            });
         }
-        else
-        {
-            ImportantOrder.SetActive(true);
-        }
+        Debug.Log($"Создаю {answers.Count} кнопок для блока {_currentBlockIndex}");
     }
 
-    public void FinishCurrentLine()
+    private void HandleAnswerSelection(string answer)
     {
-        ClearAnswers();
-        NextLine();
+        _currentBlockIndex++;
+        ShowNextDialogBlock();
+    }
+
+    private void EndDialog()
+    {
+        ImportantOrder.SetActive(true);
+        StartCoroutine(WaitForDialogClose());
+    }
+
+    private IEnumerator WaitForDialogClose()
+    {
+        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
+        HideDialog();
     }
 
     public void HideDialog()
     {
+        ToggleVisibility(false);
         gameObject.SetActive(false);
         OnDialogClosed?.Invoke();
-    }
-
-    public void SpawnAnswerButton(string answerText, Action onClick)
-    {
-        Button newButton = Instantiate(AnswerPref, answersField.transform);
-        newButton.gameObject.SetActive(true);
-        newButton.GetComponentInChildren<TextMeshProUGUI>().text = answerText;
-        newButton.onClick.AddListener(() => onClick?.Invoke());
     }
 
     public void ClearAnswers()
     {
         foreach (Transform child in answersField.transform)
             Destroy(child.gameObject);
+    }
+
+    private List<string[]> SplitIntoBlocks(string[] lines)
+    {
+        List<string[]> blocks = new List<string[]>();
+        List<string> currentBlock = new List<string>();
+
+        foreach (var line in lines)
+        {
+            string trimmed = line.Trim();
+
+            if (string.IsNullOrWhiteSpace(trimmed) || trimmed.Contains("*"))
+            {
+                if (currentBlock.Count > 0)
+                {
+                    blocks.Add(currentBlock.ToArray());
+                    currentBlock.Clear();
+                }
+                continue;
+            }
+
+            currentBlock.Add(trimmed);
+        }
+
+        if (currentBlock.Count > 0)
+            blocks.Add(currentBlock.ToArray());
+
+        return blocks;
     }
 }
