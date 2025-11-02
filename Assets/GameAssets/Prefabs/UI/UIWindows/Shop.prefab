@@ -1330,15 +1330,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 11400008, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
       propertyPath: m_Color.b
-      value: 0.62398916
+      value: 0.8396226
       objectReference: {fileID: 0}
     - target: {fileID: 11400008, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
       propertyPath: m_Color.g
-      value: 1
+      value: 0.6455589
       objectReference: {fileID: 0}
     - target: {fileID: 11400008, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
       propertyPath: m_Color.r
-      value: 0.9048368
+      value: 0.79011035
+      objectReference: {fileID: 0}
+    - target: {fileID: 11400014, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
+      propertyPath: m_ShowMaskGraphic
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 11400034, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
       propertyPath: m_Color.b
@@ -1525,6 +1529,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 602580784900735781, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 60.443
+      objectReference: {fileID: 0}
+    - target: {fileID: 602580784900735781, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
@@ -1616,6 +1624,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4581575253650098566, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
+      propertyPath: m_HorizontalFit
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4637413733054335127, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1658,6 +1670,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5544167577227891727, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614118049512761548, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
+      propertyPath: m_ChildScaleWidth
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5614118049512761548, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
+      propertyPath: m_ChildForceExpandWidth
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6209931212017716626, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
@@ -1682,7 +1702,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6694735047709238839, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 174.85
+      value: 182.5715
       objectReference: {fileID: 0}
     - target: {fileID: 6694735047709238839, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1742,7 +1762,35 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100026, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2214686271287289059}
+    - targetCorrespondingSourceObject: {fileID: 7587154699935544311, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5470967741151334329}
   m_SourcePrefab: {fileID: 100100000, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
+--- !u!1 &1067204536471626956 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7587154699935544311, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
+  m_PrefabInstance: {fileID: 7459515552420353851}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &5470967741151334329
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1067204536471626956}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 0
+  m_MinWidth: 153.8
+  m_MinHeight: -1
+  m_PreferredWidth: 155.3
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &7459515552420450689 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 100026, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
