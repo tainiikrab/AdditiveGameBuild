@@ -9,15 +9,18 @@ public class LaptopUI : MonoBehaviour
     [SerializeField] private Ease visibilityEase = Ease.OutQuad;
     private CanvasGroup canvasGroup;
     private GameManager gm;
-
+    [SerializeField] private bool hideOnPlay = true;
 
     private void Awake()
     {
         gm = GameManager.Instance;
         canvasGroup = GetComponent<CanvasGroup>();
         closeButton.onClick.AddListener(() => ToggleVisibility(false));
-        canvasGroup.alpha = 0f;
-        ToggleVisibility(false);
+        if (hideOnPlay)
+        {
+            canvasGroup.alpha = 0f;
+            ToggleVisibility(false);
+        }
     }
 
     private void Update()
