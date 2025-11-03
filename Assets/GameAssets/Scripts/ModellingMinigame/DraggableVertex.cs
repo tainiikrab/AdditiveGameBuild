@@ -14,12 +14,15 @@ public class DraggableVertex : MonoBehaviour, IPointerDownHandler, IDragHandler,
     public RectTransform rectTransform { get; private set; }
     private Canvas canvas;
     private RectTransform visuals;
+
+    public Vector2 postion => rectTransform.anchoredPosition;
     public event Action OnVertexDragged;
 
     [SerializeField] private LineConnector lineConnectorPrefab;
 
+    [SerializeField] public bool isReference = false;
 
-    [Tooltip("Соседние вершины, к которым будут рисоваться линии в редакторе")]
+    [Tooltip("Соседние вершины, к которым будут рисоваться линии")]
     public DraggableVertex[] connectedVertices;
 
     public Dictionary<DraggableVertex, LineConnector> verticesDict;
@@ -60,18 +63,21 @@ public class DraggableVertex : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (isReference) return;
         visuals.localScale = Vector3.one * 1.2f;
         transform.SetAsLastSibling();
     }
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (isReference) return;
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
         OnVertexDragged?.Invoke();
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
+        if (isReference) return;
         visuals.localScale = Vector3.one;
     }
 
