@@ -8,8 +8,8 @@ public class ModellingMinigameManager : MonoBehaviour
     [SerializeField] private RectTransform referenceVerticesHolder;
     [SerializeField] private float maxDistPixels = 300f;
     [SerializeField] private bool isLoop = true;
-    private DraggableVertex[] referenceVertices;
-    private List<DraggableVertex> playerVertices;
+    private static DraggableVertex[] referenceVertices;
+    private static List<DraggableVertex> playerVertices;
     [SerializeField] private TextMeshProUGUI scoreText;
 
     private float score;
@@ -31,9 +31,14 @@ public class ModellingMinigameManager : MonoBehaviour
         // foreach (var vertex in referenceVertices) Debug.Log(vertex);
     }
 
-    public void AddPlayerVertex(DraggableVertex vertex)
+    public static void AddPlayerVertex(DraggableVertex vertex)
     {
         playerVertices.Add(vertex);
+    }
+
+    public static void RemovePlayerVertex(DraggableVertex vertex)
+    {
+        playerVertices.Remove(vertex);
     }
 
     private void Update()

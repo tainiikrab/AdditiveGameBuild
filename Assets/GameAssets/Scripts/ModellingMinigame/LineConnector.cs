@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(Image))]
@@ -10,6 +12,7 @@ public class LineConnector : MonoBehaviour
     private RectTransform lineRect;
     private Image lineImage;
 
+
     [Header("Line Settings")] public float thickness = 2f;
 
     public void Initialize(DraggableVertex fromVertex, DraggableVertex toVertex)
@@ -19,6 +22,9 @@ public class LineConnector : MonoBehaviour
         fromVertex.OnVertexDragged += UpdatePosition;
         toVertex.OnVertexDragged += UpdatePosition;
         UpdatePosition();
+
+        var adder = GetComponentInChildren<VertexAdder>();
+        if (adder != null) adder.Initialize(pointA, pointB);
     }
 
     private void Awake()
@@ -29,10 +35,9 @@ public class LineConnector : MonoBehaviour
         lineRect.pivot = new Vector2(0.5f, 0.5f);
     }
 
-
     private void UpdatePosition()
     {
-        if (pointA == null || pointB == null) return;
+        if (pointA == null || pointB == null || this == null) return;
 
         var worldA = pointA.position;
         var worldB = pointB.position;

@@ -10,7 +10,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 319522805157008174, guid: a86128128dbb85149a574c3fa80f41fb, type: 3}
       propertyPath: m_Name
-      value: DraggableVertex
+      value: ReferenceVertex
+      objectReference: {fileID: 0}
+    - target: {fileID: 2128957232768093635, guid: a86128128dbb85149a574c3fa80f41fb, type: 3}
+      propertyPath: isReference
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2128957232768093635, guid: a86128128dbb85149a574c3fa80f41fb, type: 3}
+      propertyPath: lineConnectorPrefab
+      value: 
+      objectReference: {fileID: 3908553187201287228, guid: 96877d536809a574b83e283a3274974c, type: 3}
+    - target: {fileID: 6306538190801256149, guid: a86128128dbb85149a574c3fa80f41fb, type: 3}
+      propertyPath: m_Color.b
+      value: 0.13962269
+      objectReference: {fileID: 0}
+    - target: {fileID: 6306538190801256149, guid: a86128128dbb85149a574c3fa80f41fb, type: 3}
+      propertyPath: m_Color.g
+      value: 0.13962269
+      objectReference: {fileID: 0}
+    - target: {fileID: 6306538190801256149, guid: a86128128dbb85149a574c3fa80f41fb, type: 3}
+      propertyPath: m_Color.r
+      value: 0.13962269
       objectReference: {fileID: 0}
     - target: {fileID: 7144218299089338353, guid: a86128128dbb85149a574c3fa80f41fb, type: 3}
       propertyPath: m_Pivot.x
