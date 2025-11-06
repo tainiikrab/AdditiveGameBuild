@@ -16,7 +16,7 @@ public static class ShapeEvaluator
     {
         var avgPtR = CalculateDistance(playerVertices, referenceVertices);
         var avgRtP = CalculateDistance(referenceVertices, playerVertices);
-        Debug.Log($"avgPtR: {avgPtR}, avgRtP: {avgRtP}");
+        // Debug.Log($"avgPtR: {avgPtR}, avgRtP: {avgRtP}");
         return avgPtR * weightPlayerToRef + avgRtP * weightRefToPlayer;
     }
 

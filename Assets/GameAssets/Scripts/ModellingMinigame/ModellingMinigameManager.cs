@@ -8,8 +8,8 @@ public class ModellingMinigameManager : MonoBehaviour
     [SerializeField] private RectTransform referenceVerticesHolder;
     [SerializeField] private float maxDistPixels = 300f;
     [SerializeField] private bool isLoop = true;
-    private static DraggableVertex[] referenceVertices;
-    private static List<DraggableVertex> playerVertices;
+    public static DraggableVertex[] referenceVertices { get; private set; }
+    public static List<DraggableVertex> playerVertices { get; private set; }
     [SerializeField] private TextMeshProUGUI scoreText;
 
     private float score;

@@ -67,7 +67,9 @@ public class DraggableVertex : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     public void InitializeConnections()
     {
-        foreach (var otherVertex in connectedVertices)
+        var connectedVerticesCopy = new List<DraggableVertex>(connectedVertices);
+
+        foreach (var otherVertex in connectedVerticesCopy)
         {
             if (otherVertex == null || connectedVerticesDict[otherVertex] != null) continue;
 
@@ -82,6 +84,7 @@ public class DraggableVertex : MonoBehaviour, IPointerDownHandler, IDragHandler,
                 line.Initialize(this, otherVertex);
                 line.transform.SetAsFirstSibling();
                 connectedVerticesDict[otherVertex] = line;
+                otherVertex.AddConnection(this);
             }
         }
     }
@@ -99,6 +102,7 @@ public class DraggableVertex : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     public void RemoveSelf()
     {
+        if (ModellingMinigameManager.playerVertices.Count <= 3) return;
         var neighbors = connectedVertices.ToList();
 
         foreach (var vertex in neighbors)

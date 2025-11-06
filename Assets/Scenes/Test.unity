@@ -258,6 +258,17 @@ MonoBehaviour:
   closeButton: {fileID: 1287254746}
   visibilityEase: 6
   hideOnPlay: 0
+--- !u!114 &254147435 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1670196634024766822, guid: ebb4e982ad37b264d8aa478f905721fa, type: 3}
+  m_PrefabInstance: {fileID: 1873948383}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1607c1d2fd0ffc24ba9ca57c383c6308, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DraggableVertex
 --- !u!1001 &308765838
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2667,6 +2678,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -40
       objectReference: {fileID: 0}
+    - target: {fileID: 8512461237773911285, guid: ebb4e982ad37b264d8aa478f905721fa, type: 3}
+      propertyPath: connectedVertices.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8512461237773911285, guid: ebb4e982ad37b264d8aa478f905721fa, type: 3}
+      propertyPath: 'connectedVertices.Array.data[1]'
+      value: 
+      objectReference: {fileID: 254147435}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
