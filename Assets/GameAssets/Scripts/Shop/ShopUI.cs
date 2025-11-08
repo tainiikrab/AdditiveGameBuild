@@ -5,16 +5,10 @@ using System;
 
 public class ShopUI : MonoBehaviour
 {
-    // [Header("Shop")] [SerializeField] private GameObject shop;
-
-    [Header("Card for offers in shop")] [SerializeField]
-    private GameObject offerCardPrefab;
-
-    [Header("Place for offers")] [SerializeField]
-    private Transform offersContainer;
-
-    [Header("Drag here text from Points Label")] [SerializeField]
-    private TextMeshProUGUI playerBalance;
+    [SerializeField] private GameObject offerCardPrefab;
+    [SerializeField] private Transform offersContainer;
+    [SerializeField] private TextMeshProUGUI playerBalance;
+    [SerializeField] private TextMeshProUGUI categoryTitle;
     
     [Space(20), SerializeField] private CategorySwitcher[] categorySwitchers;
 
@@ -33,7 +27,9 @@ public class ShopUI : MonoBehaviour
     {
         foreach (var categorySwitcher in categorySwitchers)
         {
-            categorySwitcher.button.onClick.AddListener((() => SetCategory(categorySwitcher.category)));
+            categorySwitcher.button.onClick.AddListener((() => SetCategory(
+                categorySwitcher.category, categorySwitcher.title
+                )));
         }
     }
     
@@ -58,9 +54,10 @@ public class ShopUI : MonoBehaviour
         shopCardUi.Initialize(item);
     }
 
-    public void SetCategory(ShopManager.Category category)
+    private void SetCategory(ShopManager.Category category, string title = "")
     {
         sm.SetCategory(category);
+        categoryTitle.text = title;
     }
     
     [Serializable]
@@ -68,5 +65,6 @@ public class ShopUI : MonoBehaviour
     {
         public ShopManager.Category category;
         public Button button;
+        public string title;
     }
 }
