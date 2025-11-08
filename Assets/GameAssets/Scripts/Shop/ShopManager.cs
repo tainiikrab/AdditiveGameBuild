@@ -12,6 +12,7 @@ public class ShopManager : MonoBehaviour
         Materials,
         Interior,
         Tools,
+        Slaves,
         None
     }
 
