@@ -4254,7 +4254,7 @@ MonoBehaviour:
     needStop: 1
   Speed: 3
   RotationSpeed: 5
-  rotationOffsetEuler: {x: 0, y: -90, z: 0}
+  rotationOffsetEuler: {x: 0, y: 0, z: 0}
   currentPathIndex: 0
   currentWPIndex: 0
 --- !u!1 &274447751
