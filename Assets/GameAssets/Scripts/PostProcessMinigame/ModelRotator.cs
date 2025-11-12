@@ -20,13 +20,13 @@ public class ModelRotator : MonoBehaviour
     {
         // if (transform.childCount > 0) Destroy(transform.GetChild(0).gameObject);
 
-        if (OrderManager.currentOrder == null)
+        if (OrderManager.orderData == null)
         {
             Debug.LogWarning($"No current order. Fallback to {GlobalConfig.Instance.Orders[0].orderName}");
             OrderManager.SetCurrentOrder(GlobalConfig.Instance.Orders[0]);
         }
 
-        var modelGO = Instantiate(OrderManager.currentOrder.mesh, transform);
+        var modelGO = Instantiate(OrderManager.orderData.config.mesh, transform);
         model = modelGO.transform;
     }
 

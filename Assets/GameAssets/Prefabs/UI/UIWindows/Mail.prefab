@@ -1376,11 +1376,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7601354462606309326, guid: 26128a8fd16c4b447b3f037167e80f61, type: 3}
       propertyPath: m_Size
-      value: 0.78468335
+      value: 0.7846615
       objectReference: {fileID: 0}
     - target: {fileID: 7601354462606309326, guid: 26128a8fd16c4b447b3f037167e80f61, type: 3}
       propertyPath: m_Value
-      value: -20.56972
+      value: 0.0000004724449
       objectReference: {fileID: 0}
     - target: {fileID: 7672366464398933856, guid: 26128a8fd16c4b447b3f037167e80f61, type: 3}
       propertyPath: m_AnchorMax.y
@@ -1408,7 +1408,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7982965125593468655, guid: 26128a8fd16c4b447b3f037167e80f61, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1393.296
+      value: 64.595
       objectReference: {fileID: 0}
     - target: {fileID: 8096334395522631154, guid: 26128a8fd16c4b447b3f037167e80f61, type: 3}
       propertyPath: m_AnchorMax.y
@@ -2603,7 +2603,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb5565254c84f0042a0e5312911e5f4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MailUI
-  activeHeader: {fileID: 0}
+  activeHeader: {fileID: 8445612785170608744, guid: bdcf1b693b5d761459601b8b4fad7dfd, type: 3}
   containers:
   - category: 0
     contentRoot: {fileID: 8799280455238584779}

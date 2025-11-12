@@ -15614,7 +15614,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 027b0fd170e543eca7d8362c8de83f3e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MinigameManager
-  slicerWindow: {fileID: 7468496398519854777, guid: 273ef5c6930de824ba5bb41ff56fa0da, type: 3}
+  slicerWindowPF: {fileID: 7468496398519854777, guid: 273ef5c6930de824ba5bb41ff56fa0da, type: 3}
+  modellingWindowPF: {fileID: 2951672180870322338, guid: ebb4e982ad37b264d8aa478f905721fa, type: 3}
   laptopUI: {fileID: 814257470}
 --- !u!1 &1166590926
 GameObject:
@@ -27029,7 +27030,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 268913458}
-  m_LocalEulerAnglesHint: {x: 0, y: 82.159996, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &543450652622462962
 Transform:
   m_ObjectHideFlags: 0
@@ -27065,7 +27066,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &919132148084262216
 GameObject:
   m_ObjectHideFlags: 0

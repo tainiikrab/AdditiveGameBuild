@@ -73,8 +73,8 @@ public class PostprocessMinigame : MonoBehaviour
     {
         SceneSwitchManager.isMinigameFinished = true;
 
-        OrderManager.currentOrderQuality.supports = 100 - (supportCount - removedSupports) * 10;
-        OrderManager.currentOrderQuality.sandpapering = sandpaperingAmount * 100;
+        OrderManager.orderData.quality.supports = 100 - (supportCount - removedSupports) * 10;
+        OrderManager.orderData.quality.sandpapering = sandpaperingAmount * 100;
 
         SceneSwitchManager.OpenScene(Scenes.MainScene);
     }

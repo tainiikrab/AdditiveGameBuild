@@ -37,21 +37,24 @@ public class MailUI : MonoBehaviour
     private readonly List<MailHeaderUI> headers = new();
     private Dictionary<Category, Transform> categoryRoots;
 
-    public static OrderConfig currentOrder => OrderManager.currentOrder;
+    public static OrderConfig currentOrder
+    {
+        get
+        {
+            if (OrderManager.orderData == null) return null;
+            return OrderManager.orderData.config;
+        }
+    }
 
     public static void AcceptOrder(OrderConfig orderConfig, MailHeaderUI header)
     {
         OrderManager.SetCurrentOrder(orderConfig);
         Instance.MoveHeaderToCategory(header, Category.Completed);
         SaveManager.gameData.completedOrders.Add(orderConfig.id);
-        Instance.SetNextState(orderConfig);
         AudioManager.Instance.PlayClickSound();
-    }
 
-    private void SetNextState(OrderConfig orderConfig)
-    {
-        MinigameManager.Instance.OpenMinigame(orderConfig.printerType.minigames[0]);
-        GetComponent<GUIWindow>().CloseWindow();
+        OrderManager.orderData.LoadNextMinigame();
+        Instance.GetComponent<GUIWindow>().CloseWindow();
         AudioManager.Instance.PlayClickSound();
     }
 

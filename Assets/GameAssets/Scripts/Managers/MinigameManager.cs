@@ -3,7 +3,8 @@ using UnityEngine;
 
 public class MinigameManager : MonoBehaviour
 {
-    [SerializeField] private GUIWindow slicerWindow;
+    [SerializeField] private GUIWindow slicerWindowPF;
+    [SerializeField] private GUIWindow modellingWindowPF;
     [SerializeField] private Transform laptopUI;
 
 
@@ -25,10 +26,13 @@ public class MinigameManager : MonoBehaviour
         switch (minigameType)
         {
             case MinigameType.Slicer:
-                var window = Instantiate(slicerWindow, laptopUI);
+                var slicerWindow = Instantiate(slicerWindowPF, laptopUI);
                 return;
             case MinigameType.Postprocess:
                 SceneSwitchManager.OpenScene(Scenes.PostProcessMinigame);
+                return;
+            case MinigameType.Modelling:
+                var modellingWindow = Instantiate(modellingWindowPF, laptopUI);
                 return;
             default: return;
         }

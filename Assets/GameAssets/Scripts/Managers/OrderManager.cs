@@ -16,13 +16,13 @@ public static class OrderManager
 
     private static GameManager gm => GameManager.Instance;
 
-    public static OrderConfig currentOrder { get; private set; }
-    public static OrderQuality currentOrderQuality { get; set; }
+    // private static OrderConfig currentOrder { get; set; }
+    public static OrderData orderData { get; set; }
+    // public static OrderQuality currentOrderQuality { get; set; }
 
     public static void SetCurrentOrder(OrderConfig order)
     {
-        currentOrder = order;
-        currentOrderQuality = new OrderQuality();
+        orderData = new OrderData(order);
         OnOrderAccepted?.Invoke();
     }
 
@@ -80,10 +80,10 @@ public static class OrderManager
     public static void CompleteOrder()
     {
         Debug.Log("Order completed");
-        completedOrders.Add(currentOrder);
-        availableOrders.Remove(currentOrder);
-        currentOrder = null;
-        OnOrderCompleted?.Invoke(currentOrder);
+        completedOrders.Add(orderData.config);
+        availableOrders.Remove(orderData.config);
+        OnOrderCompleted?.Invoke(orderData.config);
+        orderData = null;
         OnOrderFinished?.Invoke();
 
         FillOrders();
@@ -93,7 +93,7 @@ public static class OrderManager
 
     public static void DeclineOrder(OrderConfig orderConfig)
     {
-        if (orderConfig == currentOrder)
+        if (orderConfig == orderData.config)
         {
             Debug.Log("Cannot decline current order");
             return;
@@ -109,11 +109,41 @@ public static class OrderManager
 
     public class OrderQuality
     {
-        public float fillDensity;
-        public float layerHeight;
-        public float printSpeed;
-        public float sandpapering;
-        public float supports;
-        public float totalQuality => (layerHeight + fillDensity + printSpeed + sandpapering + supports) / 5;
+        public float fillDensity { get; set; }
+        public float layerHeight { get; set; }
+        public float printSpeed { get; set; }
+        public float sandpapering { get; set; }
+        public float supports { get; set; }
+
+        public float totalQuality
+        {
+            get
+            {
+                var values = GetType()
+                    .GetProperties()
+                    .Where(p => p.PropertyType == typeof(float) && p.Name != nameof(totalQuality))
+                    .Select(p => (float)p.GetValue(this));
+
+                return values.Any() ? values.Average() : 0;
+            }
+        }
+    }
+
+    public class OrderData
+    {
+        public OrderData(OrderConfig orderConfig)
+        {
+            config = orderConfig;
+        }
+
+        public OrderQuality quality = new();
+        public OrderConfig config;
+        public int currentMinigame = -1;
+
+        public void LoadNextMinigame()
+        {
+            currentMinigame++;
+            MinigameManager.Instance.OpenMinigame(config.printerType.minigames[currentMinigame]);
+        }
     }
 }

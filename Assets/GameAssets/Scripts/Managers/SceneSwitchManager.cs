@@ -68,11 +68,11 @@ public class SceneSwitchManager : MonoBehaviour
         if (isMinigameFinished)
         {
             isMinigameFinished = false;
-            Debug.Log("Quality:" + OrderManager.currentOrderQuality.totalQuality.ToString());
+            Debug.Log("Quality:" + OrderManager.orderData.quality.totalQuality.ToString());
             if (reviewUI != null)
             {
                 reviewUI.gameObject.SetActive(true);
-                reviewUI.Initialize(OrderManager.currentOrder);
+                reviewUI.Initialize(OrderManager.orderData.config);
             }
         }
     }

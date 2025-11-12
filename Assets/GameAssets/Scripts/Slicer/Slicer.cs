@@ -41,7 +41,8 @@ public class Slicer : MonoBehaviour
 
     private void SetOrder()
     {
-        if (OrderManager.currentOrder == null)
+        if (OrderManager.orderData
+            == null)
         {
             printButton.interactable = false;
             modelTurner.GetComponent<RawImage>().enabled = false;
@@ -49,7 +50,7 @@ public class Slicer : MonoBehaviour
         }
         else
         {
-            order = OrderManager.currentOrder;
+            order = OrderManager.orderData.config;
             modelTurner.SetModel(order.mesh);
             modelRenderer = ModelTurner.turningModel.GetComponent<MeshRenderer>();
             modelRenderer.material = slicerMaterial;
@@ -61,13 +62,13 @@ public class Slicer : MonoBehaviour
 
     private void StartPrinting()
     {
-        var quality = OrderManager.currentOrderQuality;
+        var quality = OrderManager.orderData.quality;
         quality.fillDensity = 100 - Mathf.Pow(Mathf.Abs(fillDensity.value - order.fillDensity), 1f);
         quality.layerHeight = 100 - Mathf.Pow(Mathf.Abs(layerHeight.value - order.layerHeight), 1f);
         quality.printSpeed = 100 - Mathf.Pow(Mathf.Abs(printSpeed.value - order.printSpeed), 1f);
-        Debug.Log($"Order quality: {OrderManager.currentOrderQuality.totalQuality}");
+        Debug.Log($"Order quality: {OrderManager.orderData.quality.totalQuality}");
 
-        MinigameManager.Instance.OpenMinigame(MinigameType.Postprocess);
+        OrderManager.orderData.LoadNextMinigame();
 
         AudioManager.Instance.PlayClickSound();
     }
@@ -100,7 +101,7 @@ public class Slicer : MonoBehaviour
     {
         if (modelRenderer == null)
         {
-            Debug.LogError($"{nameof(modelRenderer)} is null");
+            Debug.LogWarning($"idk why but {nameof(modelRenderer)} is null");
             return;
         }
 

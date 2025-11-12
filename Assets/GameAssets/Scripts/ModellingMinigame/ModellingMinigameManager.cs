@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Rellac.Windows;
 using TMPro;
 using UnityEngine;
 
@@ -15,9 +16,12 @@ public class ModellingMinigameManager : MonoBehaviour
     private float score;
     private RectTransform rectTransform;
 
+    private OrderConfig orderConfig;
+
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
+        orderConfig = OrderManager.orderData.config;
 
         referenceVertices = new DraggableVertex[referenceVerticesHolder.childCount];
         for (var i = 0; i < referenceVertices.Length; i++)
@@ -30,6 +34,7 @@ public class ModellingMinigameManager : MonoBehaviour
         // foreach (var vertex in playerVertices) Debug.Log(vertex);
         // foreach (var vertex in referenceVertices) Debug.Log(vertex);
     }
+
 
     public static void AddPlayerVertex(DraggableVertex vertex)
     {
@@ -46,5 +51,11 @@ public class ModellingMinigameManager : MonoBehaviour
         score = ShapeEvaluator.Evaluate(playerVertices, referenceVertices, rectTransform, maxDistPixels);
 
         scoreText.text = $"Error: {score}";
+    }
+
+    public void FinishModelling()
+    {
+        OrderManager.orderData.LoadNextMinigame();
+        GetComponentInParent<GUIWindow>().CloseWindow();
     }
 }

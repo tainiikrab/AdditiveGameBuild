@@ -8,7 +8,8 @@ public static class PrinterData
         {
             ["FDM"] = new PrinterType
             {
-                minigames = new List<MinigameType> { MinigameType.Slicer, MinigameType.Postprocess },
+                minigames = new List<MinigameType>
+                    { MinigameType.Modelling, MinigameType.Slicer, MinigameType.Postprocess },
                 description = "Fused Deposition Modeling (FDM)",
                 level = 1
             },
@@ -25,7 +26,8 @@ public enum MinigameType
 {
     Empty,
     Slicer,
-    Postprocess
+    Postprocess,
+    Modelling
 }
 
 public class PrinterType

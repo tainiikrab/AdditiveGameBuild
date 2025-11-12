@@ -26,10 +26,10 @@ public class ReviewUI : MonoBehaviour
         reward = Mathf.Max(100, order.reward);
         Debug.Log($"Default reward: {order.reward}");
 
-        var score = Mathf.Max(0, Mathf.CeilToInt(OrderManager.currentOrderQuality.totalQuality));
+        var score = Mathf.Max(0, Mathf.CeilToInt(OrderManager.orderData.quality.totalQuality));
         InitStars(Mathf.RoundToInt(score / 20f));
         Debug.Log($"Score: {score}");
-        Debug.Log($"Quality: {OrderManager.currentOrderQuality.totalQuality}");
+        Debug.Log($"Quality: {OrderManager.orderData.quality.totalQuality}");
         reward = Mathf.Max(0, Mathf.CeilToInt(reward * (score / 90f)));
         rewardAmountLabel.text = reward.ToString();
 

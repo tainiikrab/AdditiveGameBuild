@@ -57,6 +57,13 @@ public class MailHeaderUI : MonoBehaviour
     {
         transform.DOKill();
         if (button == null) button = GetComponent<Button>();
+
+        if (mailBodyUI == null)
+        {
+            Debug.LogWarning("idk why but mailBodyUI is null", this);
+            return;
+        }
+
         if (toggle)
         {
             transform.localScale = Vector3.one * 0.95f;
@@ -74,7 +81,7 @@ public class MailHeaderUI : MonoBehaviour
 
             mailBodyUI.gameObject.SetActive(false);
         }
-        
+
         AudioManager.Instance.PlayClickSound();
     }
 }
