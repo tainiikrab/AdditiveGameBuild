@@ -1,9 +1,17 @@
 using System;
 using UnityEngine;
 
+public enum PathType
+{
+    ToLaptop,
+    ToPrinter,
+    FromLaptop
+}
+
 [Serializable]
 public class WayPointPath
 {
+    public PathType Type;
     public GameObject[] WayPoints;
     public bool needStop;
     public Action OnPathEnd;
@@ -172,15 +180,8 @@ public class WayPointFollower : MonoBehaviour
         PlayAnimation("Walk");
     }
 
-    public bool IsStopped()
-    {
-        return isStopped;
-    }
-
-    public bool IsWaitingForAction()
-    {
-        return isWaitingForAction;
-    }
+    public bool IsStopped() => isStopped;
+    public bool IsWaitingForAction() => isWaitingForAction;
 
     public WayPointPath GetCurrentPath()
     {
@@ -193,13 +194,13 @@ public class WayPointFollower : MonoBehaviour
     {
         if (pathIndex < 0 || pathIndex >= Paths.Length)
         {
-            Debug.LogWarning($"[WayPointFollower] Некорректный индекс пути: {pathIndex}");
+            Debug.LogWarning($"[WayPointFollower] Incorrect index: {pathIndex}");
             return;
         }
 
         if (action == null)
         {
-            Debug.LogWarning("[WayPointFollower] Пустой Action не может быть добавлен.");
+            Debug.LogWarning("[WayPointFollower] Empty action can't be added'.");
             return;
         }
 
@@ -210,10 +211,30 @@ public class WayPointFollower : MonoBehaviour
     {
         if (pathIndex < 0 || pathIndex >= Paths.Length)
         {
-            Debug.LogWarning($"[WayPointFollower] Некорректный индекс пути: {pathIndex}");
+            Debug.LogWarning($"[WayPointFollower] Incorrect path index: {pathIndex}");
             return;
         }
 
         Paths[pathIndex].OnPathEnd = null;
+    }
+
+    public void SwitchPath(PathType type)
+    {
+        for (int i = 0; i < Paths.Length; i++)
+        {
+            if (Paths[i].Type == type)
+            {
+                currentPathIndex = i;
+                currentWPIndex = 0;
+                isStopped = false;
+                isWaitingForAction = false;
+                PlayAnimation("Walk");
+
+                Debug.Log($"[WayPointFollower] Switched to path with type: {type}");
+                return;
+            }
+        }
+
+        Debug.LogWarning($"[WayPointFollower] Not found path of type {type}");
     }
 }

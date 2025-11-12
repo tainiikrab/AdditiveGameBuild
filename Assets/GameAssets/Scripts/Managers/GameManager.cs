@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public int currentPlotIndex = 1;
+    public WayPointFollower player;
 
     [SerializeField] private float openMinigameDelay;
 
@@ -51,6 +52,22 @@ public class GameManager : MonoBehaviour
         _points = 2200;
     }
 
+    private void Start()
+    {
+        player.StopMovement();
+        StartCoroutine(CreateOrdersDelayed());
+    }
+
+    private IEnumerator CreateOrdersDelayed()
+    {
+        yield return new WaitForSeconds(2.5f);
+
+        OrderManager.CreateRegularOrder(3);
+        var randomPlotOrder = OrderManager.GetRandomAvailableOrder();
+        OrderManager.CreatePlotOrder(randomPlotOrder.plotIndex);
+        points = 540;
+    }
+
     private void OnDestroy()
     {
         Instance = null;
@@ -60,5 +77,17 @@ public class GameManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         SaveManager.Save();
+    }
+
+    public void OnOrderAccepted()
+    {
+    }
+
+    public void OnOrderRejected()
+    {
+    }
+
+    public void OnOrderComplete()
+    {
     }
 }
