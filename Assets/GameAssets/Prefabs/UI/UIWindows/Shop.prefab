@@ -1694,7 +1694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6694735047709238839, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 155.3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6694735047709238839, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}
       propertyPath: m_SizeDelta.y
@@ -1811,15 +1811,20 @@ MonoBehaviour:
   offerCardPrefab: {fileID: 5946197328053603201, guid: d4ad3893bc580c443b5ef44cb21efe32, type: 3}
   offersContainer: {fileID: 2700879382021531299}
   playerBalance: {fileID: 4943777537776129731}
+  categoryTitle: {fileID: 0}
   categorySwitchers:
   - category: 0
     button: {fileID: 5875949227588247131}
+    title: 
   - category: 1
     button: {fileID: 5070254065891756659}
+    title: 
   - category: 3
     button: {fileID: 6412746498555343940}
+    title: 
   - category: 2
     button: {fileID: 986895839830387264}
+    title: 
 --- !u!224 &7459515552442194721 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 22400026, guid: 8eb6f1548bb262443a52374fdc8b1136, type: 3}

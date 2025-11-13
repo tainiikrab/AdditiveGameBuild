@@ -3,7 +3,37 @@ guid: f5ba2a06a1784c34a8fffa62faaf4ffe
 ModelImporter:
   serializedVersion: 24200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material
+    second: {fileID: 2100000, guid: 137f2f33920a9cd41aa469e17e2ba6f8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gg_darkdetails
+    second: {fileID: 2100000, guid: 13cd2d893fc1bf14bb5e3947476b0321, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gg_fur
+    second: {fileID: 2100000, guid: 21427b429ea37f84fa236fcca7f66949, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gg_light_fur
+    second: {fileID: 2100000, guid: dc52cb73a8e88a048b77ac1ed198455d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gg_shirt
+    second: {fileID: 2100000, guid: 8499c26467c2eea45a287471607a92f4, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gg_vest
+    second: {fileID: 2100000, guid: 5c321b569d43be045974326630bf8b69, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
