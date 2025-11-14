@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -51,5 +52,15 @@ public class InventoryManager : MonoBehaviour
     public bool HasItem(ShopItemConfig item)
     {
         return inventory.Contains(item);
+    }
+
+    /// <summary>
+    /// Получаем список имеющихся в инвентаре товаров определённой категории
+    /// </summary>
+    /// <param name="category"></param>
+    /// <returns></returns>
+    public List<ShopItemConfig> GetItems(string category)
+    {
+        return inventory.Where(item => item.category == category).ToList();
     }
 }
