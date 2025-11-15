@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -68,9 +69,16 @@ public class Slicer : MonoBehaviour
         quality.printSpeed = 100 - Mathf.Pow(Mathf.Abs(printSpeed.value - order.printSpeed), 1f);
         Debug.Log($"Order quality: {OrderManager.orderData.quality.totalQuality}");
 
-        OrderManager.orderData.LoadNextMinigame();
+        StartCoroutine(Walk());
 
         AudioManager.Instance.PlayClickSound();
+    }
+
+    private IEnumerator Walk()
+    {
+        GetComponentInParent<LaptopUI>().ToggleVisibility(false);
+        yield return new WaitForSeconds(2f);
+        OrderManager.orderData.LoadNextMinigame();
     }
 
     private void SetupSlider(SliderValues values)
