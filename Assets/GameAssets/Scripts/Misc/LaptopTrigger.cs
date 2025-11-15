@@ -8,6 +8,7 @@ public class LaptopTrigger : MonoBehaviour, IRaycastInteractable
 
     private void Awake()
     {
+        if (!hoverLight.gameObject.activeSelf) hoverLight.gameObject.SetActive(true);
         hoverLight.intensity = 0;
     }
 

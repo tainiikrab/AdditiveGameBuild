@@ -14,6 +14,7 @@ public class GameManager : MonoBehaviour
     private static GlobalConfig _globalConfig;
 
     public bool isUIOpened = false;
+
     private GlobalConfig globalConfig
     {
         get
@@ -55,7 +56,13 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         player.StopMovement();
-        StartCoroutine(CreateOrdersDelayed());
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.H)) StartCoroutine(CreateOrdersDelayed());
+        if (Input.GetKeyDown(KeyCode.G)) player.SwitchPath(PathType.ToPrinter);
+        if (Input.GetKeyDown(KeyCode.F)) player.SwitchPath(PathType.ToLaptop);
     }
 
     private IEnumerator CreateOrdersDelayed()

@@ -12,12 +12,11 @@ public class IndexActionTriple
 
 public class CustomerManager : MonoBehaviour
 {
-    [Header("Customer Settings")] 
-    public Customer customer;
+    [Header("Customer Settings")] public Customer customer;
     public DialogUI dialogUI;
 
     private Customer activeCustomer;
-    private GameManager gm;
+    private GameManager gm => GameManager.Instance;
 
     private void Awake()
     {
