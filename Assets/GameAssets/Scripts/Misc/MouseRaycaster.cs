@@ -1,14 +1,11 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// Handles mouse interaction with objects implementing IRaycastInteractable.
-/// Tracks hover states and triggers OnClick when clicking.
 /// </summary>
 public class MouseRaycaster : MonoBehaviour
 {
-    // [SerializeField] private LayerMask interactionLayer = Physics.DefaultRaycastLayers;
-    // [SerializeField] private float maxInteractionDistance = 10000f;
-
     private Camera cam;
     private GameObject lastHovered;
     private IRaycastInteractable lastInteractable;
@@ -16,6 +13,7 @@ public class MouseRaycaster : MonoBehaviour
     private void Start()
     {
         cam = Camera.main;
+        if (EventSystem.current == null) Debug.LogWarning("No EventSystem found in scene. UI blocking will not work.");
     }
 
     private void Update()
@@ -25,12 +23,16 @@ public class MouseRaycaster : MonoBehaviour
 
     private void HandleMouseInteraction()
     {
+        if (IsPointerOverUI())
+        {
+            ExitLastInteractable();
+            return;
+        }
+
         var ray = cam.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
 
-        var hasHit = Physics.Raycast(ray, out hit);
-
-        if (hasHit)
+        if (Physics.Raycast(ray, out hit))
         {
             ProcessHitObject(hit.collider.gameObject);
             HandleClick();
@@ -41,10 +43,17 @@ public class MouseRaycaster : MonoBehaviour
         }
     }
 
+    private bool IsPointerOverUI()
+    {
+        if (EventSystem.current == null)
+            return false;
+
+        return EventSystem.current.IsPointerOverGameObject();
+    }
+
     private void ProcessHitObject(GameObject current)
     {
         if (current == lastHovered) return;
-
 
         ExitLastInteractable();
 
@@ -68,12 +77,15 @@ public class MouseRaycaster : MonoBehaviour
 
     private void HandleClick()
     {
-        if (Input.GetMouseButtonDown(0) && lastInteractable != null) lastInteractable.OnClick();
+        if (IsPointerOverUI()) return;
+
+        if (Input.GetMouseButtonDown(0) && lastInteractable != null)
+            lastInteractable.OnClick();
     }
 
     private void LateUpdate()
     {
-        // Optional: Call OnHover only after all physics updates
-        if (lastInteractable != null) lastInteractable.OnHover();
+        if (lastInteractable != null)
+            lastInteractable.OnHover();
     }
 }

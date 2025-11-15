@@ -3,12 +3,13 @@
 public class LaptopTrigger : MonoBehaviour, IRaycastInteractable
 {
     [SerializeField] private Light hoverLight;
-    [SerializeField] private float lightIntensity = 3f;
+    private float lightIntensity = 3f;
     [SerializeField] private LaptopUI laptopUI;
 
     private void Awake()
     {
         if (!hoverLight.gameObject.activeSelf) hoverLight.gameObject.SetActive(true);
+        lightIntensity = hoverLight.intensity;
         hoverLight.intensity = 0;
     }
 

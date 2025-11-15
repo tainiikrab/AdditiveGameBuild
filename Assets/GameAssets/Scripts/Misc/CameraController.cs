@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
@@ -28,28 +29,41 @@ public class CameraController : MonoBehaviour
     private float camTargetSize;
     private GameManager gm;
 
+    [SerializeField] private bool handlePan = true;
+
     private void Start()
     {
         InitializeCamera();
         gm = GameManager.Instance;
     }
 
-    private bool isMovementAvailable = true;
+    [SerializeField] private bool blockMovementOverUI = false;
+
+
+    private bool IsPointerOverUI()
+    {
+        return EventSystem.current != null &&
+               EventSystem.current.IsPointerOverGameObject();
+    }
 
     private void Update()
     {
-        if (!isMovementAvailable) return;
-        HandlePan();
+        if (blockMovementOverUI && IsPointerOverUI())
+            return;
+
         HandleZoom();
+        if (!handlePan) return;
+
+        HandlePan();
     }
 
     private void InitializeCamera()
     {
-        cam = Camera.main;
+        cam = GetComponent<Camera>();
         camTargetSize = cam.orthographicSize;
         if (cam == null)
         {
-            Debug.LogError("Main Camera not found!");
+            Debug.LogError("Camera not found!");
         }
         else if (!cam.orthographic)
         {
