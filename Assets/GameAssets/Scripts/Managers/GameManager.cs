@@ -6,7 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public int currentPlotIndex = 1;
+    public int currentPlotIndex { get; set; } = 1;
     public WayPointFollower player;
 
     [SerializeField] private float openMinigameDelay;
@@ -60,19 +60,18 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.H)) StartCoroutine(CreateOrdersDelayed());
-        if (Input.GetKeyDown(KeyCode.G)) player.SwitchPath(PathType.ToPrinter);
-        if (Input.GetKeyDown(KeyCode.F)) player.SwitchPath(PathType.ToLaptop);
+        // if (Input.GetKeyDown(KeyCode.H)) StartCoroutine(CreateOrdersDelayed());
+        // if (Input.GetKeyDown(KeyCode.G)) player.SwitchPath(PathType.ToPrinter);
+        // if (Input.GetKeyDown(KeyCode.F)) player.SwitchPath(PathType.ToLaptop);
     }
 
     private IEnumerator CreateOrdersDelayed()
     {
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(0);
 
         OrderManager.CreateRegularOrder(3);
-        var randomPlotOrder = OrderManager.GetRandomAvailableOrder();
-        OrderManager.CreatePlotOrder(randomPlotOrder.plotIndex);
-        points = 540;
+        OrderManager.CreatePlotOrder(currentPlotIndex);
+        currentPlotIndex++;
     }
 
     private void OnDestroy()

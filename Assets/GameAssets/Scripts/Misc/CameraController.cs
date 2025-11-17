@@ -1,4 +1,5 @@
 using System;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -13,6 +14,8 @@ public class CameraController : MonoBehaviour
 
     [Header("Speed")] [SerializeField] private float basePanSpeed = 20f;
 
+    [SerializeField] private float baseMousePanSpeed = 1f;
+
     [SerializeField] private float zoomSpeed = 10f;
     [SerializeField] private float zoomLerpAmount = 1f;
 
@@ -26,6 +29,7 @@ public class CameraController : MonoBehaviour
     [SerializeField] private float yBoundary = 20f;
 
     private Camera cam;
+    private CinemachineCamera vcam;
     private float camTargetSize;
     private GameManager gm;
 
@@ -57,18 +61,30 @@ public class CameraController : MonoBehaviour
         HandlePan();
     }
 
+    private bool useVcam = false;
+
     private void InitializeCamera()
     {
         cam = GetComponent<Camera>();
-        camTargetSize = cam.orthographicSize;
-        if (cam == null)
+        vcam = GetComponent<CinemachineCamera>();
+
+        if (vcam != null)
         {
-            Debug.LogError("Camera not found!");
+            camTargetSize = vcam.Lens.OrthographicSize;
+            useVcam = true;
         }
-        else if (!cam.orthographic)
+        else if (cam != null)
         {
-            Debug.LogWarning("Camera is not orthographic. Switching it to orthographic mode.");
-            cam.orthographic = true;
+            camTargetSize = cam.orthographicSize;
+            if (!cam.orthographic)
+            {
+                Debug.LogWarning("Camera is not orthographic. Enabling orthographic mode.");
+                cam.orthographic = true;
+            }
+        }
+        else
+        {
+            Debug.LogError("No Camera or CinemachineCamera found!");
         }
     }
 
@@ -77,7 +93,12 @@ public class CameraController : MonoBehaviour
         var gotInput = false;
         var panDirection = Vector3.zero;
 
-        var panSpeedMultiplier = cam.orthographicSize / maxZoom;
+        float panSpeedMultiplier;
+        if (useVcam)
+            panSpeedMultiplier = vcam.Lens.OrthographicSize / maxZoom;
+        else
+            panSpeedMultiplier = cam.orthographicSize / maxZoom;
+
 
         if (TryGetAxisValue(verticalAxis, out var verticalValue))
         {
@@ -95,8 +116,8 @@ public class CameraController : MonoBehaviour
 
         if (Input.GetButton(panButton)) //middle mouse button
         {
-            var h = -Input.GetAxis(mouseXAxis) * panSpeedMultiplier;
-            var v = -Input.GetAxis(mouseYAxis) * panSpeedMultiplier;
+            var h = -Input.GetAxis(mouseXAxis) * panSpeedMultiplier * baseMousePanSpeed;
+            var v = -Input.GetAxis(mouseYAxis) * panSpeedMultiplier * baseMousePanSpeed;
 
             gotInput = true;
 
@@ -133,6 +154,26 @@ public class CameraController : MonoBehaviour
             camTargetSize = Mathf.Clamp(camTargetSize, minZoom, maxZoom);
         }
 
-        cam.orthographicSize = Mathf.Lerp(cam.orthographicSize, camTargetSize, zoomLerpAmount * Time.unscaledDeltaTime);
+        var newOrthoSize = Mathf.Lerp(
+            GetCurrentOrthographicSize(),
+            camTargetSize,
+            zoomLerpAmount * Time.unscaledDeltaTime
+        );
+
+        ApplyOrthographicSize(newOrthoSize);
+    }
+
+    private float GetCurrentOrthographicSize()
+    {
+        if (useVcam)
+            return vcam.Lens.OrthographicSize;
+        return cam.orthographicSize;
+    }
+
+    private void ApplyOrthographicSize(float size)
+    {
+        if (useVcam)
+            vcam.Lens.OrthographicSize = size;
+        else cam.orthographicSize = size;
     }
 }

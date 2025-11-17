@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class DebugTools : EditorWindow
 {
-    private int currentPlotIndex;
     private bool fastForwardActive;
 
     private void Update()
@@ -53,8 +52,8 @@ public class DebugTools : EditorWindow
         GUILayout.Label("Orders", EditorStyles.boldLabel);
         if (GUILayout.Button("Create Regular Order   [O]")) OrderManager.CreateRegularOrder();
 
-        currentPlotIndex = EditorGUILayout.IntField("Plot Index", currentPlotIndex);
-        if (GUILayout.Button("Create Plot Order   [Shift+P]")) OrderManager.CreatePlotOrder(currentPlotIndex);
+        // currentPlotIndex = EditorGUILayout.IntField("Plot Index", currentPlotIndex);
+        if (GUILayout.Button("Create Plot Order   [Shift+P]")) CreatePlotOrder();
 
         if (GUILayout.Button("Finish current order")) OrderManager.CompleteOrder();
 
@@ -72,6 +71,11 @@ public class DebugTools : EditorWindow
         GUILayout.Label("Perfomance", EditorStyles.boldLabel);
         if (GUILayout.Button("Set max FPS to 30")) Application.targetFrameRate = 30;
         if (GUILayout.Button("Reset max FPS")) Application.targetFrameRate = -1;
+
+        GUILayout.Space(10);
+        GUILayout.Label("Player", EditorStyles.boldLabel);
+        if (GUILayout.Button("Set player path to printer")) GameManager.Instance.player.SwitchPath(PathType.ToPrinter);
+        if (GUILayout.Button("Set player path to laptop")) GameManager.Instance.player.SwitchPath(PathType.ToLaptop);
         // }
     }
 
@@ -101,7 +105,7 @@ public class DebugTools : EditorWindow
     private static void CreatePlotOrder()
     {
         if (EditorApplication.isPlaying)
-            OrderManager.CreatePlotOrder(0);
+            OrderManager.CreatePlotOrder(GameManager.Instance.currentPlotIndex);
     }
 
     private static void ResetTime()
