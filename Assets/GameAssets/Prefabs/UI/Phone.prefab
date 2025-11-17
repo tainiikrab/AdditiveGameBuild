@@ -283,7 +283,7 @@ GameObject:
   - component: {fileID: 276189247700459165}
   - component: {fileID: 4482207504841760104}
   m_Layer: 5
-  m_Name: Description
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -303,10 +303,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4959433839488396721}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0000076293945, y: -96.70613}
-  m_SizeDelta: {x: 369.08, y: 253.3477}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 184.54, y: -223.38084}
+  m_SizeDelta: {x: 369.08, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &7701062394863058984
 MonoBehaviour:
@@ -390,8 +390,8 @@ MonoBehaviour:
   m_fontSizeMin: 26.42
   m_fontSizeMax: 48
   m_fontStyle: 0
-  m_HorizontalAlignment: 8
-  m_VerticalAlignment: 256
+  m_HorizontalAlignment: 2
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -850,9 +850,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 306711222799814077}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 275.875, y: -91.89}
   m_SizeDelta: {x: 182.67, y: 183.78}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3209466822791631335
@@ -926,6 +926,7 @@ GameObject:
   - component: {fileID: 2391264519403475434}
   - component: {fileID: 1218673002546066695}
   - component: {fileID: 3313940265222369207}
+  - component: {fileID: 4760138121980728158}
   m_Layer: 5
   m_Name: Phone
   m_TagString: Untagged
@@ -1022,9 +1023,27 @@ MonoBehaviour:
   screen: {fileID: 6212100302249626361}
   materialIcon: {fileID: 6981070055714241140}
   materialTitle: {fileID: 0}
-  materialDescription: {fileID: 4482207504841760104}
   acceptButton: {fileID: 7207541909647437389}
   cancelButton: {fileID: 2509594058396750054}
+--- !u!114 &4760138121980728158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3751351078274524922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06cf287954c01fa4c8076206971b718e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Scanner
+  phoneCameraTransform: {fileID: 0}
+  layerForDetection:
+    serializedVersion: 2
+    m_Bits: 512
+  rayDistance: 10
+  scanTime: 5
+  phoneUI: {fileID: 3313940265222369207}
 --- !u!1 &4799007256001439817
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,9 +1076,9 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 306711222799814077}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 189, y: -112}
   m_SizeDelta: {x: 184.54, y: 183.78}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7431563285438460311
@@ -1281,10 +1300,10 @@ RectTransform:
   - {fileID: 3027489311023417251}
   m_Father: {fileID: 4959433839488396721}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.000022888, y: 131.48965}
-  m_SizeDelta: {x: 369.08, y: 183.7807}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 184.54, y: 0}
+  m_SizeDelta: {x: 369.08, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5344511640821795854
 MonoBehaviour:
@@ -1391,7 +1410,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.60862404, g: 0.8275314, b: 0.9150943, a: 1}
+  m_Color: {r: 0.7685564, g: 0.9008555, b: 0.9528302, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
