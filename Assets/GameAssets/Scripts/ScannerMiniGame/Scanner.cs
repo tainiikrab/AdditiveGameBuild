@@ -9,7 +9,7 @@ public class Scanner : MonoBehaviour
     [SerializeField] private RectTransform phoneCameraPoint;
     [SerializeField] private float scanTime = 2f;
     [SerializeField] private GraphicRaycaster graphicRaycaster;
-    [SerializeField] private PhoneUI phoneUI;
+    [SerializeField] private Phone phone;
     
     private PointerEventData pointerEventData;
     
@@ -19,8 +19,8 @@ public class Scanner : MonoBehaviour
 
     private void Awake()
     {
-        phoneUI.Accepted += OnAccepted;
-        phoneUI.Cancelled += OnCancelled;
+        phone.Accepted += OnAccepted;
+        phone.Cancelled += OnCancelled;
     }
 
     private void Update()
@@ -70,7 +70,7 @@ public class Scanner : MonoBehaviour
         if (scanTimer >= scanTime)
         {
             isUIActive = true;
-            phoneUI.Initialize(currentPrintingMaterial);
+            phone.Initialize(currentPrintingMaterial);
         }
     }
 
@@ -78,7 +78,7 @@ public class Scanner : MonoBehaviour
     {
         // save material
         isUIActive = false;
-        phoneUI.ClosePhoneUI();
+        phone.ClosePhoneUI();
         // запускаем главную сцену (SceneSwitchManager?)
     }
 
@@ -87,6 +87,6 @@ public class Scanner : MonoBehaviour
         currentPrintingMaterial = null;
         scanTimer = 0f;
         isUIActive = false;
-        phoneUI.ClosePhoneUI();
+        phone.ClosePhoneUI();
     }
 }

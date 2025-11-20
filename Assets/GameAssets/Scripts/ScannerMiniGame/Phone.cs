@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PhoneUI : MonoBehaviour
+public class Phone : MonoBehaviour
 {
     [SerializeField] private GameObject screen;
     [SerializeField] private RectTransform phonePositionWithUI;
@@ -14,11 +14,20 @@ public class PhoneUI : MonoBehaviour
     [SerializeField] private Button acceptButton;
     [SerializeField] private Button cancelButton;
     
+    private DraggablePhone draggablePhone;
+    
     public event Action Accepted;
     public event Action Cancelled;
+
+    private void Start()
+    {
+        draggablePhone = GetComponent<DraggablePhone>();
+        transform.position = phoneStartPosition.position;
+    }
     
     public void Initialize(PrintingMaterial material)
     {
+        draggablePhone.enabled = false;
         shading.gameObject.SetActive(true);
         transform.position = phonePositionWithUI.position;
         
@@ -39,5 +48,6 @@ public class PhoneUI : MonoBehaviour
         screen.SetActive(false);
         shading.gameObject.SetActive(false);
         transform.position = phoneStartPosition.position;
+        draggablePhone.enabled = true;
     }
 }
