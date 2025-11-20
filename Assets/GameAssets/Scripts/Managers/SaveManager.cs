@@ -91,6 +91,7 @@ public class SaveManager
     public class GameData
     {
         public int points;
+        public int materialCount;
         public List<string> completedOrders = new();
         public List<string> declinedOrders = new();
         public List<string> purchasedOffers = new();

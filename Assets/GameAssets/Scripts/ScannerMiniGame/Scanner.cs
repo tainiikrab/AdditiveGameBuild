@@ -76,10 +76,10 @@ public class Scanner : MonoBehaviour
 
     private void OnAccepted()
     {
-        
-        
+        // save material
         isUIActive = false;
         phoneUI.ClosePhoneUI();
+        // запускаем главную сцену (SceneSwitchManager?)
     }
 
     private void OnCancelled()
