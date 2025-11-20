@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class Phone : MonoBehaviour
 {
@@ -15,6 +16,13 @@ public class Phone : MonoBehaviour
     [SerializeField] private Button cancelButton;
     
     private DraggablePhone draggablePhone;
+    private RectTransform rectTransform;
+    
+    [Space(10), Header("Animation Settings")]
+    [SerializeField] private float normalScale = 1f;
+    [SerializeField] private float bigScale = 1.5f;
+    [SerializeField] private float duration = 2f;
+    [SerializeField] private float shadingAlpha = 0.065f;
     
     public event Action Accepted;
     public event Action Cancelled;
@@ -22,6 +30,7 @@ public class Phone : MonoBehaviour
     private void Start()
     {
         draggablePhone = GetComponent<DraggablePhone>();
+        rectTransform = GetComponent<RectTransform>();
         transform.position = phoneStartPosition.position;
     }
     
@@ -29,7 +38,8 @@ public class Phone : MonoBehaviour
     {
         draggablePhone.enabled = false;
         shading.gameObject.SetActive(true);
-        transform.position = phonePositionWithUI.position;
+        
+        acceptButton.interactable = cancelButton.interactable = false;
         
         acceptButton.onClick.RemoveAllListeners();
         cancelButton.onClick.RemoveAllListeners();
@@ -41,13 +51,42 @@ public class Phone : MonoBehaviour
         
         acceptButton.onClick.AddListener(() => Accepted?.Invoke());
         cancelButton.onClick.AddListener(() => Cancelled?.Invoke());
+        
+        var sequence = DOTween.Sequence();
+        sequence.Join(
+            rectTransform.DOMove(phonePositionWithUI.position, duration).SetEase(Ease.InCubic)
+            );
+        sequence.Join(
+            rectTransform.DOScale(Vector3.one * bigScale, duration).SetEase(Ease.InCubic)
+            );
+        sequence.Join(
+            shading.DOFade(shadingAlpha, duration)
+        );
+
+        sequence.OnComplete(() =>
+        {
+            acceptButton.interactable = cancelButton.interactable = true;
+        });
     }
     
     public void ClosePhoneUI()
     {
+        var sequence = DOTween.Sequence();
+        sequence.Join(
+            rectTransform.DOScale(Vector3.one * normalScale, duration).SetEase(Ease.InCubic)
+            );
+        sequence.Join(
+            rectTransform.DOMove(phoneStartPosition.position, duration).SetEase(Ease.InCubic)
+            );
+        sequence.Join(
+            shading.DOFade(0f, duration)
+            );
+        sequence.OnComplete(() =>
+        {
+            shading.gameObject.SetActive(false);
+            draggablePhone.enabled = true;
+        });
+            
         screen.SetActive(false);
-        shading.gameObject.SetActive(false);
-        transform.position = phoneStartPosition.position;
-        draggablePhone.enabled = true;
     }
 }

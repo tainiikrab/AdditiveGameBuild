@@ -1198,7 +1198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 0.65882355}
+  m_Color: {r: 0, g: 0, b: 0, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1394,6 +1394,14 @@ PrefabInstance:
       propertyPath: shading
       value: 
       objectReference: {fileID: 1587290584}
+    - target: {fileID: 3313940265222369207, guid: 0076732a842df394097f7e31226b72be, type: 3}
+      propertyPath: duration
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3313940265222369207, guid: 0076732a842df394097f7e31226b72be, type: 3}
+      propertyPath: shadingAlpha
+      value: 0.65
+      objectReference: {fileID: 0}
     - target: {fileID: 3313940265222369207, guid: 0076732a842df394097f7e31226b72be, type: 3}
       propertyPath: phoneStartPosition
       value: 

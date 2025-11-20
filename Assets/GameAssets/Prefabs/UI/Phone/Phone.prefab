@@ -991,7 +991,7 @@ RectTransform:
   m_GameObject: {fileID: 3751351078274524922}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.5, y: 1.5, z: 1.5}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 6586383182543538094}
@@ -1024,7 +1024,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggablePhone
   phoneRect: {fileID: 2981072995049846894}
-  screenRect: {fileID: 6176604961192571690}
 --- !u!114 &3313940265222369207
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1045,6 +1044,10 @@ MonoBehaviour:
   materialTitle: {fileID: 6427036530153895793}
   acceptButton: {fileID: 7207541909647437389}
   cancelButton: {fileID: 2509594058396750054}
+  normalScale: 1
+  bigScale: 1.5
+  duration: 2
+  shadingAlpha: 0.065
 --- !u!114 &4760138121980728158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1060,7 +1063,7 @@ MonoBehaviour:
   phoneCameraPoint: {fileID: 6282784426815450710}
   scanTime: 3
   graphicRaycaster: {fileID: 0}
-  phoneUI: {fileID: 3313940265222369207}
+  phone: {fileID: 0}
 --- !u!1 &5643660051534937525
 GameObject:
   m_ObjectHideFlags: 0
