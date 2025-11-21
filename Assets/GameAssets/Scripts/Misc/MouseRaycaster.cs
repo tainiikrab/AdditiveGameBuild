@@ -6,6 +6,11 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class MouseRaycaster : MonoBehaviour
 {
+    [SerializeField] private Texture2D defaultCursor;
+    [SerializeField] private Texture2D hoverCursor;
+
+    [SerializeField] private Vector2 defaultCursorHotspot;
+    [SerializeField] private Vector2 hoverCursorHotspot;
     private Camera cam;
     private GameObject lastHovered;
     private IRaycastInteractable lastInteractable;
@@ -14,6 +19,7 @@ public class MouseRaycaster : MonoBehaviour
     {
         cam = Camera.main;
         if (EventSystem.current == null) Debug.LogWarning("No EventSystem found in scene. UI blocking will not work.");
+        Cursor.SetCursor(defaultCursor, defaultCursorHotspot, CursorMode.Auto);
     }
 
     private void Update()
@@ -59,9 +65,14 @@ public class MouseRaycaster : MonoBehaviour
 
         if (current.TryGetComponent(out IRaycastInteractable interactable))
         {
+            Cursor.SetCursor(hoverCursor, hoverCursorHotspot, CursorMode.Auto);
             lastHovered = current;
             lastInteractable = interactable;
             interactable.OnHoverEnter();
+        }
+        else
+        {
+            Cursor.SetCursor(defaultCursor, defaultCursorHotspot, CursorMode.Auto);
         }
     }
 

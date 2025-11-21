@@ -7,8 +7,7 @@ using UnityEngine.UI;
 
 public class DialogUI : MonoBehaviour
 {
-    [Header("UI Elements")]
-    public Image customerIcon;
+    [Header("UI Elements")] public Image customerIcon;
     public TextMeshProUGUI dialogText;
     public TextMeshProUGUI customerName;
     public Button AnswerPref;
@@ -16,8 +15,7 @@ public class DialogUI : MonoBehaviour
     public GameObject CharactedDialogue;
     public GameObject ImportantOrder;
 
-    [Header("Text Settings")]
-    public float textSpeed = 0.05f;
+    [Header("Text Settings")] public float textSpeed = 0.05f;
     public bool skipTextAnimation;
 
     private CanvasGroup canvasGroup;
@@ -42,6 +40,7 @@ public class DialogUI : MonoBehaviour
 
     public void ToggleVisibility(bool isVisible)
     {
+        gameObject.SetActive(isVisible);
         canvasGroup.alpha = isVisible ? 1 : 0;
         canvasGroup.interactable = isVisible;
         canvasGroup.blocksRaycasts = isVisible;
@@ -49,7 +48,6 @@ public class DialogUI : MonoBehaviour
 
     public void StartDialog(string name, Sprite icon, string[] dialogLines, string[] answerLines)
     {
-        gameObject.SetActive(true);
         ToggleVisibility(true);
 
         CharactedDialogue.SetActive(true);
@@ -68,11 +66,9 @@ public class DialogUI : MonoBehaviour
         _currentBlockIndex = 0;
         ShowNextDialogBlock();
 
-        Debug.Log($"Диалогов: {_dialogBlocks.Count}, ответных блоков: {_answerBlocks.Count}");
-        for (int i = 0; i < _answerBlocks.Count; i++)
-        {
-            Debug.Log($"Ответный блок {i}: {string.Join(", ", _answerBlocks[i])}");
-        }
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {_dialogBlocks.Count}, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ: {_answerBlocks.Count}");
+        for (var i = 0; i < _answerBlocks.Count; i++)
+            Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ {i}: {string.Join(", ", _answerBlocks[i])}");
     }
 
     private void ShowNextDialogBlock()
@@ -93,14 +89,13 @@ public class DialogUI : MonoBehaviour
 
     private IEnumerator ShowDialogBlock(string[] lines)
     {
-        foreach (var line in lines)
-        {
-            yield return StartCoroutine(ShowLine(line));
-        }
+        foreach (var line in lines) yield return StartCoroutine(ShowLine(line));
 
-        bool hasAnswers = _currentBlockIndex < _answerBlocks.Count && _answerBlocks[_currentBlockIndex].Count > 0;
+        var hasAnswers = _currentBlockIndex < _answerBlocks.Count && _answerBlocks[_currentBlockIndex].Count > 0;
         if (hasAnswers)
+        {
             SpawnAnswerButtonsForCurrentBlock();
+        }
         else
         {
             _currentBlockIndex++;
@@ -115,7 +110,7 @@ public class DialogUI : MonoBehaviour
 
         textAnimationCoroutine = StartCoroutine(AnimateText(text));
 
-        bool lineComplete = false;
+        var lineComplete = false;
         while (!lineComplete)
         {
             if (IsTextAnimating && Input.GetMouseButtonDown(0))
@@ -144,7 +139,7 @@ public class DialogUI : MonoBehaviour
             yield break;
         }
 
-        foreach (char c in text)
+        foreach (var c in text)
         {
             dialogText.text += c;
             yield return new WaitForSeconds(textSpeed);
@@ -162,18 +157,18 @@ public class DialogUI : MonoBehaviour
 
         foreach (var answer in answers)
         {
-            Button newButton = Instantiate(AnswerPref, answersField.transform);
+            var newButton = Instantiate(AnswerPref, answersField.transform);
             newButton.gameObject.SetActive(true);
             newButton.GetComponentInChildren<TextMeshProUGUI>().text = answer;
 
             newButton.onClick.AddListener(() =>
             {
-                Debug.Log($"Выбран ответ: {answer}");
+                Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ: {answer}");
                 HandleAnswerSelection(answer);
             });
         }
 
-        Debug.Log($"Создаю {answers.Count} кнопок для блока {_currentBlockIndex}");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅ {answers.Count} пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ {_currentBlockIndex}");
     }
 
     private void HandleAnswerSelection(string answer)
@@ -209,12 +204,12 @@ public class DialogUI : MonoBehaviour
 
     private List<string[]> SplitIntoBlocks(string[] lines)
     {
-        List<string[]> blocks = new List<string[]>();
-        List<string> currentBlock = new List<string>();
+        var blocks = new List<string[]>();
+        var currentBlock = new List<string>();
 
         foreach (var line in lines)
         {
-            string trimmed = line.Trim();
+            var trimmed = line.Trim();
 
             if (string.IsNullOrWhiteSpace(trimmed) || trimmed.Contains("*"))
             {
@@ -223,6 +218,7 @@ public class DialogUI : MonoBehaviour
                     blocks.Add(currentBlock.ToArray());
                     currentBlock.Clear();
                 }
+
                 continue;
             }
 
