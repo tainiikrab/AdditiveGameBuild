@@ -10,6 +10,8 @@ public class Phone : MonoBehaviour
     [SerializeField] private RectTransform phonePositionWithUI;
     [SerializeField] private RectTransform phoneStartPosition;
     [SerializeField] private Image shading;
+    
+    [Space(10), Header("Material UI elements")]
     [SerializeField] private Image materialIcon;
     [SerializeField] private TextMeshProUGUI materialTitle;
     [SerializeField] private Button acceptButton;
