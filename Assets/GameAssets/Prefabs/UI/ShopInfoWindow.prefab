@@ -56,7 +56,6 @@ MonoBehaviour:
   offerPrice: {fileID: 5663349530442179639}
   offerDescription: {fileID: 8461990988174100054}
   cancelButton: {fileID: 5044515922421489899}
-  playerBalance: {fileID: 3821426485292085984}
 --- !u!1 &838884828101841568
 GameObject:
   m_ObjectHideFlags: 0
@@ -483,7 +482,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5843940888927565559}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99995965
+  m_Size: 0.9891331
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1095,7 +1094,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000045520028}
+  m_AnchoredPosition: {x: 0, y: 0.00021584655}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &7166006563464263356
@@ -1456,7 +1455,11 @@ PrefabInstance:
     - target: {fileID: 7562331349738851097, guid: b12af9cf2b58a6241b1b44ea04aeaa2a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 8951717346767954973}
+      objectReference: {fileID: 0}
+    - target: {fileID: 7562331349738851097, guid: b12af9cf2b58a6241b1b44ea04aeaa2a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -8,7 +8,7 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private GameObject offerCardPrefab;
     [SerializeField] private Transform offersContainer;
     [SerializeField] private TextMeshProUGUI playerBalance;
-    [SerializeField] private TextMeshProUGUI categoryTitle;
+    //[SerializeField] private TextMeshProUGUI categoryTitle;
     
     [Space(20), SerializeField] private CategorySwitcher[] categorySwitchers;
 
@@ -57,7 +57,7 @@ public class ShopUI : MonoBehaviour
     private void SetCategory(ShopManager.Category category, string title = "")
     {
         sm.SetCategory(category);
-        categoryTitle.text = title;
+        //categoryTitle.text = title;
     }
     
     [Serializable]
