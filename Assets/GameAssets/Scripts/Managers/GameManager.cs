@@ -6,7 +6,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
 
-    public int currentPlotIndex { get; set; } = 1;
     public WayPointFollower player;
 
     [SerializeField] private float openMinigameDelay;
@@ -70,8 +69,8 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0);
 
         OrderManager.CreateRegularOrder(3);
-        OrderManager.CreatePlotOrder(currentPlotIndex);
-        currentPlotIndex++;
+        // OrderManager.CreatePlotOrder(currentPlotIndex);
+        // currentPlotIndex++;
     }
 
     private void OnDestroy()
