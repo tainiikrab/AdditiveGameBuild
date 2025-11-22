@@ -105,7 +105,7 @@ public class DebugTools : EditorWindow
     private static void CreatePlotOrder()
     {
         if (EditorApplication.isPlaying)
-            OrderManager.CreatePlotOrder(GameManager.Instance.currentPlotIndex);
+            OrderManager.CreatePlotOrder();
     }
 
     private static void ResetTime()

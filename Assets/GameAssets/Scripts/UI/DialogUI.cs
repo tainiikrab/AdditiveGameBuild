@@ -36,6 +36,7 @@ public class DialogUI : MonoBehaviour
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
+        ToggleVisibility(false);
     }
 
     public void ToggleVisibility(bool isVisible)

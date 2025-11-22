@@ -19,18 +19,14 @@ public class WayPointPath
 
 public class WayPointFollower : MonoBehaviour
 {
-    [Header("Paths")]
-    public WayPointPath[] Paths;
+    [Header("Paths")] public WayPointPath[] Paths;
 
-    [Header("Movement Settings")]
-    public float Speed = 3f;
+    [Header("Movement Settings")] public float Speed = 3f;
     public float RotationSpeed = 5f;
 
-    [Header("Rotation Offset (degrees)")]
-    public Vector3 rotationOffsetEuler = new Vector3(0f, -90f, 0f);
+    [Header("Rotation Offset (degrees)")] public Vector3 rotationOffsetEuler = new(0f, -90f, 0f);
 
-    [Header("Debug Info")]
-    public int currentPathIndex;
+    [Header("Debug Info")] public int currentPathIndex;
     public int currentWPIndex;
 
     private bool isStopped;
@@ -76,7 +72,7 @@ public class WayPointFollower : MonoBehaviour
             RotationSpeed * Time.deltaTime * 50
         );
 
-        float prevDistance = Vector3.Distance(transform.position, target.position);
+        var prevDistance = Vector3.Distance(transform.position, target.position);
 
         transform.position = Vector3.MoveTowards(
             transform.position,
@@ -84,7 +80,7 @@ public class WayPointFollower : MonoBehaviour
             Speed * Time.deltaTime
         );
 
-        float newDistance = Vector3.Distance(transform.position, target.position);
+        var newDistance = Vector3.Distance(transform.position, target.position);
 
         if (newDistance < prevDistance - 0.001f)
             PlayAnimation("Walk");
@@ -103,7 +99,7 @@ public class WayPointFollower : MonoBehaviour
             if (animation.GetClip(clipName) != null)
                 animation.Play(clipName);
             else
-                Debug.LogWarning($"[WayPointFollower] Не найден анимационный клип: {clipName}");
+                Debug.LogWarning($"[WayPointFollower] пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ: {clipName}");
         }
     }
 
@@ -158,7 +154,7 @@ public class WayPointFollower : MonoBehaviour
                 currentPathIndex = 0;
 
             PlayAnimation("Walk");
-            Debug.Log("Продолжаем движение после остановки");
+            Debug.Log("РџСЂРѕРґРѕР»Р¶Р°РµРј РґРІРёР¶РµРЅРёРµ РїРѕСЃР»Рµ РѕСЃС‚Р°РЅРѕРІРєРё");
         }
     }
 
@@ -180,8 +176,15 @@ public class WayPointFollower : MonoBehaviour
         PlayAnimation("Walk");
     }
 
-    public bool IsStopped() => isStopped;
-    public bool IsWaitingForAction() => isWaitingForAction;
+    public bool IsStopped()
+    {
+        return isStopped;
+    }
+
+    public bool IsWaitingForAction()
+    {
+        return isWaitingForAction;
+    }
 
     public WayPointPath GetCurrentPath()
     {
@@ -220,8 +223,7 @@ public class WayPointFollower : MonoBehaviour
 
     public void SwitchPath(PathType type)
     {
-        for (int i = 0; i < Paths.Length; i++)
-        {
+        for (var i = 0; i < Paths.Length; i++)
             if (Paths[i].Type == type)
             {
                 currentPathIndex = i;
@@ -233,7 +235,6 @@ public class WayPointFollower : MonoBehaviour
                 Debug.Log($"[WayPointFollower] Switched to path with type: {type}");
                 return;
             }
-        }
 
         Debug.LogWarning($"[WayPointFollower] Not found path of type {type}");
     }

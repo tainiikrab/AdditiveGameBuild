@@ -1,12 +1,19 @@
-using System;
 using UnityEngine;
+using System;
 using UnityEngine.Rendering;
 using DG.Tweening;
 using Unity.Cinemachine;
+using Unity.VisualScripting;
+using UnityEngine.UI;
 
 public class Tutorial : MonoBehaviour
 {
-    [SerializeField] private CanvasGroup tutorialUI;
+    [Header("Tutorial UIs")] [SerializeField]
+    private CanvasGroup tutorialUI;
+
+    [SerializeField] private GameObject workplaceTutorialUI;
+    [SerializeField] private GameObject laptopTutorialUI;
+
 
     [Space(10)] [Header("Workplace")] [SerializeField]
     private Light workplaceLight;
@@ -17,6 +24,9 @@ public class Tutorial : MonoBehaviour
     private LaptopTrigger laptopBlinker;
 
     [SerializeField] private LaptopUI laptopUI;
+    [SerializeField] private RectTransform mailImage;
+    [SerializeField] private RectTransform shopImage;
+    [SerializeField] private RectTransform closeImage;
 
     public static Tutorial instance { get; private set; }
 
@@ -33,10 +43,21 @@ public class Tutorial : MonoBehaviour
         if (!workplaceLight.gameObject.activeSelf) workplaceLight.gameObject.SetActive(true);
         workplaceLightIntensity = workplaceLight.intensity;
         workplaceLight.intensity = 0;
+
+
+        workplaceTutorialUI.gameObject.SetActive(true);
+        laptopTutorialUI.gameObject.SetActive(false);
         tutorialUI.alpha = 0;
         tutorialUI.gameObject.SetActive(false);
+
+        StartTutorial();
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.T)) StartTutorial();
+        if (Input.GetKeyDown(KeyCode.Y)) EndTutorial();
+    }
     // public void Start()
     // {
     //     laptopUI.OnVisibilityChanged() +=  
@@ -45,7 +66,7 @@ public class Tutorial : MonoBehaviour
     public void StartTutorial()
     {
         tutorialUI.gameObject.SetActive(true);
-        tutorialUI.DOFade(1, 1f);
+        tutorialUI.DOFade(1, 0.5f);
         isTutorialActive = true;
     }
 
@@ -53,7 +74,7 @@ public class Tutorial : MonoBehaviour
     {
         HideWorkplaceTutorial();
         isTutorialActive = false;
-        tutorialUI.DOFade(0, 1f).OnComplete(() => tutorialUI.gameObject.SetActive(false));
+        tutorialUI.DOFade(0, 0.5f).OnComplete(() => tutorialUI.gameObject.SetActive(false));
     }
 
 
@@ -71,13 +92,8 @@ public class Tutorial : MonoBehaviour
         workplaceCamera.Priority = -100;
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.T)) StartTutorial();
-        if (Input.GetKeyDown(KeyCode.Y)) EndTutorial();
-    }
 
-    public void HighlightScene(int sceneInt)
+    public void SwitchScene(int sceneInt)
     {
         if (sceneInt < 0 || sceneInt >= Enum.GetValues(typeof(TutorialScene)).Length)
             return;
@@ -90,6 +106,13 @@ public class Tutorial : MonoBehaviour
                 HideWorkplaceTutorial();
                 laptopBlinker.isBlinking = false;
                 currentScene = TutorialScene.None;
+                highlightTween?.Kill();
+
+                mailImage.transform.DOLocalRotate(Vector3.zero, 0.5f)
+                    .SetEase(Ease.OutElastic);
+                shopImage.transform.DOLocalRotate(Vector3.zero, 0.5f)
+                    .SetEase(Ease.OutElastic);
+
                 break;
             case TutorialScene.Workplace:
                 ShowWorkplaceScene();
@@ -97,11 +120,71 @@ public class Tutorial : MonoBehaviour
                 break;
 
             case TutorialScene.BlinkingLaptop:
+                laptopUI.OnVisibilityChanged +=
+                    LaptopTutorial;
+                tutorialUI.DOFade(0, 0.5f).OnComplete(() => tutorialUI.gameObject.SetActive(false));
                 laptopBlinker.isBlinking = true;
-                tutorialUI.gameObject.SetActive(false);
                 currentScene = TutorialScene.BlinkingLaptop;
-
                 break;
+            case TutorialScene.MailHighlight:
+                currentScene = TutorialScene.MailHighlight;
+
+                highlightTween = DOTween.Sequence()
+                    .Append(mailImage.DOLocalRotate(new Vector3(0, 0, 15), 0.5f).SetEase(Ease.InOutSine))
+                    .Append(mailImage.DOLocalRotate(new Vector3(0, 0, -15), 0.5f).SetEase(Ease.InOutSine))
+                    .Append(mailImage.DOLocalRotate(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.InOutSine))
+                    .SetLoops(-1);
+                break;
+            case TutorialScene.ShopHighlight:
+                currentScene = TutorialScene.ShopHighlight;
+                highlightTween?.Kill();
+                mailImage.transform.DOLocalRotate(Vector3.zero, 0.5f)
+                    .SetEase(Ease.OutElastic);
+
+                highlightTween = DOTween.Sequence()
+                    .Append(shopImage.DOLocalRotate(new Vector3(0, 0, 15), 0.5f).SetEase(Ease.InOutSine))
+                    .Append(shopImage.DOLocalRotate(new Vector3(0, 0, -15), 0.5f).SetEase(Ease.InOutSine))
+                    .Append(shopImage.DOLocalRotate(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.InOutSine))
+                    .SetLoops(-1);
+                break;
+            case TutorialScene.CloseLaptop:
+                currentScene = TutorialScene.CloseLaptop;
+                highlightTween?.Kill();
+                shopImage.transform.DOLocalRotate(Vector3.zero, 0.5f)
+                    .SetEase(Ease.OutElastic);
+
+                highlightTween = DOTween.Sequence()
+                    .Append(closeImage.DOLocalRotate(new Vector3(0, 0, 15), 0.5f).SetEase(Ease.InOutSine))
+                    .Append(closeImage.DOLocalRotate(new Vector3(0, 0, -15), 0.5f).SetEase(Ease.InOutSine))
+                    .Append(closeImage.DOLocalRotate(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.InOutSine))
+                    .SetLoops(-1);
+                tutorialUI.gameObject.SetActive(false);
+                break;
+            case TutorialScene.CallCustomer:
+                currentScene = TutorialScene.CallCustomer;
+                highlightTween?.Kill();
+                OrderManager.CreatePlotOrder(1);
+                break;
+        }
+    }
+
+    private Tween highlightTween;
+
+
+    private void LaptopTutorial(bool isVisible)
+    {
+        if (isVisible)
+        {
+            laptopTutorialUI.SetActive(true);
+            tutorialUI.gameObject.SetActive(true);
+            tutorialUI.DOFade(1, 0.5f);
+            laptopTutorialUI.SetActive(true);
+            SwitchScene((int)TutorialScene.None);
+        }
+        else if (currentScene == TutorialScene.CloseLaptop)
+        {
+            laptopUI.OnVisibilityChanged -= LaptopTutorial;
+            SwitchScene((int)TutorialScene.CallCustomer);
         }
     }
 
@@ -110,6 +193,10 @@ public class Tutorial : MonoBehaviour
         None, // 0
         Workplace, // 1
         BlinkingLaptop, // 2
-        BlinkingMail // 3
+        MailHighlight, // 3
+        ShopHighlight, // 4
+        CloseLaptop, // 5
+        CallCustomer, // 6
+        end
     }
 }

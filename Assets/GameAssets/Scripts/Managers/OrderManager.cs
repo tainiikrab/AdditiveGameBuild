@@ -47,16 +47,19 @@ public static class OrderManager
         }
     }
 
-    public static void CreatePlotOrder(int plotIndex)
+    public static int currentPlotIndex { get; set; } = -1;
+
+    public static void CreatePlotOrder(int plotIndex = -1)
     {
-        OnOrderPlotCreated?.Invoke(GetPlotOrder(plotIndex));
-        SetCurrentOrder(GetPlotOrder(plotIndex));
+        currentPlotIndex = plotIndex == -1 ? currentPlotIndex + 1 : plotIndex;
+        OnOrderPlotCreated?.Invoke(GetPlotOrder(currentPlotIndex));
+        SetCurrentOrder(GetPlotOrder(currentPlotIndex));
     }
 
     public static OrderConfig GetPlotOrder(int plotIndex)
     {
-        foreach (var OrderConfig in GlobalConfig.Instance.Orders)
-            Debug.Log($"Plot index: {OrderConfig.plotIndex}");
+        // foreach (var OrderConfig in GlobalConfig.Instance.Orders)
+        //     Debug.Log($"Plot index: {OrderConfig.plotIndex}");
         var orderConfig =
             GlobalConfig.Instance.Orders.Find(order => order.plotIndex == plotIndex);
 
