@@ -1,3 +1,4 @@
+using System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
@@ -29,8 +30,11 @@ public class LaptopUI : MonoBehaviour
     }
 
 
+    public event Action<bool> OnVisibilityChanged;
+
     public void ToggleVisibility(bool toggle)
     {
+        if (toggle) gameObject.SetActive(true);
         canvasGroup.DOKill();
 
         canvasGroup.DOFade(toggle ? 1f : 0f, 0.3f)
@@ -40,6 +44,7 @@ public class LaptopUI : MonoBehaviour
                 if (!toggle) gameObject.SetActive(false);
             });
 
+        OnVisibilityChanged?.Invoke(toggle);
         canvasGroup.interactable = toggle;
         canvasGroup.blocksRaycasts = toggle;
     }
