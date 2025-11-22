@@ -6,24 +6,20 @@ public class MaterialManager : MonoBehaviour
     [SerializeField] private MaterialWarningUI materialWarningUI;
 
     private int count;
-    
+
     public int Count
     {
         get => count;
         private set
         {
             if (count == 0)
-            {
                 ShowWarning();
-            }
             else
-            {
                 count = value;
-            }
             SaveManager.gameData.materialCount = count;
         }
     }
-    
+
     public static MaterialManager Instance { get; set; }
 
     private void Awake()
@@ -58,6 +54,8 @@ public class MaterialManager : MonoBehaviour
 
     private void ShowWarning()
     {
-        materialWarningUI.gameObject.SetActive(true);
+        Debug.Log("Showed material warning");
+        // materialWarningUI.gameObject.SetActive(true);
+        // not implemented correctly yet
     }
 }

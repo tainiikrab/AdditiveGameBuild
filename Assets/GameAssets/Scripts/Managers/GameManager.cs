@@ -59,9 +59,25 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        // if (Input.GetKeyDown(KeyCode.H)) StartCoroutine(CreateOrdersDelayed());
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            OrderManager.CreatePlotOrder(1);
+            OrderManager.orderData.currentMinigame = 0;
+            Debug.Log("Plot order created");
+            Debug.Log(OrderManager.orderData.ToString());
+            Debug.Log(OrderManager.orderData.config.orderName);
+            Debug.Log(OrderManager.orderData.config.mesh);
+            Debug.Log(OrderManager.orderData.config.printerType.minigames[0]);
+            Debug.Log(OrderManager.orderData.config.printerType.minigames[1]);
+        }
+
         // if (Input.GetKeyDown(KeyCode.G)) player.SwitchPath(PathType.ToPrinter);
         // if (Input.GetKeyDown(KeyCode.F)) player.SwitchPath(PathType.ToLaptop);
+    }
+
+    public void SendPlayerToPrinter()
+    {
+        player.SwitchPath(PathType.ToPrinter);
     }
 
     private IEnumerator CreateOrdersDelayed()

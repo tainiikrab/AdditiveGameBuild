@@ -69,17 +69,41 @@ public class Slicer : MonoBehaviour
         quality.printSpeed = 100 - Mathf.Pow(Mathf.Abs(printSpeed.value - order.printSpeed), 1f);
         Debug.Log($"Order quality: {OrderManager.orderData.quality.totalQuality}");
 
-        StartCoroutine(Walk());
+        // StartCoroutine(Walk());
+        walk = true;
+        Debug.Log("Starting minigame");
+        OrderManager.orderData.LoadNextMinigame();
 
         AudioManager.Instance.PlayClickSound();
     }
 
-    private IEnumerator Walk()
-    {
-        GetComponentInParent<LaptopUI>().ToggleVisibility(false);
-        yield return new WaitForSeconds(2f);
-        OrderManager.orderData.LoadNextMinigame();
-    }
+    private float time;
+    private bool walk = false;
+
+    // private void Update()
+    // {
+    //     if (walk)
+    //     {
+    //         GetComponentInParent<LaptopUI>().ToggleVisibility(false);
+    //         GameManager.Instance.SendPlayerToPrinter();
+    //         time += Time.deltaTime;
+    //     }
+    //
+    //     if (time > 2f)
+    //     {
+    //         Debug.Log("Starting minigame");
+    //         OrderManager.orderData.LoadNextMinigame();
+    //         walk = false;
+    //     }
+    // }
+
+    // private IEnumerator Walk()
+    // {
+    //     
+    //     yield return new WaitForSecondsRealtime(1f);
+    //     Debug.Log("Starting minigame");
+    //     OrderManager.orderData.LoadNextMinigame();
+    // }
 
     private void SetupSlider(SliderValues values)
     {
@@ -109,8 +133,12 @@ public class Slicer : MonoBehaviour
     {
         if (modelRenderer == null)
         {
-            Debug.LogWarning($"idk why but {nameof(modelRenderer)} is null");
-            return;
+            SetOrder();
+            if (modelRenderer == null)
+            {
+                Debug.LogWarning($"idk why but {nameof(modelRenderer)} is null");
+                return;
+            }
         }
 
         // block.SetFloat("_PrintProgress", Time.time % 10f);

@@ -61,5 +61,6 @@ public class ReviewUI : MonoBehaviour
         OrderManager.CompleteOrder();
         gameObject.SetActive(false);
         AudioManager.Instance.PlayClickSound();
+        OrderManager.CreateRegularOrder(3);
     }
 }

@@ -140,6 +140,8 @@ public class WayPointFollower : MonoBehaviour
             currentPathIndex = 0;
     }
 
+    public static event Action<GameObject> OnContinueMovement;
+
     public void ContinueMovement()
     {
         if (isStopped && isWaitingForAction)
@@ -155,6 +157,7 @@ public class WayPointFollower : MonoBehaviour
 
             PlayAnimation("Walk");
             Debug.Log("Продолжаем движение после остановки");
+            OnContinueMovement?.Invoke(gameObject);
         }
     }
 
@@ -232,7 +235,7 @@ public class WayPointFollower : MonoBehaviour
                 isWaitingForAction = false;
                 PlayAnimation("Walk");
 
-                Debug.Log($"[WayPointFollower] Switched to path with type: {type}");
+                // Debug.Log($"[WayPointFollower] Switched to path with type: {type}");
                 return;
             }
 

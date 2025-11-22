@@ -52,6 +52,7 @@ public static class OrderManager
     public static void CreatePlotOrder(int plotIndex = -1)
     {
         currentPlotIndex = plotIndex == -1 ? currentPlotIndex + 1 : plotIndex;
+
         OnOrderPlotCreated?.Invoke(GetPlotOrder(currentPlotIndex));
         SetCurrentOrder(GetPlotOrder(currentPlotIndex));
     }
@@ -110,6 +111,7 @@ public static class OrderManager
         FillOrders();
     }
 
+    [Serializable]
     public class OrderQuality
     {
         public float fillDensity { get; set; }
@@ -132,6 +134,7 @@ public static class OrderManager
         }
     }
 
+    [Serializable]
     public class OrderData
     {
         public OrderData(OrderConfig orderConfig)
@@ -147,6 +150,8 @@ public static class OrderManager
         {
             currentMinigame++;
             MinigameManager.Instance.OpenMinigame(config.printerType.minigames[currentMinigame]);
+            Debug.Log($"The next minigame is {config.printerType.minigames[currentMinigame]}");
+            Debug.Log($"Minigame index is {currentMinigame}");
         }
     }
 }

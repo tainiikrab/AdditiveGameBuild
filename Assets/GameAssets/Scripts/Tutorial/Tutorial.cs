@@ -13,6 +13,7 @@ public class Tutorial : MonoBehaviour
 
     [SerializeField] private GameObject workplaceTutorialUI;
     [SerializeField] private GameObject laptopTutorialUI;
+    [SerializeField] private GameObject afterCustomerUI;
 
 
     [Space(10)] [Header("Workplace")] [SerializeField]
@@ -27,7 +28,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private RectTransform mailImage;
     [SerializeField] private RectTransform shopImage;
     [SerializeField] private RectTransform closeImage;
-
+    public static bool hasTutorialFired = false;
     public static Tutorial instance { get; private set; }
 
     private float workplaceLightIntensity;
@@ -37,6 +38,12 @@ public class Tutorial : MonoBehaviour
 
     private void Awake()
     {
+        if (hasTutorialFired)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
         if (instance == null) instance = this;
         else Destroy(gameObject);
 
@@ -68,6 +75,7 @@ public class Tutorial : MonoBehaviour
         tutorialUI.gameObject.SetActive(true);
         tutorialUI.DOFade(1, 0.5f);
         isTutorialActive = true;
+        hasTutorialFired = true;
     }
 
     public void EndTutorial()
@@ -93,12 +101,14 @@ public class Tutorial : MonoBehaviour
     }
 
 
-    public void SwitchScene(int sceneInt)
+    private void SwitchScene(int sceneInt)
     {
         if (sceneInt < 0 || sceneInt >= Enum.GetValues(typeof(TutorialScene)).Length)
             return;
 
         var scene = (TutorialScene)sceneInt;
+
+        highlightTween?.Kill();
 
         switch (scene)
         {
@@ -106,66 +116,88 @@ public class Tutorial : MonoBehaviour
                 HideWorkplaceTutorial();
                 laptopBlinker.isBlinking = false;
                 currentScene = TutorialScene.None;
-                highlightTween?.Kill();
 
-                mailImage.transform.DOLocalRotate(Vector3.zero, 0.5f)
-                    .SetEase(Ease.OutElastic);
-                shopImage.transform.DOLocalRotate(Vector3.zero, 0.5f)
-                    .SetEase(Ease.OutElastic);
-
+                ResetRotation(mailImage);
+                ResetRotation(shopImage);
                 break;
+
             case TutorialScene.Workplace:
                 ShowWorkplaceScene();
                 currentScene = TutorialScene.Workplace;
                 break;
 
             case TutorialScene.BlinkingLaptop:
-                laptopUI.OnVisibilityChanged +=
-                    LaptopTutorial;
-                tutorialUI.DOFade(0, 0.5f).OnComplete(() => tutorialUI.gameObject.SetActive(false));
+                laptopUI.OnVisibilityChanged -= LaptopTutorial;
+                laptopUI.OnVisibilityChanged += LaptopTutorial;
+
+                ToggleTutorialUI(false);
+
                 laptopBlinker.isBlinking = true;
                 currentScene = TutorialScene.BlinkingLaptop;
                 break;
+
             case TutorialScene.MailHighlight:
                 currentScene = TutorialScene.MailHighlight;
-
-                highlightTween = DOTween.Sequence()
-                    .Append(mailImage.DOLocalRotate(new Vector3(0, 0, 15), 0.5f).SetEase(Ease.InOutSine))
-                    .Append(mailImage.DOLocalRotate(new Vector3(0, 0, -15), 0.5f).SetEase(Ease.InOutSine))
-                    .Append(mailImage.DOLocalRotate(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.InOutSine))
-                    .SetLoops(-1);
+                highlightTween = CreateHighlightTween(mailImage);
                 break;
+
             case TutorialScene.ShopHighlight:
                 currentScene = TutorialScene.ShopHighlight;
-                highlightTween?.Kill();
-                mailImage.transform.DOLocalRotate(Vector3.zero, 0.5f)
-                    .SetEase(Ease.OutElastic);
-
-                highlightTween = DOTween.Sequence()
-                    .Append(shopImage.DOLocalRotate(new Vector3(0, 0, 15), 0.5f).SetEase(Ease.InOutSine))
-                    .Append(shopImage.DOLocalRotate(new Vector3(0, 0, -15), 0.5f).SetEase(Ease.InOutSine))
-                    .Append(shopImage.DOLocalRotate(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.InOutSine))
-                    .SetLoops(-1);
+                ResetRotation(mailImage);
+                highlightTween = CreateHighlightTween(shopImage);
                 break;
+
             case TutorialScene.CloseLaptop:
                 currentScene = TutorialScene.CloseLaptop;
-                highlightTween?.Kill();
-                shopImage.transform.DOLocalRotate(Vector3.zero, 0.5f)
-                    .SetEase(Ease.OutElastic);
+                ResetRotation(shopImage);
+                highlightTween = CreateHighlightTween(closeImage);
 
-                highlightTween = DOTween.Sequence()
-                    .Append(closeImage.DOLocalRotate(new Vector3(0, 0, 15), 0.5f).SetEase(Ease.InOutSine))
-                    .Append(closeImage.DOLocalRotate(new Vector3(0, 0, -15), 0.5f).SetEase(Ease.InOutSine))
-                    .Append(closeImage.DOLocalRotate(new Vector3(0, 0, 0), 0.5f).SetEase(Ease.InOutSine))
-                    .SetLoops(-1);
-                tutorialUI.gameObject.SetActive(false);
+                ToggleTutorialUI(false);
                 break;
+
             case TutorialScene.CallCustomer:
                 currentScene = TutorialScene.CallCustomer;
-                highlightTween?.Kill();
                 OrderManager.CreatePlotOrder(1);
+                OrderManager.orderData.currentMinigame = 0;
+
+                WayPointFollower.OnContinueMovement -= HandleAfterCustomer;
+                WayPointFollower.OnContinueMovement += HandleAfterCustomer;
+                break;
+            case TutorialScene.AfterCustomer:
+                ToggleTutorialUI(false);
                 break;
         }
+    }
+
+    private void ToggleTutorialUI(bool alpha = false)
+    {
+        if (alpha) tutorialUI.gameObject.SetActive(true);
+        tutorialUI.DOFade(alpha ? 1 : 0, 0.5f)
+            .OnComplete(() =>
+            {
+                if (!alpha) tutorialUI.gameObject.SetActive(false);
+            });
+    }
+
+    private void ResetRotation(Transform target)
+    {
+        target.DOLocalRotate(Vector3.zero, 0.5f).SetEase(Ease.OutElastic);
+    }
+
+    private Tween CreateHighlightTween(Transform target)
+    {
+        return DOTween.Sequence()
+            .Append(target.DOLocalRotate(new Vector3(0, 0, 15), 0.5f).SetEase(Ease.InOutSine))
+            .Append(target.DOLocalRotate(new Vector3(0, 0, -15), 0.5f).SetEase(Ease.InOutSine))
+            .Append(target.DOLocalRotate(Vector3.zero, 0.5f).SetEase(Ease.InOutSine))
+            .SetLoops(-1);
+    }
+
+    private void HandleAfterCustomer(GameObject customer)
+    {
+        ToggleTutorialUI(true);
+        afterCustomerUI.SetActive(true);
+        WayPointFollower.OnContinueMovement -= HandleAfterCustomer;
     }
 
     private Tween highlightTween;
@@ -188,6 +220,7 @@ public class Tutorial : MonoBehaviour
         }
     }
 
+
     public enum TutorialScene
     {
         None, // 0
@@ -197,6 +230,9 @@ public class Tutorial : MonoBehaviour
         ShopHighlight, // 4
         CloseLaptop, // 5
         CallCustomer, // 6
+        AfterCustomer, // 7
+
+
         end
     }
 }

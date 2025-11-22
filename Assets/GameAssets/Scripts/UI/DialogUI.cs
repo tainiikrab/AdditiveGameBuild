@@ -32,6 +32,7 @@ public class DialogUI : MonoBehaviour
     public event Action OnOrderRejected;
 
     public bool IsTextAnimating { get; private set; }
+    private bool isVisible = false;
 
     private void Awake()
     {
@@ -41,10 +42,12 @@ public class DialogUI : MonoBehaviour
 
     public void ToggleVisibility(bool isVisible)
     {
+        if (isVisible == this.isVisible) return;
         gameObject.SetActive(isVisible);
         canvasGroup.alpha = isVisible ? 1 : 0;
         canvasGroup.interactable = isVisible;
         canvasGroup.blocksRaycasts = isVisible;
+        this.isVisible = isVisible;
     }
 
     public void StartDialog(string name, Sprite icon, string[] dialogLines, string[] answerLines)
@@ -67,9 +70,9 @@ public class DialogUI : MonoBehaviour
         _currentBlockIndex = 0;
         ShowNextDialogBlock();
 
-        Debug.Log($"��������: {_dialogBlocks.Count}, �������� ������: {_answerBlocks.Count}");
-        for (var i = 0; i < _answerBlocks.Count; i++)
-            Debug.Log($"�������� ���� {i}: {string.Join(", ", _answerBlocks[i])}");
+        // Debug.Log($"��������: {_dialogBlocks.Count}, �������� ������: {_answerBlocks.Count}");
+        // for (var i = 0; i < _answerBlocks.Count; i++)
+        //     Debug.Log($"�������� ���� {i}: {string.Join(", ", _answerBlocks[i])}");
     }
 
     private void ShowNextDialogBlock()
