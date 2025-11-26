@@ -8,10 +8,8 @@ public class ShopItemConfig : IConfig
     {
         "Sprites/Shop/OfferIcons/", "Sprites/SceneObjects/"
     };
-    private const string PrefabPath = "Models/Shop/";
     public string name;
     public string iconID;
-    public string prefabID;
     public int price;
     public string category;
     public string description;
@@ -43,17 +41,6 @@ public class ShopItemConfig : IConfig
             return _icon;
         }
         set => _icon = value;
-    }
-
-    public GameObject Prefab
-    {
-        get
-        {
-            if (_prefab == null)
-                _prefab = Resources.Load<GameObject>(PrefabPath + prefabID);
-            return _prefab;
-        }
-        set => _prefab = value;
     }
 
     public string id
