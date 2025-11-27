@@ -12,6 +12,8 @@ public class OfferCardUI : MonoBehaviour
 
     private TextMeshProUGUI offerPriceText;
 
+    private ShopUI shopUI;
+
     /// <summary>
     /// Поле для хранения информации о товаре в данной карточке
     /// </summary>
@@ -20,6 +22,7 @@ public class OfferCardUI : MonoBehaviour
     private void Awake()
     {
         offerPriceText = buyButton.GetComponentInChildren<TextMeshProUGUI>();
+        shopUI = GetComponentInParent<ShopUI>();
     }
 
     private void OnEnable()
@@ -34,6 +37,7 @@ public class OfferCardUI : MonoBehaviour
     {
         thisOffer = offer;
         offerIcon.sprite = offer.Icon;
+        offerIcon.preserveAspect = true;
         offerName.text = offer.name;
         offerPriceText.text = offer.price.ToString();
         buyButton.onClick.AddListener(() => OnBuyButtonClick(thisOffer));
@@ -52,6 +56,7 @@ public class OfferCardUI : MonoBehaviour
         {
             buyButton.interactable = false;
             buyButton.image.color = Color.darkOliveGreen;
+            buyButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
             buyButton.GetComponentInChildren<TextMeshProUGUI>().text = "Куплено";
             detailedButton.interactable = false;
         }
@@ -72,8 +77,8 @@ public class OfferCardUI : MonoBehaviour
 
     private void OnMoreDetailedButtonClick(ShopItemConfig item)
     {
-        //var panel = Instantiate(moreDetailedUI);
-        // потом доделаю)
+        var panel = Instantiate(moreDetailedUI, shopUI.gameObject.transform);
+        panel.Initialize(item);
     }
 
     private void OnDisable()

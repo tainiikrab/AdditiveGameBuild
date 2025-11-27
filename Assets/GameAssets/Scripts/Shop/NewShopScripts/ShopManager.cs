@@ -4,6 +4,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using DG.Tweening;
+using UnityEditor.SearchService;
 
 public class ShopManager : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class ShopManager : MonoBehaviour
         sceneObjects = FindObjectsByType<SceneObject>(FindObjectsInactive.Include, FindObjectsSortMode.None).ToList();
         foreach (var sceneObject in sceneObjects)
             Debug.Log(sceneObject.name);
+
+        ShowPurchasedSceneObjects(sceneObjects);
     }
 
     /// <summary>
@@ -50,6 +53,20 @@ public class ShopManager : MonoBehaviour
         Device,
         Interior,
         Worker
+    }
+
+    /// <summary>
+    /// Активируем ранее купленные объекты
+    /// </summary>
+    private void ShowPurchasedSceneObjects(List<SceneObject> sceneObjects)
+    {
+        foreach (var sceneObject in sceneObjects)
+        {
+            if (SaveManager.gameData.purchasedOffers.Contains(sceneObject.SceneObjectId))
+            {
+                sceneObject.gameObject.SetActive(true);
+            }
+        }
     }
 
     /// <summary>

@@ -55,6 +55,7 @@ MonoBehaviour:
   offerDescription: {fileID: 8461990988174100054}
   buyButton: {fileID: 4514644720517130217}
   cancelButton: {fileID: 5044515922421489899}
+  shading: {fileID: 5513234547115071679}
 --- !u!1 &838884828101841568
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,7 +482,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5843940888927565559}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.9999114
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -1093,7 +1094,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.000035449397}
+  m_AnchoredPosition: {x: 0, y: 0.000024457622}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &7166006563464263356
