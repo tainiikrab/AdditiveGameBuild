@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9021575488292740086}
-  - component: {fileID: 8951717346767954973}
+  - component: {fileID: 1220245408204637230}
   m_Layer: 5
   m_Name: ShopInfoWindow
   m_TagString: Untagged
@@ -38,7 +38,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8951717346767954973
+--- !u!114 &1220245408204637230
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -47,15 +47,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 577100591517246063}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67a02333bf07723488a32e9ac7c0b24c, type: 3}
+  m_Script: {fileID: 11500000, guid: 8801ee3dae7d46469d8bc9c410cb0ed5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PurchaseWindow
-  offerName: {fileID: 5086011834357165121}
+  m_EditorClassIdentifier: Assembly-CSharp::MoreDetailedUI
   offerIcon: {fileID: 1837012777245793176}
-  buyButton: {fileID: 4514644720517130217}
-  offerPrice: {fileID: 5663349530442179639}
+  offerName: {fileID: 5086011834357165121}
   offerDescription: {fileID: 8461990988174100054}
+  buyButton: {fileID: 4514644720517130217}
   cancelButton: {fileID: 5044515922421489899}
+  shading: {fileID: 5513234547115071679}
 --- !u!1 &838884828101841568
 GameObject:
   m_ObjectHideFlags: 0
@@ -177,7 +177,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8951717346767954973}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: PurchaseWindow, Assembly-CSharp
         m_MethodName: OnClickCancelButton
         m_Mode: 1
@@ -482,7 +482,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5843940888927565559}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9891331
+  m_Size: 0.9999114
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -521,7 +521,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -0.00009918213}
+  m_AnchoredPosition: {x: 0, y: -0.00012207031}
   m_SizeDelta: {x: 3493.2817, y: 3193.7207}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7521849467310098330
@@ -1094,7 +1094,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.00021584655}
+  m_AnchoredPosition: {x: 0, y: 0.000024457622}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!1 &7166006563464263356
@@ -1481,17 +1481,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1314903708133197862, guid: b12af9cf2b58a6241b1b44ea04aeaa2a, type: 3}
   m_PrefabInstance: {fileID: 6221143715507350768}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &5663349530442179639 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1787281834377840839, guid: b12af9cf2b58a6241b1b44ea04aeaa2a, type: 3}
-  m_PrefabInstance: {fileID: 6221143715507350768}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1001 &7641377817702146723
 PrefabInstance:
   m_ObjectHideFlags: 0
