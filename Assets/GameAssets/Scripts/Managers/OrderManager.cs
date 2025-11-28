@@ -83,6 +83,13 @@ public static class OrderManager
 
     public static void CompleteOrder()
     {
+        if (orderData == null)
+        {
+            Debug.LogWarning("Order is null");
+            return;
+        }
+
+
         Debug.Log("Order completed");
         completedOrders.Add(orderData.config);
         availableOrders.Remove(orderData.config);
@@ -97,6 +104,12 @@ public static class OrderManager
 
     public static void DeclineOrder(OrderConfig orderConfig)
     {
+        if (orderData == null)
+        {
+            Debug.LogWarning("Order is null");
+            return;
+        }
+
         if (orderConfig == orderData.config)
         {
             Debug.Log("Cannot decline current order");

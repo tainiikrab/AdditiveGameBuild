@@ -17,7 +17,6 @@ public class MailHeaderUI : MonoBehaviour
 
     public MailUI.Category category { get; set; }
 
-    // public CanvasGroup canvasGroup { get; private set; }
     public MailBodyUI mailBodyUI { get; private set; }
     public OrderConfig orderConfig { get; private set; }
 
@@ -36,7 +35,7 @@ public class MailHeaderUI : MonoBehaviour
     public void Initialize(OrderConfig orderConfig, RectTransform bodyContainer)
     {
         this.orderConfig = orderConfig;
-        if (orderConfig.customerConfig.icon != null)
+        if (orderConfig.customerConfig?.icon != null)
             icon.sprite = orderConfig.customerConfig.icon;
         mailName.text = orderConfig.orderName;
         mailBodyUI = Instantiate(mailBodyPrefab, bodyContainer);
