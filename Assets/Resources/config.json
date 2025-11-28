@@ -359,43 +359,43 @@
     "PrintingMaterials": [
         {
             "name": "PLA",
-            "goodPropertiesRaw": "",
-            "badPropertiesRaw": "",
+            "goodProperties": "Легко печатается, Экологичный, Нет запаха",
+            "badProperties": "Хрупкий, Плавится при жаре",
             "iconID": "PLA_icon",
             "_id": "PLA"
         },
         {
             "name": "Nylon",
-            "goodPropertiesRaw": "",
-            "badPropertiesRaw": "",
+            "goodProperties": "Не ломается, Очень прочный, Выдерживает нагрузки",
+            "badProperties": "Требуется сушилка, Сложно печатается",
             "iconID": "NYLON_icon",
             "_id": "NYLON"
         },
         {
             "name": "PETG",
-            "goodPropertiesRaw": "",
-            "badPropertiesRaw": "",
+            "goodProperties": "Гибкий, Крепкий, Выдерживает высокую температуру",
+            "badProperties": "Липнет к соплу, Тянет нити",
             "iconID": "PETG_icon",
             "_id": "PETG"
         },
         {
             "name": "ABS",
-            "goodPropertiesRaw": "",
-            "badPropertiesRaw": "",
+            "goodProperties": "Легко печатается, Экологичный, Нет запаха",
+            "badProperties": "Сложный в настройке, Воняет при печати",
             "iconID": "ABS_icon",
             "_id": "ABS"
         },
         {
             "name": "TPU",
-            "goodPropertiesRaw": "",
-            "badPropertiesRaw": "",
+            "goodProperties": "Не ломается, Можно мять, Гибкий",
+            "badProperties": "Медленная скорость, Сложно печатается",
             "iconID": "TPU_icon",
             "_id": "TPU"
         },
         {
             "name": "SLA",
-            "goodPropertiesRaw": "",
-            "badPropertiesRaw": "",
+            "goodProperties": "Точная детализация, Гладкий, Твёрдый",
+            "badProperties": "Хрупкий, Токсичный",
             "iconID": "SLA_icon",
             "_id": "SLA"
         }

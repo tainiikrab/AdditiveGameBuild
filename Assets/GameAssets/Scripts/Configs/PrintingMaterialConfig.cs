@@ -5,7 +5,6 @@ using System;
 public class PrintingMaterialConfig : IConfig
 {
     private static string IconsPath = "Sprites/PrintingMaterials/Icons/";
-    private char delimiter = ',';
 
     public string name;
     public string goodProperties;
@@ -15,6 +14,38 @@ public class PrintingMaterialConfig : IConfig
     private string[] _goodProperties;
     private string[] _badProperties;
     private Sprite _icon;
+
+    public string[] GoodProperties
+    {
+        get
+        {
+            if (_goodProperties == null || _goodProperties.Length == 0)
+            {
+                _goodProperties = goodProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                for (int i = 0; i < _goodProperties.Length; i++)
+                {
+                    _goodProperties[i] = _goodProperties[i].Trim();
+                }
+            }
+            return _goodProperties;
+        }
+    }
+
+    public string[] BadProperties
+    {
+        get
+        {
+            if (_badProperties == null || _badProperties.Length == 0)
+            {
+                _badProperties = badProperties.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+                for (int i = 0; i < _badProperties.Length; i++)
+                {
+                    _badProperties[i] = _badProperties[i].Trim();
+                }
+            }
+            return _badProperties;
+        }
+    }
 
     public Sprite Icon
     {
