@@ -5,12 +5,12 @@ using UnityEngine.tvOS;
 
 public class InventoryManager : MonoBehaviour
 {
-    public static InventoryManager Instance {get; private set;}
-    
+    public static InventoryManager Instance { get; private set; }
+
     private List<ShopItemConfig> purchasedItems;
-    
+
     private List<SceneObject> purchasedSceneObjects; // Device / Interior
-    
+
     private ShopManager sm;
 
     private void Awake()
@@ -18,8 +18,8 @@ public class InventoryManager : MonoBehaviour
         if (Instance != null && Instance != this) Destroy(this);
         Instance = this;
 
+        if (sm == null) return;
         sm.OnPurchase += SortPurchasedOffers;
-        
     }
 
     /// <summary>
@@ -30,10 +30,7 @@ public class InventoryManager : MonoBehaviour
         foreach (var item in purchasedItems)
         {
             var sceneObject = ShopManager.Instance.SceneObjects.Find(x => x.SceneObjectId == item.id);
-            if (sceneObject != null)
-            {
-                purchasedSceneObjects.Add(sceneObject);
-            }
+            if (sceneObject != null) purchasedSceneObjects.Add(sceneObject);
         }
     }
 

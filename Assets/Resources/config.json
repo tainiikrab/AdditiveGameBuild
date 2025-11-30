@@ -15,7 +15,7 @@
             "printSpeed": 60.0,
             "sandpapering": 0.0,
             "meshID": "",
-            "reward": 200,
+            "reward": 150,
             "_id": "statuette",
             "rawPrinterTypeName": "FDM"
         },
@@ -34,7 +34,7 @@
             "printSpeed": 30.0,
             "sandpapering": 4.0,
             "meshID": "",
-            "reward": 85,
+            "reward": 210,
             "_id": "phone_stand",
             "rawPrinterTypeName": "FDM"
         },
@@ -72,7 +72,7 @@
             "printSpeed": 50.0,
             "sandpapering": 0.0,
             "meshID": "",
-            "reward": 95,
+            "reward": 270,
             "_id": "bottle",
             "rawPrinterTypeName": "FDM"
         },
@@ -91,7 +91,7 @@
             "printSpeed": 20.0,
             "sandpapering": 0.0,
             "meshID": "",
-            "reward": 280,
+            "reward": 670,
             "_id": "panel_dislike",
             "rawPrinterTypeName": "FDM"
         },
@@ -110,7 +110,7 @@
             "printSpeed": 30.0,
             "sandpapering": 0.0,
             "meshID": "",
-            "reward": 100,
+            "reward": 210,
             "_id": "pendent",
             "rawPrinterTypeName": "FDM"
         },
@@ -129,7 +129,7 @@
             "printSpeed": 40.0,
             "sandpapering": 0.0,
             "meshID": "",
-            "reward": 285,
+            "reward": 250,
             "_id": "detail",
             "rawPrinterTypeName": "FDM"
         },
@@ -148,7 +148,7 @@
             "printSpeed": 50.0,
             "sandpapering": 0.0,
             "meshID": "",
-            "reward": 320,
+            "reward": 800,
             "_id": "crystal_lattice",
             "rawPrinterTypeName": "FDM"
         },
@@ -167,7 +167,7 @@
             "printSpeed": 60.0,
             "sandpapering": 0.0,
             "meshID": "",
-            "reward": 115,
+            "reward": 500,
             "_id": "magnet",
             "rawPrinterTypeName": "FDM"
         },
@@ -186,7 +186,7 @@
             "printSpeed": 60.0,
             "sandpapering": 0.0,
             "meshID": "",
-            "reward": 350,
+            "reward": 1200,
             "_id": "headphones_holder",
             "rawPrinterTypeName": "FDM"
         },
@@ -205,7 +205,7 @@
             "printSpeed": 50.0,
             "sandpapering": 0.0,
             "meshID": "",
-            "reward": 140,
+            "reward": 750,
             "_id": "lamp",
             "rawPrinterTypeName": "FDM"
         },
@@ -224,7 +224,7 @@
             "printSpeed": 40.0,
             "sandpapering": 0.0,
             "meshID": "",
-            "reward": 500,
+            "reward": 2000,
             "_id": "robot",
             "rawPrinterTypeName": "FDM"
         },
@@ -243,7 +243,7 @@
             "printSpeed": 20.0,
             "sandpapering": 0.0,
             "meshID": "",
-            "reward": 180,
+            "reward": 900,
             "_id": "box",
             "rawPrinterTypeName": "FDM"
         },
@@ -262,7 +262,7 @@
             "printSpeed": 60.0,
             "sandpapering": 0.0,
             "meshID": "",
-            "reward": 190,
+            "reward": 1500,
             "_id": "mask",
             "rawPrinterTypeName": "FDM"
         },
@@ -281,7 +281,7 @@
             "printSpeed": 40.0,
             "sandpapering": 0.0,
             "meshID": "",
-            "reward": 550,
+            "reward": 2500,
             "_id": "tripod",
             "rawPrinterTypeName": "FDM"
         }
@@ -310,17 +310,17 @@
         {
             "name": "CoreXY",
             "iconID": "printer_02",
-            "price": 3000,
-            "category": "Device",
-            "description": "Скоростной и точный принтер для тех, кто любит динамику и качество. В отличие от обычных принтеров, у CoreXY движется не весь портал, а только лёгкая печатающая голова — за счёт этого он печатает быстрее, тише и с меньшими вибрациями. Подходит для тех, кто уже немного освоился с 3D-печатью и хочет выйти на новый уровень.",
+            "price": 500,
+            "category": "Interior",
+            "description": "Скоростной и точный принтер для тех, кто любит динамику и качество.",
             "_id": "printer_corexy"
         },
         {
             "name": "Delta",
             "iconID": "printer_03",
-            "price": 5000,
-            "category": "Device",
-            "description": "Элегантный и быстрый, как паук в движении. Принтер с дельта-кинематикой выглядит футуристично: три подвижные руки с лёгкостью управляют печатающей головкой, создавая плавные и точные линии. Он отлично справляется с высокими, симметричными объектами и впечатляет скоростью работы.",
+            "price": 800,
+            "category": "Interior",
+            "description": "Принтер с дельта-кинематикой выглядит футуристично: три подвижные руки с лёгкостью управляют печатающей головкой, создавая плавные и точные линии.",
             "_id": "printer_delta"
         },
         {
@@ -334,7 +334,7 @@
         {
             "name": "Чайничек",
             "iconID": "kettle",
-            "price": 140,
+            "price": 195,
             "category": "Interior",
             "description": "Иметь чайник в лаборатории - элитно. Только смотри, чтобы другие аспиранты не знали",
             "_id": "kettle"
@@ -342,18 +342,42 @@
         {
             "name": "Аквариум",
             "iconID": "aquarium",
-            "price": 185,
+            "price": 350,
             "category": "Interior",
             "description": "Маленький аквариум с маленькой рыбкой. Она любит плавать.",
             "_id": "aquarium"
         },
         {
-            "name": "Стажёр",
+            "name": "Стажёр Дима",
             "iconID": "",
-            "price": 1500,
+            "price": 1000,
             "category": "Worker",
-            "description": "Юный исследователь пришёл стжироваться.",
+            "description": "Выполняет за тебя 3D моделирование",
             "_id": "worker1"
+        },
+        {
+            "name": "Стажерка Оля",
+            "iconID": "",
+            "price": 1000,
+            "category": "Worker",
+            "description": "Берет на себя Настройку пареметров в программе",
+            "_id": "worker2"
+        },
+        {
+            "name": "Стажерка Мила",
+            "iconID": "",
+            "price": 1000,
+            "category": "Worker",
+            "description": "Сама подбирает пластик",
+            "_id": "worker3"
+        },
+        {
+            "name": "Стажер Костя",
+            "iconID": "",
+            "price": 1000,
+            "category": "Worker",
+            "description": "Очищает и подпиливает модель",
+            "_id": "worker4"
         }
     ],
     "PrintingMaterials": [
