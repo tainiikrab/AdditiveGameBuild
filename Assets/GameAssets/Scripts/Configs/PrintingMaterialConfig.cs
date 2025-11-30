@@ -4,11 +4,12 @@ using System;
 [Serializable]
 public class PrintingMaterialConfig : IConfig
 {
-    private static string IconsPath = "Sprites/PrintingMaterials/Icons/";
+    private static string IconsPath = "Sprites/PrintingMaterials/";
 
     public string name;
     public string goodProperties;
     public string badProperties;
+    public string description;
     public string iconID;
 
     private string[] _goodProperties;
