@@ -158,6 +158,7 @@ public static class OrderManager
         public OrderQuality quality = new();
         public OrderConfig config;
         public int currentMinigame = -1;
+        public PrintingMaterialConfig chosenMaterial;
 
         public void LoadNextMinigame()
         {

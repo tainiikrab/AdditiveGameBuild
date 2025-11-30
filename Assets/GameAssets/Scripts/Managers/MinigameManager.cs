@@ -34,6 +34,9 @@ public class MinigameManager : MonoBehaviour
             case MinigameType.Modelling:
                 var modellingWindow = Instantiate(modellingWindowPF, laptopUI);
                 return;
+            case MinigameType.Scanning:
+                SceneSwitchManager.OpenScene(Scenes.ScannerMinigame);
+                return;
             default: return;
         }
     }

@@ -1,5 +1,6 @@
 using UnityEngine;
 using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class Scanner : MonoBehaviour
 {
@@ -18,6 +19,7 @@ public class Scanner : MonoBehaviour
     {
         phone.Accepted += OnAccepted;
         phone.Cancelled += OnCancelled;
+
         
         if (scanLine != null)
         {
@@ -89,6 +91,14 @@ public class Scanner : MonoBehaviour
         }
         
         return null;
+    }
+
+    private void FinishMinigame()
+    {
+        SceneSwitchManager.isMinigameFinished = true;
+        OrderManager.orderData.chosenMaterial = currentPrintingMaterial;
+        currentPrintingMaterial = null;
+        SceneSwitchManager.OpenScene(Scenes.MainScene);
     }
 
     private bool IsCodeFullyInCameraPoint(Code code)
@@ -163,6 +173,7 @@ public class Scanner : MonoBehaviour
         StopScanAnimation();
         phone.ClosePhoneUI();
         // Возврат на главную сцену
+        FinishMinigame();
     }
 
     private void OnCancelled()
