@@ -69,16 +69,11 @@ public class DialogUI : MonoBehaviour
 
         _currentBlockIndex = 0;
         ShowNextDialogBlock();
-
-        // Debug.Log($"��������: {_dialogBlocks.Count}, �������� ������: {_answerBlocks.Count}");
-        // for (var i = 0; i < _answerBlocks.Count; i++)
-        //     Debug.Log($"�������� ���� {i}: {string.Join(", ", _answerBlocks[i])}");
     }
 
     private void ShowNextDialogBlock()
     {
         ClearAnswers();
-
         if (_currentBlockIndex >= _dialogBlocks.Count)
         {
             EndDialog();
@@ -93,7 +88,8 @@ public class DialogUI : MonoBehaviour
 
     private IEnumerator ShowDialogBlock(string[] lines)
     {
-        foreach (var line in lines) yield return StartCoroutine(ShowLine(line));
+        foreach (var line in lines) 
+            yield return StartCoroutine(ShowLine(line));
 
         var hasAnswers = _currentBlockIndex < _answerBlocks.Count && _answerBlocks[_currentBlockIndex].Count > 0;
         if (hasAnswers)
@@ -113,22 +109,8 @@ public class DialogUI : MonoBehaviour
             StopCoroutine(textAnimationCoroutine);
 
         textAnimationCoroutine = StartCoroutine(AnimateText(text));
-
-        var lineComplete = false;
-        while (!lineComplete)
-        {
-            if (IsTextAnimating && Input.GetMouseButtonDown(0))
-            {
-                dialogText.text = text;
-                IsTextAnimating = false;
-            }
-            else if (!IsTextAnimating && Input.GetMouseButtonDown(0))
-            {
-                lineComplete = true;
-            }
-
-            yield return null;
-        }
+    
+        yield return new WaitUntil(() => !IsTextAnimating);
     }
 
     private IEnumerator AnimateText(string text)
@@ -167,12 +149,10 @@ public class DialogUI : MonoBehaviour
 
             newButton.onClick.AddListener(() =>
             {
-                Debug.Log($"������ �����: {answer}");
                 HandleAnswerSelection(answer);
             });
         }
 
-        Debug.Log($"������ {answers.Count} ������ ��� ����� {_currentBlockIndex}");
     }
 
     private void HandleAnswerSelection(string answer)
@@ -183,7 +163,6 @@ public class DialogUI : MonoBehaviour
 
     private void EndDialog()
     {
-        //ImportantOrder.SetActive(true);
         StartCoroutine(WaitForDialogClose());
     }
 
@@ -202,9 +181,19 @@ public class DialogUI : MonoBehaviour
 
     public void ClearAnswers()
     {
-        foreach (Transform child in answersField.transform)
-            Destroy(child.gameObject);
+    #if UNITY_EDITOR
+        if (!Application.isPlaying)
+        {
+            foreach (Transform child in answersField.transform)
+                DestroyImmediate(child.gameObject);
+            return;
+        }
+    #endif
+
+    foreach (Transform child in answersField.transform)
+        Destroy(child.gameObject);
     }
+
 
     private List<string[]> SplitIntoBlocks(string[] lines)
     {
@@ -234,4 +223,29 @@ public class DialogUI : MonoBehaviour
 
         return blocks;
     }
+
+    #if UNITY_EDITOR
+    [ContextMenu("Add Test Answer Button")]
+    private void SpawnTestAnswerButton()
+    {
+        if (AnswerPref == null || answersField == null)
+        {
+            Debug.LogWarning("AnswerPref или answersField не назначены!");
+            return;
+        }
+
+        Button newButton = Instantiate(AnswerPref, answersField.transform);
+        newButton.gameObject.SetActive(true);
+        newButton.GetComponentInChildren<TextMeshProUGUI>().text = "Новый ответ";
+
+        Debug.Log("Тестовая кнопка ответа создана в инспекторе!");
+    }
+
+    [ContextMenu("Clear Answer Buttons")]
+    private void ClearAnswerButtonw()
+    {
+        ClearAnswers();
+    }
+    #endif
+
 }
