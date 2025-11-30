@@ -52,6 +52,8 @@ public class Slicer : MonoBehaviour
         else
         {
             order = OrderManager.orderData.config;
+            Debug.Log(order.orderName);
+            Debug.Log(order.mesh.name);
             modelTurner.SetModel(order.mesh);
             modelRenderer = ModelTurner.turningModel.GetComponent<MeshRenderer>();
             modelRenderer.material = slicerMaterial;

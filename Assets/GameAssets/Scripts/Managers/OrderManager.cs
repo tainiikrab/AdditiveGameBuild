@@ -47,7 +47,7 @@ public static class OrderManager
         }
     }
 
-    public static int currentPlotIndex { get; set; } = -1;
+    public static int currentPlotIndex { get; set; } = 0;
 
     public static void CreatePlotOrder(int plotIndex = -1)
     {
