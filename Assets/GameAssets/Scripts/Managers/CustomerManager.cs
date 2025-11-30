@@ -46,7 +46,6 @@ public class CustomerManager : MonoBehaviour
         activeCustomer.Initialize(customerConfig, orderConfig, new List<IndexActionTriple> { pair });
 
         activeCustomer.StartMovement();
-        Debug.Log($"🧍 Клиент '{customerConfig.name}' создан");
     }
 
     private void ShowDialogueUI()

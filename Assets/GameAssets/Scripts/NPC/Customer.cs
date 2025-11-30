@@ -19,6 +19,7 @@ public class Customer : WayPointFollower
     {
         this.orderConfig = orderConfig;
         this.customerConfig = customerConfig;
+
         foreach (var iap in indexActionPairs)
         {
             Paths[iap.PathIndex].OnPathEnd += iap.action;
