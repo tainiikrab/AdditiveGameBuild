@@ -1,11 +1,16 @@
 using UnityEngine;
 
+/// <summary>
+/// Класс, хранящий категорию материала для сканируемого кода в мини-игре сканера
+/// </summary>
 public class Code : MonoBehaviour
 {
-    private void Start()
+    public MaterialReference MaterialLink => materialLink;
+
+    [SerializeField] private MaterialReference materialLink;
+
+    public enum MaterialReference
     {
-        Material = GetComponentInParent<PrintingMaterial>();
+        PLA, ABS, PETG, Nylon, TPU, SLA
     }
-    
-    public PrintingMaterial Material { get; private set; }
 }

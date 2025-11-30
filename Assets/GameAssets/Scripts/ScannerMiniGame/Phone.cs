@@ -36,7 +36,7 @@ public class Phone : MonoBehaviour
         transform.position = phoneStartPosition.position;
     }
     
-    public void Initialize(PrintingMaterial material)
+    public void Initialize(PrintingMaterialConfig material)
     {
         draggablePhone.enabled = false;
         shading.gameObject.SetActive(true);
@@ -49,12 +49,23 @@ public class Phone : MonoBehaviour
         screen.SetActive(true);
 
         materialIcon.sprite = material.Icon;
-        materialTitle.text = material.Title;
+        materialTitle.text = material.name;
         
         acceptButton.onClick.AddListener(() => Accepted?.Invoke());
         cancelButton.onClick.AddListener(() => Cancelled?.Invoke());
-        
-        var sequence = DOTween.Sequence();
+
+        OnScannedAnimation();
+    }
+    
+    public void ClosePhoneUI()
+    {
+        ContinueScanAnimation();
+        screen.SetActive(false);
+    }
+
+    private void OnScannedAnimation()
+    {
+                var sequence = DOTween.Sequence();
         sequence.Join(
             rectTransform.DOMove(phonePositionWithUI.position, duration).SetEase(Ease.InCubic)
             );
@@ -70,10 +81,10 @@ public class Phone : MonoBehaviour
             acceptButton.interactable = cancelButton.interactable = true;
         });
     }
-    
-    public void ClosePhoneUI()
+
+    private void ContinueScanAnimation()
     {
-        var sequence = DOTween.Sequence();
+                var sequence = DOTween.Sequence();
         sequence.Join(
             rectTransform.DOScale(Vector3.one * normalScale, duration).SetEase(Ease.InCubic)
             );
@@ -88,7 +99,5 @@ public class Phone : MonoBehaviour
             shading.gameObject.SetActive(false);
             draggablePhone.enabled = true;
         });
-            
-        screen.SetActive(false);
     }
 }

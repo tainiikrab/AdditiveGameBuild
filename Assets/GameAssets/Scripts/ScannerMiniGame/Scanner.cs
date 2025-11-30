@@ -9,7 +9,7 @@ public class Scanner : MonoBehaviour
     [SerializeField] private RectTransform scanLine;
     
     private bool isUIActive;
-    private PrintingMaterial currentPrintingMaterial;
+    private PrintingMaterialConfig currentPrintingMaterial;
     private float scanTimer;
     private Tween scanLineTween;
     private Code currentDetectedCode;
@@ -57,7 +57,10 @@ public class Scanner : MonoBehaviour
         if (currentDetectedCode != detectedCode)
         {
             currentDetectedCode = detectedCode;
-            currentPrintingMaterial = detectedCode.GetComponentInParent<PrintingMaterial>();
+
+            currentPrintingMaterial = GlobalConfig.Instance.PrintingMaterials.Find(material => 
+                material.id.ToString() == currentDetectedCode.MaterialLink.ToString());
+
             scanTimer = 0f;
             
             StartScanAnimation();
@@ -159,7 +162,7 @@ public class Scanner : MonoBehaviour
         isUIActive = false;
         StopScanAnimation();
         phone.ClosePhoneUI();
-        
+        // Возврат на главную сцену
     }
 
     private void OnCancelled()
@@ -177,7 +180,7 @@ public class Scanner : MonoBehaviour
         StopScanAnimation();
     }
 
-    private void OnDrawGizmos()
+    /*private void OnDrawGizmos()
     {
         if (phoneCameraPoint != null)
         {
@@ -207,5 +210,5 @@ public class Scanner : MonoBehaviour
                 }
             }
         }
-    }
+    }*/
 }
