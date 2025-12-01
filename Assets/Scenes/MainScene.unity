@@ -4883,8 +4883,13 @@ MonoBehaviour:
   resetButton: {fileID: 145213437}
   sfxSlider: {fileID: 213175660}
   musicSlider: {fileID: 319078075}
-  clickSound: {fileID: 8300000, guid: 4155553cbaba88d459a69c82d3ef2210, type: 3}
-  musicClip: {fileID: 8300000, guid: 3b063188cb9628a4b896b7a2bf3865b6, type: 3}
+  sounds:
+  - clip: {fileID: 8300000, guid: 3b063188cb9628a4b896b7a2bf3865b6, type: 3}
+    soundType: 0
+  - clip: {fileID: 8300000, guid: e825f9516644bf84686a2db7ae86b150, type: 3}
+    soundType: 2
+  - clip: {fileID: 8300000, guid: 4155553cbaba88d459a69c82d3ef2210, type: 3}
+    soundType: 3
 --- !u!1 &294164887
 GameObject:
   m_ObjectHideFlags: 0

@@ -60,7 +60,7 @@ public class ReviewUI : MonoBehaviour
         GameManager.Instance.points += reward;
         OrderManager.CompleteOrder();
         gameObject.SetActive(false);
-        AudioManager.Instance.PlayClickSound();
+        AudioManager.Instance.PlaySound(SoundType.Close);
         OrderManager.CreateRegularOrder(3);
     }
 }
