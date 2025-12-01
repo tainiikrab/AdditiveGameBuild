@@ -82,5 +82,6 @@ public class SceneSwitchManager : MonoBehaviour
 public enum Scenes
 {
     MainScene,
-    PostProcessMinigame
+    PostProcessMinigame,
+    ScannerMinigame,
 }
