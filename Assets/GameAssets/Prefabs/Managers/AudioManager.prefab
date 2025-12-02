@@ -50,5 +50,4 @@ MonoBehaviour:
   resetButton: {fileID: 0}
   sfxSlider: {fileID: 0}
   musicSlider: {fileID: 0}
-  clickSound: {fileID: 0}
-  musicClip: {fileID: 0}
+  sounds: []

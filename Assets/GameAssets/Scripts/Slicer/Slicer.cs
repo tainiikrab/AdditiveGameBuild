@@ -68,7 +68,7 @@ public class Slicer : MonoBehaviour
             printButton.onClick.AddListener(StartPrinting);
         }
 
-        AudioManager.Instance.PlayClickSound();
+        //AudioManager.Instance.PlayClickSound();
     }
 
     private float CalculateQuality()
@@ -107,7 +107,7 @@ public class Slicer : MonoBehaviour
         Debug.Log("Starting minigame");
         OrderManager.orderData.LoadNextMinigame();
 
-        AudioManager.Instance.PlayClickSound();
+        //AudioManager.Instance.PlayClickSound();
     }
 
     // private float time;

@@ -51,11 +51,11 @@ public class MailUI : MonoBehaviour
         OrderManager.SetCurrentOrder(orderConfig);
         Instance.MoveHeaderToCategory(header, Category.Completed);
         SaveManager.gameData.completedOrders.Add(orderConfig.id);
-        AudioManager.Instance.PlayClickSound();
+        AudioManager.Instance.PlaySound(SoundType.Accept);
 
         OrderManager.orderData.LoadNextMinigame();
         Instance.GetComponent<GUIWindow>().CloseWindow();
-        AudioManager.Instance.PlayClickSound();
+        AudioManager.Instance.PlaySound(SoundType.Accept);
     }
 
     public static void DeclineOrder(OrderConfig orderConfig, MailHeaderUI header)
@@ -66,7 +66,7 @@ public class MailUI : MonoBehaviour
         SaveManager.gameData.declinedOrders.Add(orderConfig.id);
         Debug.Log($"Declined order: {orderConfig.id}");
 
-        AudioManager.Instance.PlayClickSound();
+        AudioManager.Instance.PlaySound(SoundType.Cancel);
     }
 
     private void Awake()
@@ -142,7 +142,7 @@ public class MailUI : MonoBehaviour
             }
         }
 
-        AudioManager.Instance.PlayClickSound();
+        AudioManager.Instance.PlaySound(SoundType.Switch);
     }
 
     public void MoveHeaderToCategory(MailHeaderUI header, Category newCategory)
@@ -210,7 +210,7 @@ public class MailUI : MonoBehaviour
     private void AddOrder(OrderConfig order)
     {
         AddOrder(order, Category.Incoming);
-        AudioManager.Instance.PlayClickSound();
+        //AudioManager.Instance.PlayClickSound();
     }
 
     private void AddOrder(OrderConfig order, Category category)
@@ -222,7 +222,7 @@ public class MailUI : MonoBehaviour
         orderHeader.Toggle(false);
         headers.Add(orderHeader);
 
-        AudioManager.Instance.PlayClickSound();
+        //AudioManager.Instance.PlayClickSound();
         // ActivateHeader(orderHeader);
     }
 

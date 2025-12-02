@@ -81,6 +81,6 @@ public class MailHeaderUI : MonoBehaviour
             mailBodyUI.gameObject.SetActive(false);
         }
 
-        AudioManager.Instance.PlayClickSound();
+        //AudioManager.Instance.PlayClickSound();
     }
 }

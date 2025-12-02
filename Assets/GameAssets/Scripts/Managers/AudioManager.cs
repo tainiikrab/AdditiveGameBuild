@@ -1,4 +1,5 @@
-using System.Collections;
+using System;
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -7,28 +8,56 @@ using UnityEngine.UI;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
-    
+
     [SerializeField] private AudioMixer audioMixer;
-    
+
     [SerializeField] private AudioMixerGroup sfxGroup;
     [SerializeField] private AudioMixerGroup musicGroup;
-    
+
     [SerializeField] private Button resetButton;
-    
+
     [SerializeField] private Slider sfxSlider;
     [SerializeField] private Slider musicSlider;
-    
-    [SerializeField] private AudioClip clickSound;
-    [SerializeField] private AudioClip musicClip;
-    
-    private const string SfxMixerGroup = "soundEffectsVolume"; 
+
+    [SerializeField] private Sound[] sounds;
+
+    private Dictionary<SoundType, AudioSource> soundSources;
+
+    private const string SfxMixerGroup = "soundEffectsVolume";
     private const string MusicMixerGroup = "musicVolume";
-    
+
     private void Awake()
     {
         if (Instance == null) Instance = this;
         
-        sfxSlider.onValueChanged.AddListener(SetSfxVolume); 
+        soundSources = new Dictionary<SoundType, AudioSource>();
+
+        foreach (var sound in sounds)
+        {
+            if (sound.clip == null)
+            {
+                Debug.Log("Sound clip is null");
+                continue;
+            }
+            
+            var source = gameObject.AddComponent<AudioSource>();
+            source.clip = sound.clip;
+            soundSources[sound.soundType] = source;
+
+            if (sound.soundType == SoundType.BackgroundMusic)
+            {
+                source.outputAudioMixerGroup = musicGroup;
+                source.loop = true;
+                source.Play();
+            }
+            else
+            {
+                source.outputAudioMixerGroup = sfxGroup;
+                source.loop = false;
+            }
+        }
+
+        sfxSlider.onValueChanged.AddListener(SetSfxVolume);
         musicSlider.onValueChanged.AddListener(SetMusicVolume);
         resetButton.onClick.AddListener(ResetVolumeSettings);
     }
@@ -36,7 +65,6 @@ public class AudioManager : MonoBehaviour
     private void Start()
     {
         LoadVolumeSettings();
-        PlayMusic();
     }
 
     private void OnDestroy()
@@ -46,31 +74,12 @@ public class AudioManager : MonoBehaviour
         resetButton.onClick.RemoveListener(ResetVolumeSettings);
     }
 
-    public void PlayClickSound()
+    public void PlaySound(SoundType soundType)
     {
-        StartCoroutine(ClickSound());
+        soundSources.TryGetValue(soundType, out var sound);
+        sound.Play();
     }
 
-    private IEnumerator ClickSound()
-    {
-        var sfxSource = this.AddComponent<AudioSource>();
-        sfxSource.clip = clickSound;
-        sfxSource.loop = false;
-        sfxSource.outputAudioMixerGroup = sfxGroup;
-        sfxSource.Play();
-        yield return new WaitForSeconds(sfxSource.clip.length);
-        Destroy(sfxSource);
-    }
-
-    private void PlayMusic()
-    {
-        var musicSource = this.AddComponent<AudioSource>();
-        musicSource.clip = musicClip;
-        musicSource.loop = true;
-        musicSource.outputAudioMixerGroup = musicGroup;
-        musicSource.Play();
-    }
-    
     private void SetMusicVolume(float value)
     {
         audioMixer.SetFloat(MusicMixerGroup, Mathf.Log10(Mathf.Max(float.Epsilon, value)) * 20);
@@ -95,4 +104,29 @@ public class AudioManager : MonoBehaviour
         musicSlider.value = SaveManager.gameData.volumeData.MusicVolume;
         sfxSlider.value = SaveManager.gameData.volumeData.SfxVolume;
     }
+
+    [Serializable]
+    public class Sound
+    {
+        public AudioClip clip;
+        public SoundType soundType;
+    }
+}
+
+public enum SoundType
+{
+    BackgroundMusic,
+    Switch,
+    Open,
+    Close,
+    Accept,
+    Cancel,
+    Scanning,
+    Buy,
+    OrderComplete,
+    Nippers,
+    Sandpaper,
+    Painting,
+    Printing,
+    Other
 }

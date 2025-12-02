@@ -13,12 +13,12 @@ public class UIPopup : MonoBehaviour
     public void Show()
     {
         body.SetActive(true);
-        AudioManager.Instance.PlayClickSound();
+        AudioManager.Instance.PlaySound(SoundType.Open);
     }
 
     public void Hide()
     {
         body.SetActive(false);
-        AudioManager.Instance.PlayClickSound();
+        AudioManager.Instance.PlaySound(SoundType.Close);
     }
 }
