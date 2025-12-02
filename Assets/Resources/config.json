@@ -289,7 +289,7 @@
             "sandpapering": 0.0,
             "meshID": "",
             "reward": 1500,
-            "slicerPrompt": "Она должна быть крепкая, но немного гибкая. Так что ничего суперсложного — делай уверенно, но не на максималках.",
+            "slicerPrompt": "Хочу гладкую, хрупкую поверхность… Делай медленно, аккуратно, пусть выглядит как стекло.",
             "plasticPrompt": "Нужно что-то крепкое, но одновременно с этим гибкое…что же это может быть…Ты можешь прям что-то сложное сделать?",
             "_id": "mask",
             "rawPrinterTypeName": "FDM"
@@ -319,7 +319,7 @@
     "Customers": [
         {
             "name": "Директор",
-            "iconID": "old_bear",
+            "iconID": "bear_placeholder",
             "modelID": "bear_01",
             "_id": "customer1"
         },
@@ -341,7 +341,7 @@
             "name": "CoreXY",
             "iconID": "printer_02",
             "price": 500,
-            "category": "Interior",
+            "category": "Device",
             "description": "Скоростной и точный принтер для тех, кто любит динамику и качество.",
             "_id": "printer_corexy"
         },
@@ -349,7 +349,7 @@
             "name": "Delta",
             "iconID": "printer_03",
             "price": 800,
-            "category": "Interior",
+            "category": "Device",
             "description": "Принтер с дельта-кинематикой выглядит футуристично: три подвижные руки с лёгкостью управляют печатающей головкой, создавая плавные и точные линии.",
             "_id": "printer_delta"
         },

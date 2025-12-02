@@ -27,7 +27,7 @@ public class OfferCardUI : MonoBehaviour
 
     private void OnEnable()
     {
-        ShopManager.Instance.OnPurchase += () => SetButtonsState(buyButton, moreDetailedButton);
+        ShopManager.Instance.OnPurchase += SetButtonsState;
     }
     /// <summary>
     /// Инициализирует данные о товаре на карточке
@@ -40,13 +40,23 @@ public class OfferCardUI : MonoBehaviour
         offerIcon.preserveAspect = true;
         offerName.text = offer.name;
         offerPriceText.text = offer.price.ToString();
+        
+        buyButton.onClick.RemoveAllListeners();
+        moreDetailedButton.onClick.RemoveAllListeners();
+        
         buyButton.onClick.AddListener(() => OnBuyButtonClick(thisOffer));
         moreDetailedButton.onClick.AddListener(() => OnMoreDetailedButtonClick(thisOffer));
-        SetButtonsState(buyButton, moreDetailedButton);
+        
+        SetButtonsState();
     }
 
-    private void SetButtonsState(Button buyButton, Button detailedButton)
+    private void SetButtonsState()
     {
+        if (this == null || gameObject == null || !gameObject.activeInHierarchy) 
+            return;
+    
+        if (thisOffer == null) return;
+    
         if (GameManager.Instance.points < thisOffer.price)
         {
             buyButton.interactable = false;
@@ -58,14 +68,14 @@ public class OfferCardUI : MonoBehaviour
             buyButton.image.color = Color.darkOliveGreen;
             buyButton.GetComponentInChildren<TextMeshProUGUI>().color = Color.white;
             buyButton.GetComponentInChildren<TextMeshProUGUI>().text = "Куплено";
-            detailedButton.interactable = false;
+            moreDetailedButton.interactable = false;
         }
         else
         {
             buyButton.interactable = true;
             buyButton.image.color = Color.white;
-            detailedButton.interactable = true;
-            detailedButton.image.color = Color.white;
+            moreDetailedButton.interactable = true;
+            moreDetailedButton.image.color = Color.white;
         }
     }
 
@@ -81,8 +91,10 @@ public class OfferCardUI : MonoBehaviour
         panel.Initialize(item);
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
-        ShopManager.Instance.OnPurchase -= () => SetButtonsState(buyButton, moreDetailedButton);
+        ShopManager.Instance.OnPurchase -= SetButtonsState;
+        buyButton.onClick.RemoveListener(() => OnBuyButtonClick(thisOffer));
+        moreDetailedButton.onClick.RemoveListener(() => OnMoreDetailedButtonClick(thisOffer));
     }
 }

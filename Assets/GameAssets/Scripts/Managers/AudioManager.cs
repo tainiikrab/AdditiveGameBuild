@@ -128,5 +128,6 @@ public enum SoundType
     Sandpaper,
     Painting,
     Printing,
+    Notification,
     Other
 }

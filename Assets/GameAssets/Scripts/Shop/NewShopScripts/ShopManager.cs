@@ -84,15 +84,18 @@ public class ShopManager : MonoBehaviour
     /// <param name="offer"></param>
     public void Purchase(ShopItemConfig offer)
     {
+        GameManager.Instance.points -= offer.price;
+        SaveManager.gameData.purchasedOffers.Add(offer.id);
+        Debug.Log($"{offer.name} purchased {offer.price} points");
+        
         if (IsSceneObject(offer))
         {
             var sObj = sceneObjects.Find(x => x.SceneObjectId == offer.id);
             OnPurchaseSceneObject?.Invoke();
             AnimationSceneObject(sObj);
         }
-        GameManager.Instance.points -= offer.price;
-        SaveManager.gameData.purchasedOffers.Add(offer.id);
         OnPurchase?.Invoke();
+        AudioManager.Instance.PlaySound(SoundType.Buy);
     }
 
     /// <summary>
