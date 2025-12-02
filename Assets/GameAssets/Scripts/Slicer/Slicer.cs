@@ -19,6 +19,12 @@ public class Slicer : MonoBehaviour
 
     [SerializeField] private Material slicerMaterial;
 
+
+    [Space(10)] [Header("Misc")] [SerializeField]
+    private TextMeshProUGUI slicerPromptLabel;
+
+    [SerializeField] private Image qualityImage;
+
     private void Awake()
     {
         block = new MaterialPropertyBlock();
@@ -28,8 +34,12 @@ public class Slicer : MonoBehaviour
         OrderManager.OnOrderAccepted += SetOrder;
         onCompletedHandler = _ => SetOrder();
         OrderManager.OnOrderCompleted += onCompletedHandler;
-
         SetOrder();
+        if (order != null)
+        {
+            slicerPromptLabel.text = order.slicerPrompt;
+            SetQualityImage(CalculateQuality());
+        }
     }
 
     private void OnDestroy()
@@ -52,9 +62,7 @@ public class Slicer : MonoBehaviour
         else
         {
             order = OrderManager.orderData.config;
-            Debug.Log(order.orderName);
-            Debug.Log(order.mesh.name);
-            modelTurner.SetModel(order.mesh);
+            modelTurner.TrySetModel(order.mesh);
             modelRenderer = ModelTurner.turningModel.GetComponent<MeshRenderer>();
             modelRenderer.material = slicerMaterial;
             printButton.onClick.AddListener(StartPrinting);
@@ -63,24 +71,47 @@ public class Slicer : MonoBehaviour
         AudioManager.Instance.PlayClickSound();
     }
 
+    private float CalculateQuality()
+    {
+        Debug.Log($"Density: {fillDensity.value}, orderDensity: {order.fillDensity}");
+        var quality = OrderManager.orderData.quality;
+        quality.fillDensity =
+            Mathf.Clamp(100 - Mathf.Abs((fillDensity.value - order.fillDensity) * fillDensity.scoreModifier), 0, 100);
+        quality.layerHeight =
+            Mathf.Clamp(100 - Mathf.Abs((layerHeight.value - order.layerHeight) * layerHeight.scoreModifier), 0, 100);
+        quality.printSpeed =
+            Mathf.Clamp(100 - Mathf.Abs((printSpeed.value - order.printSpeed) * printSpeed.scoreModifier), 0, 100);
+
+        Debug.Log(
+            $"Quality: density: {quality.fillDensity}, height: {quality.layerHeight}, speed: {quality.printSpeed}");
+        return (quality.fillDensity + quality.layerHeight + quality.printSpeed) / 3f;
+    }
+
+    private void SetQualityImage(float quality)
+    {
+        var normalizedQuality = Mathf.Clamp01(quality / 100f);
+
+        var color = Color.Lerp(Color.red, Color.green, normalizedQuality);
+
+        Debug.Log($"NormalizedQuality: {normalizedQuality}");
+        qualityImage.color = color;
+    }
+
     private void StartPrinting()
     {
-        var quality = OrderManager.orderData.quality;
-        quality.fillDensity = 100 - Mathf.Pow(Mathf.Abs(fillDensity.value - order.fillDensity), 1f);
-        quality.layerHeight = 100 - Mathf.Pow(Mathf.Abs(layerHeight.value - order.layerHeight), 1f);
-        quality.printSpeed = 100 - Mathf.Pow(Mathf.Abs(printSpeed.value - order.printSpeed), 1f);
+        CalculateQuality();
         Debug.Log($"Order quality: {OrderManager.orderData.quality.totalQuality}");
 
         // StartCoroutine(Walk());
-        walk = true;
+        // walk = true;
         Debug.Log("Starting minigame");
         OrderManager.orderData.LoadNextMinigame();
 
         AudioManager.Instance.PlayClickSound();
     }
 
-    private float time;
-    private bool walk = false;
+    // private float time;
+    // private bool walk = false;
 
     // private void Update()
     // {
@@ -169,6 +200,8 @@ public class Slicer : MonoBehaviour
         values.slider.SetValueWithoutNotify(snapped);
         values.label.text = $"{values.labelPrefix}{snapped:F2}{values.labelPostfix}";
 
+        if (order != null)
+            SetQualityImage(CalculateQuality());
         UpdateModel();
     }
 
@@ -180,6 +213,8 @@ public class Slicer : MonoBehaviour
         public int steps = 10;
         public float minValue;
         public float maxValue;
+
+        public float scoreModifier;
         private string _labelPostfix;
         private string _labelPrefix;
 

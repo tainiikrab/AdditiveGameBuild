@@ -56,10 +56,16 @@ public class ModelTurner : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndD
         }
     }
 
-    public void SetModel(GameObject model)
+    public void TrySetModel(GameObject model)
     {
         if (turningModel == null)
             FindTurningModel();
+
+        if (model == null)
+        {
+            Debug.LogWarning("Model is null for slicer");
+            return;
+        }
 
         if (turningModel != null)
             Destroy(turningModel.gameObject);

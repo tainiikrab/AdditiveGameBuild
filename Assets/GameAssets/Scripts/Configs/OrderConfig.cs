@@ -28,6 +28,9 @@ public class OrderConfig : IConfig
     public string meshID;
     public int reward;
 
+    public string slicerPrompt;
+    public string plasticPrompt;
+
 
     [SerializeField] private string _id;
 
@@ -135,5 +138,4 @@ public class OrderConfig : IConfig
     {
         wasCalled = value;
     }
-
 }

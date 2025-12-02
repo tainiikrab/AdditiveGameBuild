@@ -8,7 +8,7 @@ public class ModelRotator : MonoBehaviour
     private Vector2 angularVelocity;
     private bool isDragging;
     private Vector3 lastMousePos;
-    public Transform model { get; private set; }
+    public Transform model;
 
 
     private void Awake()
@@ -26,6 +26,13 @@ public class ModelRotator : MonoBehaviour
             OrderManager.SetCurrentOrder(GlobalConfig.Instance.Orders[0]);
         }
 
+        if (OrderManager.orderData.config.mesh == null)
+        {
+            Debug.LogWarning($"No mesh for {OrderManager.orderData.config.orderName}");
+            return;
+        }
+
+        Destroy(model.gameObject);
         var modelGO = Instantiate(OrderManager.orderData.config.mesh, transform);
         model = modelGO.transform;
     }

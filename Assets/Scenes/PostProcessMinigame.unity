@@ -631,7 +631,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d52149286734434bb2cfcd0005898f19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  currentPlotIndex: 1
   player: {fileID: 0}
   openMinigameDelay: 0
   isUIOpened: 0
@@ -1384,7 +1383,7 @@ AudioSource:
   m_GameObject: {fileID: 1214401594}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3295945009703890252, guid: aa58ca04a3e5edf438529aad2f86d699, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: b009c6864130f2f4b8ce1b91a6a457b1, type: 3}
   m_PlayOnAwake: 1
@@ -2061,7 +2060,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: e42de1707367424458de7714ff64de04, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2106,9 +2105,9 @@ Transform:
   m_Children:
   - {fileID: 540897298}
   - {fileID: 1808928789}
-  - {fileID: 1592463592}
   - {fileID: 728333502}
   - {fileID: 1711354158}
+  - {fileID: 1592463592}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1606104214
@@ -2146,6 +2145,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DragRotateSimple
   rotationSpeed: 0.15
   inertiaDamping: 5
+  model: {fileID: 1592463592}
 --- !u!1 &1684362408
 GameObject:
   m_ObjectHideFlags: 0
@@ -2652,7 +2652,7 @@ AudioSource:
   m_GameObject: {fileID: 1813959117}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: -3295945009703890252, guid: aa58ca04a3e5edf438529aad2f86d699, type: 2}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 0}
   m_PlayOnAwake: 1

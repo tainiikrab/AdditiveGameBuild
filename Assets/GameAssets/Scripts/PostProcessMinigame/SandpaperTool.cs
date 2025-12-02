@@ -24,6 +24,7 @@ public class SandpaperTool : AbstractTool
             // Debug.Log("Raycast");
             var parent = hit.transform.parent;
             var renderer = parent.GetChild(parent.childCount - 1).GetComponentInChildren<Renderer>();
+            Debug.Log(renderer.gameObject.name);
             if (renderer != null)
                 // if (targetMaterial == null)
                 //     // клонируем материал, чтобы не портить sharedMaterial
@@ -46,6 +47,7 @@ public class SandpaperTool : AbstractTool
                     // звук шлифовки
                     audioSource.volume = 1f;
                     animation[animationName].speed = 1f;
+                    Debug.Log($"Material smoothness: {renderer.material.GetFloat(smoothnessProperty)}");
                 }
         }
         else

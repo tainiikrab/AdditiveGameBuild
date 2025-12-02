@@ -5106,7 +5106,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &310703184
 Transform:
   m_ObjectHideFlags: 0
@@ -27504,8 +27504,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2eab7f03fdbc58042968633ac1ae3d72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SceneObject
-  category: 0
-  sceneObjectId: 
 --- !u!1 &1862405705
 GameObject:
   m_ObjectHideFlags: 0
@@ -32838,6 +32836,10 @@ PrefabInstance:
     - target: {fileID: 8556825381351385985, guid: f0736941b72642d468a79805b85e514d, type: 3}
       propertyPath: m_LocalPosition.z
       value: -1.97
+      objectReference: {fileID: 0}
+    - target: {fileID: 8696549423219968597, guid: f0736941b72642d468a79805b85e514d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8862477033908560446, guid: f0736941b72642d468a79805b85e514d, type: 3}
       propertyPath: m_LocalPosition.x
