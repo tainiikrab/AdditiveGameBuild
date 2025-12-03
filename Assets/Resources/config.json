@@ -289,7 +289,7 @@
             "sandpapering": 0.0,
             "meshID": "",
             "reward": 1500,
-            "slicerPrompt": "Хочу гладкую, хрупкую поверхность… Делай медленно, аккуратно, пусть выглядит как стекло.",
+            "slicerPrompt": "Она должна быть крепкая, но немного гибкая. Так что ничего суперсложного — делай уверенно, но не на максималках.",
             "plasticPrompt": "Нужно что-то крепкое, но одновременно с этим гибкое…что же это может быть…Ты можешь прям что-то сложное сделать?",
             "_id": "mask",
             "rawPrinterTypeName": "FDM"
@@ -379,7 +379,7 @@
         },
         {
             "name": "Стажёр Дима",
-            "iconID": "",
+            "iconID": "workerDimaIcon",
             "price": 1000,
             "category": "Worker",
             "description": "Выполняет за тебя 3D моделирование",
@@ -387,7 +387,7 @@
         },
         {
             "name": "Стажерка Оля",
-            "iconID": "",
+            "iconID": "workerOlyaIcon",
             "price": 1000,
             "category": "Worker",
             "description": "Берет на себя Настройку пареметров в программе",
@@ -395,7 +395,7 @@
         },
         {
             "name": "Стажерка Мила",
-            "iconID": "",
+            "iconID": "workerMilaIcon",
             "price": 1000,
             "category": "Worker",
             "description": "Сама подбирает пластик",
@@ -403,7 +403,7 @@
         },
         {
             "name": "Стажер Костя",
-            "iconID": "",
+            "iconID": "workerKostyaIcon",
             "price": 1000,
             "category": "Worker",
             "description": "Очищает и подпиливает модель",
