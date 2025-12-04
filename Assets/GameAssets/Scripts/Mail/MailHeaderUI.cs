@@ -9,6 +9,7 @@ public class MailHeaderUI : MonoBehaviour
 {
     [SerializeField] private Image icon;
     [SerializeField] private TextMeshProUGUI mailName;
+    [SerializeField] private TextMeshProUGUI mailDescription;
     [SerializeField] private MailBodyUI mailBodyPrefab;
     [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color activeColor = Color.green;
@@ -38,6 +39,8 @@ public class MailHeaderUI : MonoBehaviour
         if (orderConfig.customerConfig?.icon != null)
             icon.sprite = orderConfig.customerConfig.icon;
         mailName.text = orderConfig.orderName;
+        mailDescription.text = orderConfig.descriptionInMail;
+        Debug.Log(orderConfig.descriptionInMail);
         mailBodyUI = Instantiate(mailBodyPrefab, bodyContainer);
         mailBodyUI.Initialize(orderConfig, this);
     }

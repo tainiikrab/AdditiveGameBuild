@@ -29,7 +29,7 @@ public class AudioManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null) Instance = this;
-        
+
         soundSources = new Dictionary<SoundType, AudioSource>();
 
         foreach (var sound in sounds)
@@ -39,7 +39,7 @@ public class AudioManager : MonoBehaviour
                 Debug.Log("Sound clip is null");
                 continue;
             }
-            
+
             var source = gameObject.AddComponent<AudioSource>();
             source.clip = sound.clip;
             soundSources[sound.soundType] = source;
@@ -76,8 +76,10 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySound(SoundType soundType)
     {
-        soundSources.TryGetValue(soundType, out var sound);
-        sound.Play();
+        if (soundSources.TryGetValue(soundType, out var sound))
+            sound.Play();
+        else
+            Debug.LogWarning($"Sound {soundType} not found");
     }
 
     private void SetMusicVolume(float value)

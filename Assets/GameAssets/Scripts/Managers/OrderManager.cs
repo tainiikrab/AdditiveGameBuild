@@ -11,6 +11,16 @@ public static class OrderManager
     public static List<OrderConfig> completedOrders = new();
     public static List<OrderConfig> declinedOrders = new();
 
+    private static OrderData _defaultOrder = new(GlobalConfig.Instance.Orders[0]);
+
+    public static OrderData defaultOrder
+    {
+        get
+        {
+            Debug.LogWarning("Used default order");
+            return _defaultOrder;
+        }
+    }
 
     private static int minOrderAmount;
 

@@ -77,6 +77,10 @@ public class MailUI : MonoBehaviour
             return;
         }
 
+        foreach (var c in containers)
+            for (var i = 0; i < c.contentRoot.childCount; i++)
+                Destroy(c.contentRoot.GetChild(i).gameObject);
+
         InitializeCategories();
         Instance = this;
         foreach (Transform child in bodyContainer) Destroy(child.gameObject);

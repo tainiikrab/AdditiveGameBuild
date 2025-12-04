@@ -9,7 +9,7 @@ public class OrderConfig : IConfig
     private const string SpritesPath = "Sprites/UISprites/DesktopIcons/";
     private const string ModelsPath = "Models/PrintableObjects/";
     public string orderName;
-    public string description;
+    public string descriptionInMail;
     public string requirements;
     public string customerID;
     public string rawDialogLines;

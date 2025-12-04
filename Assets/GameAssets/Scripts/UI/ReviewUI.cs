@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class ReviewUI : MonoBehaviour
 {
@@ -21,22 +22,47 @@ public class ReviewUI : MonoBehaviour
 
     [SerializeField] private string[] reviewTexts;
 
-    public void Initialize(OrderConfig order)
-    {
-        reward = Mathf.Max(100, order.reward);
-        Debug.Log($"Default reward: {order.reward}");
+    public CanvasGroup canvasGroup;
 
-        var score = Mathf.Max(0, Mathf.CeilToInt(OrderManager.orderData.quality.totalQuality));
-        InitStars(Mathf.RoundToInt(score / 20f));
+    [Space(10)] [Header("Misc")] [SerializeField]
+    private int defaultScore;
+
+    public void Initialize()
+    {
+        var orderData = OrderManager.orderData;
+
+        int score;
+        if (orderData == null)
+        {
+            orderData = OrderManager.defaultOrder;
+            score = defaultScore;
+        }
+        else
+        {
+            score = Mathf.Max(0, Mathf.CeilToInt(orderData.quality.totalQuality));
+        }
+
+        reward = Mathf.Max(100, orderData.config.reward);
+        // Debug.Log($"Default reward: {orderData.config.reward}");
+
+        for (var i = 0; i < starsContainer.childCount; i++)
+        {
+            var star = starsContainer.GetChild(i);
+            star.localScale = Vector3.zero;
+        }
+
+        canvasGroup = GetComponent<CanvasGroup>();
+        canvasGroup.DOFade(1, 0.5f).OnComplete(() => InitStars(Mathf.RoundToInt(score / 20f)));
+
         Debug.Log($"Score: {score}");
-        Debug.Log($"Quality: {OrderManager.orderData.quality.totalQuality}");
+        Debug.Log($"Quality: {orderData.quality.totalQuality}");
         reward = Mathf.Max(0, Mathf.CeilToInt(reward * (score / 90f)));
         rewardAmountLabel.text = reward.ToString();
 
-        if (order.customerConfig.icon != null)
-            customerImage.sprite = order.customerConfig.icon;
-        customerName.text = order.customerConfig.name;
-        orderName.text = order.orderName;
+        if (orderData.config.customerConfig.icon != null)
+            customerImage.sprite = orderData.config.customerConfig.icon;
+        customerName.text = orderData.config.customerConfig.name;
+        orderName.text = orderData.config.orderName;
 
 
         var index = Mathf.RoundToInt(score / 20f) - 1;
@@ -47,20 +73,29 @@ public class ReviewUI : MonoBehaviour
 
     private void InitStars(int grade)
     {
-        foreach (Transform child in starsContainer)
+        for (var i = 0; i < starsContainer.childCount; i++)
         {
-            if (grade <= 0) return;
-            child.GetComponent<Image>().sprite = filledStar;
-            grade--;
+            var star = starsContainer.GetChild(i);
+            var starImage = star.GetComponent<Image>();
+
+            if (i < grade)
+                starImage.sprite = filledStar;
+            star.DOScale(1f, 0.3f).SetEase(Ease.OutBack).SetDelay(0.1f * i);
+
+            // else
+            // {
+            //     star.DOScale(1f, 0.3f).SetEase(Ease.OutBack).SetDelay(0.1f * i);
+            // }
         }
     }
 
     public void Hide()
     {
+        AudioManager.Instance.PlaySound(SoundType.Close);
         GameManager.Instance.points += reward;
         OrderManager.CompleteOrder();
-        gameObject.SetActive(false);
-        AudioManager.Instance.PlaySound(SoundType.Close);
         OrderManager.CreateRegularOrder(3);
+
+        canvasGroup.DOFade(0, 0.5f).OnComplete(() => { gameObject.SetActive(false); });
     }
 }

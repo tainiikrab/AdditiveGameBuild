@@ -3641,6 +3641,18 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1433542644177377349, guid: 5642223e8b2ace046b1d25a3b70316e3, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1433542644177377349, guid: 5642223e8b2ace046b1d25a3b70316e3, type: 3}
+      propertyPath: m_Interactable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1433542644177377349, guid: 5642223e8b2ace046b1d25a3b70316e3, type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2153553123507916288, guid: 5642223e8b2ace046b1d25a3b70316e3, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -3768,6 +3780,10 @@ PrefabInstance:
     - target: {fileID: 5428554585587390329, guid: 5642223e8b2ace046b1d25a3b70316e3, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -50
+      objectReference: {fileID: 0}
+    - target: {fileID: 6815845181086429390, guid: 5642223e8b2ace046b1d25a3b70316e3, type: 3}
+      propertyPath: defaultScore
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8380714581846632563, guid: 5642223e8b2ace046b1d25a3b70316e3, type: 3}
       propertyPath: m_AnchorMax.y
@@ -12565,7 +12581,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &814257467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23020,6 +23036,7 @@ GameObject:
   - component: {fileID: 1505269391}
   - component: {fileID: 1505269393}
   - component: {fileID: 1505269392}
+  - component: {fileID: 1505269394}
   m_Layer: 6
   m_Name: Text (TMP) (1)
   m_TagString: Untagged
@@ -23145,6 +23162,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1505269390}
   m_CullTransparentMesh: 1
+--- !u!114 &1505269394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1505269390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f088bc0bd2f485ba6e09ff0d30f20b3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LaptopTimeChanger
+  timeLabel: {fileID: 1505269392}
 --- !u!1 &1511881883
 GameObject:
   m_ObjectHideFlags: 0
@@ -26833,11 +26863,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6164927742286114238, guid: 23769111e4c9171498ee8b0ea2f74b2a, type: 3}
       propertyPath: m_Interactable
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7673560558358164010, guid: 23769111e4c9171498ee8b0ea2f74b2a, type: 3}
       propertyPath: m_text
-      value: "\u0418\u043D\u0432\u0435\u043D\u0442\u0430\u0440\u044C"
+      value: "\u041C\u043E\u0434\u0435\u043B\u043B\u0435\u0440"
       objectReference: {fileID: 0}
     - target: {fileID: 7673560558358164010, guid: 23769111e4c9171498ee8b0ea2f74b2a, type: 3}
       propertyPath: m_fontSize
