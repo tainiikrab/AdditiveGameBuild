@@ -15,6 +15,8 @@ public class SceneSwitchManager : MonoBehaviour
     public static SceneSwitchManager Instance { get; private set; }
     public static bool isMinigameFinished = false;
 
+    public static SceneName currentScene { get; private set; }
+
     private void Awake()
     {
         if (Instance != null)
@@ -25,21 +27,37 @@ public class SceneSwitchManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
         Instance = this;
+        currentScene = SceneName.MainScene;
     }
 
-    public static void OpenScene(Scenes scene)
+    public static void ReloadScene()
     {
-        if (Instance != null)
+        OpenScene(currentScene);
+    }
+
+    public static void OpenScene(SceneName sceneName, bool instant = false)
+    {
+        currentScene = sceneName;
+        if (Instance == null)
         {
-            Instance.StartCoroutine(Instance.LoadSceneAsync(scene));
+            Debug.Log("No instance for sceneswitchmanager");
+            SceneManager.LoadScene((int)sceneName);
             return;
         }
 
-        Debug.Log("No instance for sceneswitchmanager");
-        SceneManager.LoadScene((int)scene);
+        if (Instance.reviewUI.canvasGroup != null) Instance.reviewUI.canvasGroup.alpha = 0;
+        Instance.reviewUI.gameObject.SetActive(false);
+
+        if (instant)
+        {
+            SceneManager.LoadScene((int)sceneName);
+            return;
+        }
+
+        Instance.StartCoroutine(Instance.LoadSceneAsync(sceneName));
     }
 
-    private IEnumerator LoadSceneAsync(Scenes scene)
+    private IEnumerator LoadSceneAsync(SceneName sceneName)
     {
         Debug.Log("Loading async");
         loadingScreen.SetActive(true);
@@ -47,7 +65,7 @@ public class SceneSwitchManager : MonoBehaviour
         if (loadingAnimation != null)
             loadingAnimation.Play();
 
-        var operation = SceneManager.LoadSceneAsync((int)scene);
+        var operation = SceneManager.LoadSceneAsync((int)sceneName);
         operation.allowSceneActivation = false;
 
         while (!operation.isDone)
@@ -65,23 +83,30 @@ public class SceneSwitchManager : MonoBehaviour
 
         loadingScreen.SetActive(false);
 
-        if (isMinigameFinished)
+        if (isMinigameFinished) OpenReviewUI();
+    }
+
+# if UNITY_EDITOR
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.F1)) OpenReviewUI();
+    }
+#endif
+    private void OpenReviewUI()
+    {
+        isMinigameFinished = false;
+        if (reviewUI != null)
         {
-            isMinigameFinished = false;
-            Debug.Log("Quality:" + OrderManager.orderData.quality.totalQuality.ToString());
-            if (reviewUI != null)
-            {
-                reviewUI.gameObject.SetActive(true);
-                reviewUI.Initialize(OrderManager.orderData.config);
-            }
+            reviewUI.gameObject.SetActive(true);
+            reviewUI.Initialize();
         }
     }
 }
 
 
-public enum Scenes
+public enum SceneName
 {
     MainScene,
     PostProcessMinigame,
-    ScannerMinigame,
+    ScannerMinigame
 }

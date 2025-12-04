@@ -91,7 +91,7 @@ public class DebugTools : EditorWindow
     private static void ReloadScene()
     {
         if (EditorApplication.isPlaying)
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneSwitchManager.ReloadScene();
     }
 
     [MenuItem("Tools/Debug/Create Regular Order _o")]
