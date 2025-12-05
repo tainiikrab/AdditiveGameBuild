@@ -126,6 +126,8 @@ public enum SoundType
     Scanning,
     Buy,
     OrderComplete,
+    OrderNotVeryWell,
+    OrderFailed,
     Nippers,
     Sandpaper,
     Painting,

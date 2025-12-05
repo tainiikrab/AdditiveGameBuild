@@ -35,6 +35,9 @@ public class OfferCardUI : MonoBehaviour
     /// <param name="offer">Данные о товаре</param>
     public void Initialize(ShopItemConfig offer)
     {
+        var rect = GetComponent<RectTransform>();
+        rect.sizeDelta = new Vector2(375f, 475f);
+        
         thisOffer = offer;
         offerIcon.sprite = offer.Icon;
         offerIcon.preserveAspect = true;

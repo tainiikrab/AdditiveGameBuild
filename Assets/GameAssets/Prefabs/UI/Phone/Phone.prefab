@@ -1710,7 +1710,7 @@ MonoBehaviour:
   cancelButton: {fileID: 2509594058396750054}
   materialProperty: {fileID: 9042890684870138326, guid: a8d1e9a0574fcf74eb6a881b2f17195e, type: 3}
   materialPropertiesContainer: {fileID: 3844989877857032365}
-  promptOrder: {fileID: 0}
+  prompt: {fileID: 0}
   normalScale: 1
   bigScale: 1.5
   duration: 0.5
@@ -2967,6 +2967,14 @@ PrefabInstance:
     m_TransformParent: {fileID: 7164714457792769600}
     m_Modifications:
     - target: {fileID: 116154701929867152, guid: 76cddf0b62f2bf243b6b25ced85d923f, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 581488bb8bf05b54ebfd95fc3e9cc6d6, type: 3}
+    - target: {fileID: 116154701929867152, guid: 76cddf0b62f2bf243b6b25ced85d923f, type: 3}
+      propertyPath: m_Maskable
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 116154701929867152, guid: 76cddf0b62f2bf243b6b25ced85d923f, type: 3}
       propertyPath: m_PreserveAspect
       value: 1
       objectReference: {fileID: 0}
@@ -3096,7 +3104,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4697278096533343386, guid: 76cddf0b62f2bf243b6b25ced85d923f, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -83.60742
+      value: -83.6074
       objectReference: {fileID: 0}
     - target: {fileID: 4697278096533343386, guid: 76cddf0b62f2bf243b6b25ced85d923f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -3120,6 +3128,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5448998134068903373, guid: 76cddf0b62f2bf243b6b25ced85d923f, type: 3}
       propertyPath: m_Padding.m_Bottom
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6002812163476851743, guid: 76cddf0b62f2bf243b6b25ced85d923f, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6002812163476851743, guid: 76cddf0b62f2bf243b6b25ced85d923f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6002812163476851743, guid: 76cddf0b62f2bf243b6b25ced85d923f, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6002812163476851743, guid: 76cddf0b62f2bf243b6b25ced85d923f, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6002812163476851743, guid: 76cddf0b62f2bf243b6b25ced85d923f, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6002812163476851743, guid: 76cddf0b62f2bf243b6b25ced85d923f, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6002812163476851743, guid: 76cddf0b62f2bf243b6b25ced85d923f, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6002812163476851743, guid: 76cddf0b62f2bf243b6b25ced85d923f, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7847632589423832886, guid: 76cddf0b62f2bf243b6b25ced85d923f, type: 3}
