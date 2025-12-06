@@ -7,16 +7,22 @@ using UnityEngine.UI;
 
 public class DialogUI : MonoBehaviour
 {
-    [Header("UI Elements")] public Image customerIcon;
+    [Header("UI Elements")] 
+    public Image customerIcon;
     public TextMeshProUGUI dialogText;
     public TextMeshProUGUI customerName;
     public Button AnswerPref;
     public GridLayoutGroup answersField;
     public GameObject CharactedDialogue;
     public GameObject ImportantOrder;
+    public GameObject Blur;
 
-    [Header("Text Settings")] public float textSpeed = 0.05f;
-    public bool skipTextAnimation;
+    [Header("Text Settings")] 
+    public float textSpeed = 0.05f;
+    
+    [Header("Test Data")]
+    [SerializeField] private string[] testAnswers = { "Да", "Нет", "Может быть" };
+    [SerializeField] private string[] testDialog = { "Привет!", "Как дела?" };
 
     private CanvasGroup canvasGroup;
 
@@ -55,6 +61,7 @@ public class DialogUI : MonoBehaviour
         ToggleVisibility(true);
 
         CharactedDialogue.SetActive(true);
+        Blur.SetActive(true);
         ImportantOrder.SetActive(false);
 
         if (icon != null) customerIcon.sprite = icon;
@@ -109,7 +116,7 @@ public class DialogUI : MonoBehaviour
             StopCoroutine(textAnimationCoroutine);
 
         textAnimationCoroutine = StartCoroutine(AnimateText(text));
-    
+
         yield return new WaitUntil(() => !IsTextAnimating);
     }
 
@@ -118,20 +125,16 @@ public class DialogUI : MonoBehaviour
         dialogText.text = "";
         IsTextAnimating = true;
 
-        if (skipTextAnimation)
-        {
-            dialogText.text = text;
-            IsTextAnimating = false;
-            yield break;
-        }
-
         foreach (var c in text)
         {
+            if (Input.GetMouseButton(0))
+            {
+                dialogText.text = text;
+                break;
+            }
+
             dialogText.text += c;
             yield return new WaitForSeconds(textSpeed);
-
-            if (!IsTextAnimating)
-                yield break;
         }
 
         IsTextAnimating = false;
@@ -140,19 +143,29 @@ public class DialogUI : MonoBehaviour
     private void SpawnAnswerButtonsForCurrentBlock()
     {
         var answers = _answerBlocks[_currentBlockIndex];
+        bool isLastBlock = _currentBlockIndex >= _dialogBlocks.Count - 1;
 
-        foreach (var answer in answers)
+        for (int i = 0; i < answers.Count; i++)
         {
+            var answer = answers[i];
             var newButton = Instantiate(AnswerPref, answersField.transform);
             newButton.gameObject.SetActive(true);
             newButton.GetComponentInChildren<TextMeshProUGUI>().text = answer;
 
+            bool isLastButton = i == answers.Count - 1;
+        
             newButton.onClick.AddListener(() =>
             {
-                HandleAnswerSelection(answer);
+                if (isLastBlock && isLastButton)
+                {
+                    EndDialog();
+                }
+                else
+                {
+                    HandleAnswerSelection(answer);
+                }
             });
         }
-
     }
 
     private void HandleAnswerSelection(string answer)
@@ -163,37 +176,61 @@ public class DialogUI : MonoBehaviour
 
     private void EndDialog()
     {
-        StartCoroutine(WaitForDialogClose());
-    }
-
-    private IEnumerator WaitForDialogClose()
-    {
-        yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
         HideDialog();
     }
 
     public void HideDialog()
     {
         ToggleVisibility(false);
+        Blur.SetActive(false);
         gameObject.SetActive(false);
         OnDialogClosed?.Invoke();
     }
 
+    /// <summary>
+    /// Очищает все кнопки ответов
+    /// </summary>
+    [ContextMenu("Clear Answer Buttons")]
     public void ClearAnswers()
     {
-    #if UNITY_EDITOR
-        if (!Application.isPlaying)
-        {
-            foreach (Transform child in answersField.transform)
-                DestroyImmediate(child.gameObject);
-            return;
-        }
-    #endif
-
-    foreach (Transform child in answersField.transform)
-        Destroy(child.gameObject);
+        foreach (Transform child in answersField.transform)
+            Destroy(child.gameObject);
     }
 
+    /// <summary>
+    /// Создает тестовые кнопки ответов (для проверки в редакторе)
+    /// </summary>
+    [ContextMenu("Spawn Test Answer Buttons")]
+    public void SpawnTestAnswerButtons()
+    {
+        ClearAnswers();
+        
+        for (int i = 0; i < testAnswers.Length; i++)
+        {
+            var answer = testAnswers[i];
+            var newButton = Instantiate(AnswerPref, answersField.transform);
+            newButton.gameObject.SetActive(true);
+            newButton.GetComponentInChildren<TextMeshProUGUI>().text = answer;
+            
+            // Добавляем обработчик клика для тестирования
+            newButton.onClick.AddListener(() =>
+            {
+                Debug.Log($"Выбран ответ: {answer}");
+                ClearAnswers();
+            });
+        }
+        
+        Debug.Log($"Создано {testAnswers.Length} тестовых кнопок ответов");
+    }
+
+    /// <summary>
+    /// Запускает тестовый диалог (для проверки в редакторе)
+    /// </summary>
+    [ContextMenu("Start Test Dialog")]
+    public void StartTestDialog()
+    {
+        StartDialog("Тестовый NPC", null, testDialog, testAnswers);
+    }
 
     private List<string[]> SplitIntoBlocks(string[] lines)
     {
@@ -223,29 +260,4 @@ public class DialogUI : MonoBehaviour
 
         return blocks;
     }
-
-    #if UNITY_EDITOR
-    [ContextMenu("Add Test Answer Button")]
-    private void SpawnTestAnswerButton()
-    {
-        if (AnswerPref == null || answersField == null)
-        {
-            Debug.LogWarning("AnswerPref или answersField не назначены!");
-            return;
-        }
-
-        Button newButton = Instantiate(AnswerPref, answersField.transform);
-        newButton.gameObject.SetActive(true);
-        newButton.GetComponentInChildren<TextMeshProUGUI>().text = "Новый ответ";
-
-        Debug.Log("Тестовая кнопка ответа создана в инспекторе!");
-    }
-
-    [ContextMenu("Clear Answer Buttons")]
-    private void ClearAnswerButtonw()
-    {
-        ClearAnswers();
-    }
-    #endif
-
 }
