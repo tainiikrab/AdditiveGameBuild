@@ -11,7 +11,15 @@ public static class OrderManager
     public static List<OrderConfig> completedOrders = new();
     public static List<OrderConfig> declinedOrders = new();
 
-    private static OrderData _defaultOrder = new(GlobalConfig.Instance.Orders[0]);
+    public static int defaultOrderIndex = 0;
+
+#if UNITY_EDITOR
+    public static void SetDefaultOrder(int index)
+    {
+        defaultOrderIndex = index;
+    }
+
+    private static OrderData _defaultOrder = new(GlobalConfig.Instance.Orders[defaultOrderIndex]);
 
     public static OrderData defaultOrder
     {

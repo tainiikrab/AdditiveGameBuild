@@ -14862,6 +14862,7 @@ MonoBehaviour:
   uiContainer: {fileID: 1839230350}
   creditsCanvasGroup: {fileID: 245352346}
   tutorial: {fileID: 310703185}
+  characterDialog: {fileID: 1366736053}
 --- !u!1 &858605757
 GameObject:
   m_ObjectHideFlags: 0
@@ -23265,6 +23266,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1366151151}
   m_CullTransparentMesh: 1
+--- !u!1 &1366736053 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4517383185642974475, guid: ca40287af6edd56478cf57058e2e624b, type: 3}
+  m_PrefabInstance: {fileID: 168829206}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1371624400
 GameObject:
   m_ObjectHideFlags: 0

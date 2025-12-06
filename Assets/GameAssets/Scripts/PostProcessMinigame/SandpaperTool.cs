@@ -16,7 +16,7 @@ public class SandpaperTool : AbstractTool
     [SerializeField] private Animation animation;
     [SerializeField] private string animationName = "Sandpaper";
 
-    protected override void OnUse()
+    protected override void OnActiveInstrument()
     {
         // Debug.Log("OnUse()");
         if (Physics.Raycast(transform.position, transform.forward, out var hit, rayDistance, modelLayer))
@@ -33,6 +33,8 @@ public class SandpaperTool : AbstractTool
 
                 if (renderer.material.HasProperty(smoothnessProperty))
                 {
+                    if (!isOnUse) return;
+
                     // Debug.Log("Smoothness");
                     var current = renderer.material.GetFloat(smoothnessProperty);
                     if (defaultSmoothness == 0)
@@ -58,7 +60,20 @@ public class SandpaperTool : AbstractTool
         }
     }
 
+    private bool isOnUse = false;
+
+    protected override void OnUse()
+    {
+        isOnUse = true;
+    }
+
     protected override void OnStopUse()
+    {
+        isOnUse = false;
+        OnStopActiveInstrument();
+    }
+
+    protected override void OnStopActiveInstrument()
     {
         audioSource.volume = 0f;
         animation[animationName].speed = 0f;
