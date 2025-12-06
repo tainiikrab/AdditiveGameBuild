@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.SceneManagement;
@@ -19,6 +20,7 @@ public class Scanner : MonoBehaviour
     {
         phone.Accepted += OnAccepted;
         phone.Cancelled += OnCancelled;
+        phone.ReturnedToStart += OnPhoneReturned;
 
 
         if (scanLine != null) scanLine.gameObject.SetActive(false);
@@ -153,10 +155,8 @@ public class Scanner : MonoBehaviour
 
     private void OnAccepted()
     {
-        isUIActive = false;
         StopScanAnimation();
         phone.ClosePhoneUI();
-        // Возврат на главную сцену
         FinishMinigame();
     }
 
@@ -165,14 +165,24 @@ public class Scanner : MonoBehaviour
         currentPrintingMaterial = null;
         currentDetectedCode = null;
         scanTimer = 0f;
-        isUIActive = false;
         StopScanAnimation();
         phone.ClosePhoneUI();
+    }
+
+    private void OnPhoneReturned()
+    {
+        isUIActive = false;
     }
 
     private void OnDestroy()
     {
         StopScanAnimation();
+        if (phone != null)
+        {
+            phone.Accepted -= OnAccepted;
+            phone.Cancelled -= OnCancelled;
+            phone.ReturnedToStart -= OnPhoneReturned;
+        }
     }
 
     /*private void OnDrawGizmos()

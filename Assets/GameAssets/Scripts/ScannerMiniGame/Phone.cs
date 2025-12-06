@@ -16,7 +16,7 @@ public class Phone : MonoBehaviour
     [SerializeField] private TextMeshProUGUI materialTitle;
     [SerializeField] private TextMeshProUGUI materialDescription;
     [SerializeField] private Button acceptButton;
-    [SerializeField] private Button cancelButton;
+    [SerializeField] private Button continueButton;
     [SerializeField] private MaterialProperty materialProperty;
     [SerializeField] private RectTransform materialPropertiesContainer;
     [SerializeField] private TextMeshProUGUI prompt;
@@ -29,9 +29,10 @@ public class Phone : MonoBehaviour
     [SerializeField] private float bigScale = 1.5f;
     [SerializeField] private float duration = 2f;
     [SerializeField] private float shadingAlpha = 0.065f;
-    
+
     public event Action Accepted;
     public event Action Cancelled;
+    public event Action ReturnedToStart;
 
     private void Start()
     {
@@ -49,7 +50,7 @@ public class Phone : MonoBehaviour
         //acceptButton.interactable = cancelButton.interactable = false;
 
         acceptButton.onClick.RemoveAllListeners();
-        cancelButton.onClick.RemoveAllListeners();
+        continueButton.onClick.RemoveAllListeners();
 
         screen.SetActive(true);
 
@@ -58,7 +59,7 @@ public class Phone : MonoBehaviour
         materialDescription.text = material.description;
 
         acceptButton.onClick.AddListener(() => Accepted?.Invoke());
-        cancelButton.onClick.AddListener(() => Cancelled?.Invoke());
+        continueButton.onClick.AddListener(() => Cancelled?.Invoke());
 
         ClearOldProperties(materialPropertiesContainer);
 
@@ -66,16 +67,16 @@ public class Phone : MonoBehaviour
 
         foreach (var property in material.GoodProperties)
         {
-            Instantiate(materialProperty, materialPropertiesContainer);
-            materialProperty.InitializeProperty(property,
+            var createdProperty = Instantiate(materialProperty, materialPropertiesContainer);
+            createdProperty.InitializeProperty(property,
                 new Color(0f, 131f / 255f, 4f / 255f),
                 new Color(140f / 255f, 255f / 255f, 0f));
         }
 
         foreach (var property in material.BadProperties)
         {
-            Instantiate(materialProperty, materialPropertiesContainer);
-            materialProperty.InitializeProperty(property,
+            var createdProperty = Instantiate(materialProperty, materialPropertiesContainer);
+            createdProperty.InitializeProperty(property,
                 new Color(131f / 255f, 0f, 0f),
                 new Color(1f, 0f, 0f));
         }
@@ -87,7 +88,7 @@ public class Phone : MonoBehaviour
 
     public void ClosePhoneUI()
     {
-        //ContinueScanAnimation();
+        ContinueScanAnimation();
         screen.SetActive(false);
     }
 
@@ -99,7 +100,7 @@ public class Phone : MonoBehaviour
             Destroy(container.GetChild(i).gameObject);
         }
     }
-    
+
     /*private void OnScannedAnimation()
     {
                 var sequence = DOTween.Sequence();
@@ -119,9 +120,9 @@ public class Phone : MonoBehaviour
         });
     }*/
 
-    /*private void ContinueScanAnimation()
+    private void ContinueScanAnimation()
     {
-                var sequence = DOTween.Sequence();
+        var sequence = DOTween.Sequence();
         sequence.Join(
             rectTransform.DOScale(Vector3.one * normalScale, duration).SetEase(Ease.InCubic)
             );
@@ -135,6 +136,7 @@ public class Phone : MonoBehaviour
         {
             shading.gameObject.SetActive(false);
             draggablePhone.enabled = true;
+            ReturnedToStart?.Invoke();
         });
-    }*/
+    }
 }
