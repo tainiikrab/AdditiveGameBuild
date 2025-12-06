@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     public WayPointFollower player;
+    public Printer printer;
 
     [SerializeField] private float openMinigameDelay;
 
@@ -46,7 +47,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        // Debug.Log("Instance of GameManager");
         Instance = this;
         globalConfig = GlobalConfig.Instance;
         _points = 2200;
@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         player.StopMovement();
+        SetupPrinterPathActions();
     }
 
     private void Update()
@@ -70,9 +71,6 @@ public class GameManager : MonoBehaviour
             Debug.Log(OrderManager.orderData.config.printerType.minigames[0]);
             Debug.Log(OrderManager.orderData.config.printerType.minigames[1]);
         }
-
-        // if (Input.GetKeyDown(KeyCode.G)) player.SwitchPath(PathType.ToPrinter);
-        // if (Input.GetKeyDown(KeyCode.F)) player.SwitchPath(PathType.ToLaptop);
     }
 
     public void SendPlayerToPrinter()
@@ -85,8 +83,6 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0);
 
         OrderManager.CreateRegularOrder(3);
-        // OrderManager.CreatePlotOrder(currentPlotIndex);
-        // currentPlotIndex++;
     }
 
     private void OnDestroy()
@@ -102,6 +98,9 @@ public class GameManager : MonoBehaviour
 
     public void OnOrderAccepted()
     {
+        printer.defaultModel = OrderManager.orderData.config.mesh;
+        player.SwitchPath(PathType.ToPrinter);
+        player.StartMovement();
     }
 
     public void OnOrderRejected()
@@ -110,5 +109,34 @@ public class GameManager : MonoBehaviour
 
     public void OnOrderComplete()
     {
+    }
+
+    private void SetupPrinterPathActions()
+    {
+        for (int i = 0; i < player.Paths.Length; i++)
+        {
+            if (player.Paths[i].Type == PathType.ToPrinter)
+            {
+                player.ClearOnPathEndActions(i);
+                
+                player.AddOnPathEndAction(i, () =>
+                {
+                    Debug.Log("Player reached printer - starting printing process");
+                    
+                    printer.TogglePrinterCamera();
+                    
+                    StartCoroutine(StartPrintingDelayed());
+                });
+                
+                Debug.Log($"Setup printer actions for path index: {i}");
+                break;
+            }
+        }
+    }
+
+    private IEnumerator StartPrintingDelayed()
+    {
+        yield return new WaitForSeconds(0.5f);
+        StartCoroutine(printer.PrintHeadMoveRoutine());
     }
 }

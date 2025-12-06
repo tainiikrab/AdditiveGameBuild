@@ -9,6 +9,9 @@ public class Printer : MonoBehaviour, IRaycastInteractable
     public GameObject printHead;
     public GameObject printHeadSupport;
     public GameObject display;
+    public GameObject modelFloor;
+    public GameObject defaultModel;
+    public Material dissMaterial;
 
     [SerializeField] private Light hoverLight;
     [SerializeField] private CinemachineCamera printerCamera;
@@ -18,9 +21,6 @@ public class Printer : MonoBehaviour, IRaycastInteractable
     [SerializeField] private float moveDistance = 0.2f;
     [SerializeField] private float moveDuration = 3f;
 
-    [Header("Print Head Support Settings")]
-    [SerializeField] private float moveSpeedSupport = 0.5f;
-    [SerializeField] private float moveDistanceSupport = 0.1f;
 
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private VisualEffect printEffect;
@@ -122,32 +122,66 @@ public class Printer : MonoBehaviour, IRaycastInteractable
     }
 
 
-    private IEnumerator PrintHeadMoveRoutine()
+    public IEnumerator PrintHeadMoveRoutine()
     {
         if (printHead == null || printHeadSupport == null) yield break;
 
-        isPrinting = true;
+        GameObject spawnedObj = null;
+        Renderer rend = null;
+        Material matInstance = null;
+        float minHeight = 0f;
+        float maxHeight = 0f;
 
-        if (printEffect != null)
+        if (defaultModel != null && modelFloor != null)
         {
-            printEffect.gameObject.SetActive(true);
-            printEffect.Play();
+            Vector3 spawnPosition = modelFloor.transform.position;
+            spawnedObj = Instantiate(defaultModel, spawnPosition, Quaternion.identity);
+
+            spawnedObj.transform.localScale = Vector3.one * 0.5f;
+
+            rend = spawnedObj.GetComponent<Renderer>();
+            matInstance = new Material(dissMaterial);
+            rend.material = matInstance;
+
+            Bounds bounds = rend.bounds;
+            minHeight = bounds.min.y;
+            maxHeight = bounds.max.y;
+
+            matInstance.SetFloat("_MinHeight", minHeight);
+            matInstance.SetFloat("_MaxHeight", maxHeight);
+            matInstance.SetFloat("_DissolveAmount", 1f);
+
+            minHeight = bounds.min.z;
+            maxHeight = bounds.max.z;
+
+            float modelMinX_world = bounds.min.x;
+            float modelMaxX_world = bounds.max.x;
+
+            Transform root = this.transform;
+
+            float modelMinX_local = root.InverseTransformPoint(new Vector3(modelMinX_world, 0, 0)).x;
+            float modelMaxX_local = root.InverseTransformPoint(new Vector3(modelMaxX_world, 0, 0)).x;
+
+            headStartX = modelMinX_local;
+            headEndX   = modelMaxX_local;
         }
+
+        isPrinting = true;
 
         Vector3 startPoint = printHead.transform.localPosition;
         Vector3 endPoint = startPoint + new Vector3(moveDistance, 0, 0);
+        startPoint.x = headStartX;
+        endPoint.x = headEndX;
         Vector3 target = endPoint;
 
         Vector3 startPointSupport = printHeadSupport.transform.localPosition;
-        Vector3 endPointSupport = startPointSupport + new Vector3(0, 0, moveDistanceSupport);
-        Vector3 targetSupport = endPointSupport;
 
         float elapsedHead = 0f;
+        float objectHeight = maxHeight - minHeight;
 
         while (elapsedHead < moveDuration)
         {
             float moveStepHead = moveSpeed * Time.deltaTime;
-            float moveStepSupport = moveSpeedSupport * Time.deltaTime;
 
             printHead.transform.localPosition =
                 Vector3.MoveTowards(printHead.transform.localPosition, target, moveStepHead);
@@ -155,17 +189,23 @@ public class Printer : MonoBehaviour, IRaycastInteractable
             if (Vector3.Distance(printHead.transform.localPosition, target) < 0.001f)
             {
                 target = target == endPoint ? startPoint : endPoint;
-            }   
-
-            printHeadSupport.transform.localPosition =
-                Vector3.MoveTowards(printHeadSupport.transform.localPosition, targetSupport, moveStepSupport);
-
-            if (Vector3.Distance(printHeadSupport.transform.localPosition, targetSupport) < 0.001f)
-            {
-                targetSupport = targetSupport == endPointSupport ? startPointSupport : endPointSupport;
             }
 
             elapsedHead += Time.deltaTime;
+
+            if (matInstance != null)
+            {
+                float t = Mathf.Clamp01(elapsedHead / moveDuration);
+
+                float dissolveValue = Mathf.Lerp(1f, 0f, t);
+                matInstance.SetFloat("_DissolveAmount", dissolveValue);
+
+                float linearGrowth = t;
+
+                Vector3 supportPos = printHeadSupport.transform.localPosition;
+                supportPos.z = startPointSupport.z + objectHeight * linearGrowth;
+                printHeadSupport.transform.localPosition = supportPos;
+            }
 
             float remainingTime = Mathf.Max(moveDuration - elapsedHead, 0f);
             timerText.text = FormatTime(remainingTime);
@@ -173,17 +213,10 @@ public class Printer : MonoBehaviour, IRaycastInteractable
             yield return null;
         }
 
-        printHead.transform.localPosition = startPoint;
-        printHeadSupport.transform.localPosition = startPointSupport;
-
         timerText.text = "00:00:00";
-
-        printEffect.Stop();
-        printEffect.gameObject.SetActive(false);
-        
 
         isPrinting = false;
     }
-
-
+    private float headStartX;
+    private float headEndX;
 }
