@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -32,6 +33,7 @@ public class SceneSwitchManager : MonoBehaviour
 
     public static void ReloadScene()
     {
+        currentScene = (SceneName)SceneManager.GetActiveScene().buildIndex;
         OpenScene(currentScene);
     }
 

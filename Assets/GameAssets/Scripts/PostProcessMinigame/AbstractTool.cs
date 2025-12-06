@@ -24,7 +24,7 @@ public abstract class AbstractTool : MonoBehaviour
     {
         startPosition = transform.position;
         audioSource = GetComponent<AudioSource>();
-        OnStopUse();
+        OnStopActiveInstrument();
     }
 
     protected virtual void Update()
@@ -42,7 +42,9 @@ public abstract class AbstractTool : MonoBehaviour
             );
 
             // Debug.Log("Abstract");
-            OnUse();
+            OnActiveInstrument();
+            if (Input.GetMouseButtonDown(1)) OnUse();
+            if (Input.GetMouseButtonUp(1)) OnStopUse();
         }
     }
 
@@ -55,7 +57,7 @@ public abstract class AbstractTool : MonoBehaviour
     private void OnMouseUp()
     {
         isDragging = false;
-        OnStopUse();
+        OnStopActiveInstrument();
         moveTween = transform.DOMove(startPosition, returnDuration)
             .SetEase(returnEase, elasticity, oscillations);
     }
@@ -63,9 +65,15 @@ public abstract class AbstractTool : MonoBehaviour
     /// <summary>
     /// Метод действия инструмента — переопределяется в наследниках
     /// </summary>
+    protected abstract void OnActiveInstrument();
+
     protected abstract void OnUse();
 
     protected virtual void OnStopUse()
+    {
+    }
+
+    protected virtual void OnStopActiveInstrument()
     {
     }
 }

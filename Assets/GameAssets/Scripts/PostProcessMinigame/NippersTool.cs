@@ -13,9 +13,9 @@ public class NippersTool : AbstractTool
     private SupportModel supportModel;
     [SerializeField] private float waitTime = 0.65f;
 
-    protected override void OnUse()
+    protected override void OnActiveInstrument()
     {
-        if (isCutting) return;
+        // if (isCutting) return;
 
         if (Physics.Raycast(transform.position, transform.forward, out var hit, rayDistance, supportLayer))
         {
@@ -23,12 +23,20 @@ public class NippersTool : AbstractTool
             if (support != null)
             {
                 isCutting = true;
+                Debug.Log("Cutting");
                 supportModel = support;
-
-                nippersAnimation.Play(cutAnimName);
-                Invoke(nameof(FinishCut), waitTime);
+                return;
             }
         }
+
+        isCutting = false;
+    }
+
+    protected override void OnUse()
+    {
+        if (!isCutting) return;
+        nippersAnimation.Play(cutAnimName);
+        Invoke(nameof(FinishCut), waitTime);
     }
 
     private void FinishCut()

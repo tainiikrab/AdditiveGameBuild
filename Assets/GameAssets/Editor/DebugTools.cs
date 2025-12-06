@@ -1,3 +1,4 @@
+using System;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -26,6 +27,8 @@ public class DebugTools : EditorWindow
 
         Repaint();
     }
+
+    private static int newDefaultIndex = 1;
 
     private void OnGUI()
     {
@@ -57,6 +60,15 @@ public class DebugTools : EditorWindow
 
         if (GUILayout.Button("Finish current order")) OrderManager.CompleteOrder();
 
+        GUILayout.Space(5);
+        newDefaultIndex = EditorGUILayout.IntField("Default Order Index", newDefaultIndex);
+
+        // if (GUILayout.Button("Set Default Order Index"))
+        // {
+        //     OrderManager.defaultOrderIndex = newDefaultIndex;
+        //     Debug.Log($"Default Order Index set to {newDefaultIndex}");
+        // }
+
         GUILayout.Space(10);
         GUILayout.Label("Saves", EditorStyles.boldLabel);
         if (GUILayout.Button("Delete saves"))
@@ -76,6 +88,8 @@ public class DebugTools : EditorWindow
         GUILayout.Label("Player", EditorStyles.boldLabel);
         if (GUILayout.Button("Set player path to printer")) GameManager.Instance.player.SwitchPath(PathType.ToPrinter);
         if (GUILayout.Button("Set player path to laptop")) GameManager.Instance.player.SwitchPath(PathType.ToLaptop);
+
+
         // }
     }
 
@@ -111,5 +125,10 @@ public class DebugTools : EditorWindow
     private static void ResetTime()
     {
         Time.timeScale = 1f;
+    }
+
+    private static void SetDefaultOrderIndex(int index)
+    {
+        OrderManager.defaultOrderIndex = index;
     }
 }
