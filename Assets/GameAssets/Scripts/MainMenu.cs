@@ -17,18 +17,38 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private CanvasGroup uiContainer;
     [SerializeField] private CanvasGroup creditsCanvasGroup;
 
+    [SerializeField] private Tutorial tutorial;
+
     private RectTransform creditsBody;
+
+    private static bool isGameLaunch = true;
+    private bool isMenuOpen = false;
 
     private void Awake()
     {
+        if (!isGameLaunch)
+        {
+            StartGame();
+            ui.SetActive(false);
+            return;
+        }
+
+        creditsBody = creditsCanvasGroup.transform.GetChild(0).GetComponent<RectTransform>();
+        ShowMainMenu();
+        Time.timeScale = 1;
+    }
+
+    public void ShowMainMenu()
+    {
+        vcam.Priority = 100;
+        ui.SetActive(true);
+        uiContainer.alpha = 0;
         otherUIs.SetActive(false);
-        // settingsPanel?.gameObject.SetActive(false);
         mouseRaycaster.enabled = false;
         creditsCanvasGroup.alpha = 0;
         creditsCanvasGroup.gameObject.SetActive(false);
-        uiContainer.alpha = 1;
-        ui.SetActive(true);
-        creditsBody = creditsCanvasGroup.transform.GetChild(0).GetComponent<RectTransform>();
+        uiContainer.DOFade(1, 0.5f);
+        isMenuOpen = true;
     }
 
     public void StartGame()
@@ -37,19 +57,29 @@ public class MainMenu : MonoBehaviour
         otherUIs.SetActive(true);
         vcam.Priority = -100;
         mouseRaycaster.enabled = true;
+
+        if (isGameLaunch)
+        {
+            isGameLaunch = false;
+            tutorial.gameObject.SetActive(true);
+        }
+
+        isMenuOpen = false;
     }
 
     public void ToggleCredits(bool value)
     {
         if (value)
         {
-            StartCoroutine(RollCredits());
             creditsCanvasGroup.gameObject.SetActive(true);
-            uiContainer.DOFade(0, 0.5f).OnComplete(() => creditsCanvasGroup.DOFade(1, 0.5f));
+            uiContainer.DOFade(0, 0.5f).OnComplete(() =>
+            {
+                creditsCanvasGroup.DOFade(1, 0.5f).OnComplete(() => { creditsActive = true; });
+            });
             return;
         }
 
-        StopCoroutine(RollCredits());
+        creditsActive = false;
         creditsCanvasGroup.DOFade(0, 0.5f).OnComplete(() =>
         {
             creditsCanvasGroup.gameObject.SetActive(false);
@@ -68,12 +98,32 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
     }
 
-    private IEnumerator RollCredits()
+    // private IEnumerator RollCredits()
+    // {
+    //     while (true)
+    //     {
+    //         creditsBody.anchoredPosition += creditsSpeed * Time.deltaTime * Vector2.up;
+    //         yield return null;
+    //     }
+    // }
+
+    private bool creditsActive = false;
+
+    private void Update()
     {
-        while (true)
+        if (Input.GetKeyDown(KeyCode.Escape))
+            if (!isMenuOpen)
+                ShowMainMenu();
+
+        if (!creditsActive) return;
+
+        creditsBody.anchoredPosition += creditsSpeed * Time.deltaTime * Vector2.up;
+
+        var scroll = Input.mouseScrollDelta.y;
+        if (Mathf.Abs(scroll) > 0.01f)
         {
-            creditsBody.anchoredPosition += Vector2.up * creditsSpeed;
-            yield return null;
+            var manualSpeed = 50f;
+            creditsBody.anchoredPosition += scroll * manualSpeed * Vector2.up;
         }
     }
 }
