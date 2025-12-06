@@ -8,7 +8,7 @@ public class Scanner : MonoBehaviour
     [SerializeField] private float scanTime = 2f;
     [SerializeField] private Phone phone;
     [SerializeField] private RectTransform scanLine;
-    
+
     private bool isUIActive;
     private PrintingMaterialConfig currentPrintingMaterial;
     private float scanTimer;
@@ -20,32 +20,23 @@ public class Scanner : MonoBehaviour
         phone.Accepted += OnAccepted;
         phone.Cancelled += OnCancelled;
 
-        
-        if (scanLine != null)
-        {
-            scanLine.gameObject.SetActive(false);
-        }
+
+        if (scanLine != null) scanLine.gameObject.SetActive(false);
     }
 
     private void Update()
     {
-        if (!isUIActive)
-        {
-            Scan();
-        }
+        if (!isUIActive) Scan();
     }
 
     private void Scan()
     {
         Code detectedCode = null;
-        bool isCodeFullyInView = false;
+        var isCodeFullyInView = false;
 
         detectedCode = FindCodeInView();
 
-        if (detectedCode != null)
-        {
-            isCodeFullyInView = IsCodeFullyInCameraPoint(detectedCode);
-        }
+        if (detectedCode != null) isCodeFullyInView = IsCodeFullyInCameraPoint(detectedCode);
 
         if (detectedCode == null || !isCodeFullyInView)
         {
@@ -60,14 +51,14 @@ public class Scanner : MonoBehaviour
         {
             currentDetectedCode = detectedCode;
 
-            currentPrintingMaterial = GlobalConfig.Instance.PrintingMaterials.Find(material => 
+            currentPrintingMaterial = GlobalConfig.Instance.PrintingMaterials.Find(material =>
                 material.id.ToString() == currentDetectedCode.MaterialLink.ToString());
 
             scanTimer = 0f;
-            
+
             StartScanAnimation();
         }
-        
+
         scanTimer += Time.deltaTime;
 
         if (scanTimer >= scanTime)
@@ -81,15 +72,11 @@ public class Scanner : MonoBehaviour
     private Code FindCodeInView()
     {
         var allCodes = FindObjectsOfType<Code>();
-        
+
         foreach (var code in allCodes)
-        {
             if (IsCodeFullyInCameraPoint(code))
-            {
                 return code;
-            }
-        }
-        
+
         return null;
     }
 
@@ -98,13 +85,13 @@ public class Scanner : MonoBehaviour
         SceneSwitchManager.isMinigameFinished = true;
         OrderManager.orderData.chosenMaterial = currentPrintingMaterial;
         currentPrintingMaterial = null;
-        SceneSwitchManager.OpenScene(Scenes.MainScene);
+        SceneSwitchManager.OpenScene(SceneName.MainScene);
     }
 
     private bool IsCodeFullyInCameraPoint(Code code)
     {
         if (code == null || phoneCameraPoint == null) return false;
-        
+
         var codeRect = code.GetComponent<RectTransform>();
         if (codeRect == null) return false;
 
@@ -112,7 +99,7 @@ public class Scanner : MonoBehaviour
         var cameraRectLocal = GetWorldRect(phoneCameraPoint);
 
         // Проверяем, полностью ли код внутри CameraPoint
-        return cameraRectLocal.Contains(codeRectLocal.min) && 
+        return cameraRectLocal.Contains(codeRectLocal.min) &&
                cameraRectLocal.Contains(codeRectLocal.max);
     }
 
@@ -120,7 +107,7 @@ public class Scanner : MonoBehaviour
     {
         var corners = new Vector3[4];
         rectTransform.GetWorldCorners(corners);
-        
+
         return new Rect(
             corners[0].x,
             corners[0].y,
@@ -132,24 +119,24 @@ public class Scanner : MonoBehaviour
     private void StartScanAnimation()
     {
         if (scanLine == null || phoneCameraPoint == null) return;
-        
+
         StopScanAnimation();
-        
+
         scanLine.gameObject.SetActive(true);
-        
+
         var cameraCorners = new Vector3[4];
         phoneCameraPoint.GetWorldCorners(cameraCorners);
-        
+
         var startPos = new Vector2(
             cameraCorners[0].x,
             (cameraCorners[0].y + cameraCorners[1].y) / 2f
         );
-        
+
         var endPos = new Vector2(
             cameraCorners[2].x,
             (cameraCorners[0].y + cameraCorners[1].y) / 2f
         );
-        
+
         scanLine.position = startPos;
         scanLineTween = scanLine.DOMove(endPos, scanTime)
             .SetEase(Ease.Linear)
@@ -160,11 +147,8 @@ public class Scanner : MonoBehaviour
     {
         scanLineTween?.Kill();
         scanLineTween = null;
-        
-        if (scanLine != null)
-        {
-            scanLine.gameObject.SetActive(false);
-        }
+
+        if (scanLine != null) scanLine.gameObject.SetActive(false);
     }
 
     private void OnAccepted()
@@ -197,7 +181,7 @@ public class Scanner : MonoBehaviour
         {
             var corners = new Vector3[4];
             phoneCameraPoint.GetWorldCorners(corners);
-            
+
             Gizmos.color = Color.green;
             for (int i = 0; i < 4; i++)
             {
@@ -212,7 +196,7 @@ public class Scanner : MonoBehaviour
                 {
                     var codeCorners = new Vector3[4];
                     codeRect.GetWorldCorners(codeCorners);
-                    
+
                     Gizmos.color = Color.red;
                     for (int i = 0; i < 4; i++)
                     {

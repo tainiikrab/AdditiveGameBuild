@@ -28,8 +28,8 @@ public class MailBodyUI : MonoBehaviour
         this.order = order;
         icon.sprite = order.icon;
         title.text = order.orderName;
-        description.text = order.description;
-        requirements.text = order.requirements;
+        description.text = order.descriptionInMail;
+        requirements.text = order.slicerPrompt;
 
         // if (declineButton == null) return;
         if (header.category != MailUI.Category.Incoming)

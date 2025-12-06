@@ -11,6 +11,6 @@ public class Code : MonoBehaviour
 
     public enum MaterialReference
     {
-        PLA, ABS, PETG, Nylon, TPU, SLA
+        PLA, ABS, PETG, NYLON, TPU, SLA
     }
 }
