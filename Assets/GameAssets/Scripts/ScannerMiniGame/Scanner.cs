@@ -16,19 +16,75 @@ public class Scanner : MonoBehaviour
     private Tween scanLineTween;
     private Code currentDetectedCode;
 
+    // last phone world position for movement detection
+    private Vector3 lastPhonePosition;
+    // минимальный сдвиг (в мировых координатах) для срабатывания возобновления
+    [SerializeField] private float movementThreshold = 0.5f;
+
+    // флаг — разрешать возобновление сканирования при дергании телефона (устанавливается в OnCancelled)
+    private bool resumeOnDrag;
+
+    // задержка перед началом отслеживания движения (чтобы избежать ложных толчков сразу после ClosePhoneUI)
+    [SerializeField] private float resumeDelay = 0.06f;
+    private float resumeDelayTimer;
+
     private void Awake()
     {
         phone.Accepted += OnAccepted;
         phone.Cancelled += OnCancelled;
-        phone.ReturnedToStart += OnPhoneReturned;
-
+        // если Phone больше не бросает ReturnedToStart, можно убрать подписку
+        // phone.ReturnedToStart += OnPhoneReturned;
 
         if (scanLine != null) scanLine.gameObject.SetActive(false);
+
+        // инициализация позиции телефона (безопасно, если phone назначен)
+        lastPhonePosition = phone != null ? phone.transform.position : Vector3.zero;
+        resumeOnDrag = false;
+        resumeDelayTimer = 0f;
     }
 
     private void Update()
     {
-        if (!isUIActive) Scan();
+        // если UI активен — ждем начала движения телефона (только если разрешено)
+        if (isUIActive)
+        {
+            if (resumeOnDrag && phone != null)
+            {
+                // сначала даём короткую паузу, чтобы избежать ложных срабатываний
+                if (resumeDelayTimer > 0f)
+                {
+                    resumeDelayTimer -= Time.deltaTime;
+                    // обновляем lastPhonePosition во время паузы, чтобы "зафиксировать" стартовую позицию
+                    lastPhonePosition = phone.transform.position;
+                    return;
+                }
+
+                var currentPos = phone.transform.position;
+                var delta = Vector3.Distance(currentPos, lastPhonePosition);
+
+                if (delta > movementThreshold)
+                {
+                    // началось реальное движение — скрываем UI и возобновляем сканирование
+                    isUIActive = false;
+                    resumeOnDrag = false;
+                    phone.ClosePhoneUI(); // скрыть UI без возврата в позицию (Phone.ClosePhoneUI уже настроен)
+                    AudioManager.Instance?.StopSound(SoundType.Scanning);
+
+                    // обновляем базовую позицию и сразу проверяем сканирование в этом кадре
+                    lastPhonePosition = currentPos;
+                    Scan();
+                    return;
+                }
+
+                // обновляем позицию для следующей проверки
+                lastPhonePosition = currentPos;
+            }
+
+            return;
+        }
+
+        // если UI не активен — обычный цикл сканирования
+        Scan();
     }
 
     private void Scan()
@@ -42,6 +98,7 @@ public class Scanner : MonoBehaviour
 
         if (detectedCode == null || !isCodeFullyInView)
         {
+            AudioManager.Instance.StopSound(SoundType.Scanning);
             StopScanAnimation();
             scanTimer = 0f;
             currentPrintingMaterial = null;
@@ -59,6 +116,7 @@ public class Scanner : MonoBehaviour
             scanTimer = 0f;
 
             StartScanAnimation();
+            AudioManager.Instance.PlaySound(SoundType.Scanning);
         }
 
         scanTimer += Time.deltaTime;
@@ -66,6 +124,7 @@ public class Scanner : MonoBehaviour
         if (scanTimer >= scanTime)
         {
             StopScanAnimation();
+            AudioManager.Instance.StopSound(SoundType.Scanning);
             isUIActive = true;
             phone.Initialize(currentPrintingMaterial);
         }
@@ -157,6 +216,7 @@ public class Scanner : MonoBehaviour
     {
         StopScanAnimation();
         phone.ClosePhoneUI();
+        AudioManager.Instance.PlaySound(SoundType.UniversalClick);
         FinishMinigame();
     }
 
@@ -165,8 +225,18 @@ public class Scanner : MonoBehaviour
         currentPrintingMaterial = null;
         currentDetectedCode = null;
         scanTimer = 0f;
+        AudioManager.Instance.PlaySound(SoundType.Cancel);
         StopScanAnimation();
+        // не возвращаем телефон в стартовую позицию — ждем, пока игрок начнёт двигать телефон (но только если нажал continue)
         phone.ClosePhoneUI();
+
+        // фиксируем текущую позицию телефона как стартовую и запускаем "ждущий" режим с короткой паузой
+        if (phone != null)
+            lastPhonePosition = phone.transform.position;
+
+        resumeDelayTimer = resumeDelay;
+        // разрешаем возобновление сканирования при первом движении телефона (после паузы)
+        resumeOnDrag = true;
     }
 
     private void OnPhoneReturned()

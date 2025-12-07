@@ -5448,14 +5448,25 @@ MonoBehaviour:
   sfxSlider: {fileID: 1473313777}
   musicSlider: {fileID: 2071525804}
   sounds:
-  - clip: {fileID: 8300000, guid: 3b063188cb9628a4b896b7a2bf3865b6, type: 3}
-    soundType: 0
-  - clip: {fileID: 8300000, guid: e825f9516644bf84686a2db7ae86b150, type: 3}
-    soundType: 2
-  - clip: {fileID: 8300000, guid: 4155553cbaba88d459a69c82d3ef2210, type: 3}
-    soundType: 3
-  - clip: {fileID: 8300000, guid: 3958d1f63f907424291c2f7b395cfabf, type: 3}
+  - clip: {fileID: 8300000, guid: d5b6d7923cc18fc47ba0463543c1543c, type: 3}
     soundType: 7
+  - clip: {fileID: 8300000, guid: 4155553cbaba88d459a69c82d3ef2210, type: 3}
+    soundType: 8
+  - clip: {fileID: 8300000, guid: e825f9516644bf84686a2db7ae86b150, type: 3}
+    soundType: 0
+  - clip: {fileID: 8300000, guid: 3958d1f63f907424291c2f7b395cfabf, type: 3}
+    soundType: 2
+  - clip: {fileID: 8300000, guid: ff48c7ec083901949b858cf2a4d96583, type: 3}
+    soundType: 3
+  - clip: {fileID: 8300000, guid: 96ab91799478e9f4b95859a325c21c71, type: 3}
+    soundType: 4
+  - clip: {fileID: 8300000, guid: 4155553cbaba88d459a69c82d3ef2210, type: 3}
+    soundType: 9
+  musics:
+  - clip: {fileID: 8300000, guid: d22c6b2b05a3e47409c8acb479694671, type: 3}
+    musicType: 0
+  - clip: {fileID: 8300000, guid: 3b063188cb9628a4b896b7a2bf3865b6, type: 3}
+    musicType: 1
 --- !u!1 &294164887
 GameObject:
   m_ObjectHideFlags: 0
@@ -32577,6 +32588,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Hint
       objectReference: {fileID: 0}
+    - target: {fileID: 6628790859648385264, guid: 5abf74bdd93e4e042bedea47652dadff, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7600102884772792530, guid: 5abf74bdd93e4e042bedea47652dadff, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -36856,6 +36871,12 @@ PrefabInstance:
       insertIndex: 7
       addedObject: {fileID: 942845718}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2562860790700429256, guid: f0736941b72642d468a79805b85e514d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5631032058318899915}
+    - targetCorrespondingSourceObject: {fileID: 4538993134372838043, guid: f0736941b72642d468a79805b85e514d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5631032058318899914}
     - targetCorrespondingSourceObject: {fileID: 7682065125332963755, guid: f0736941b72642d468a79805b85e514d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1723066168}
@@ -36874,12 +36895,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3089760028489365084, guid: f0736941b72642d468a79805b85e514d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5631032058318899916}
-    - targetCorrespondingSourceObject: {fileID: 2562860790700429256, guid: f0736941b72642d468a79805b85e514d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5631032058318899915}
-    - targetCorrespondingSourceObject: {fileID: 4538993134372838043, guid: f0736941b72642d468a79805b85e514d, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 5631032058318899914}
     - targetCorrespondingSourceObject: {fileID: 3200123419535674539, guid: f0736941b72642d468a79805b85e514d, type: 3}
       insertIndex: -1
       addedObject: {fileID: 5631032058318899913}

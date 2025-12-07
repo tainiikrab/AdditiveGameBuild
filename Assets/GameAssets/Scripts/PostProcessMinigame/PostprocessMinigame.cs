@@ -28,11 +28,13 @@ public class PostprocessMinigame : MonoBehaviour
     public static float sandpaperingAmount = 0f;
     public static int removedSupports = 0;
 
-    private void Awak()
+    private void Awake()
     {
         finishButton.onClick.AddListener(FinishGame);
         sandpaperingAmount = 0f;
         removedSupports = 0;
+        
+        AudioManager.Instance.PlayMusic(MusicType.BackgroundMusic);
     }
 
     private void Start()

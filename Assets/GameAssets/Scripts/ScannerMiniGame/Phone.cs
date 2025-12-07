@@ -88,7 +88,7 @@ public class Phone : MonoBehaviour
 
     public void ClosePhoneUI()
     {
-        ContinueScanAnimation();
+        //ContinueScanAnimation();
         screen.SetActive(false);
     }
 
@@ -120,7 +120,7 @@ public class Phone : MonoBehaviour
         });
     }*/
 
-    private void ContinueScanAnimation()
+    /*private void ContinueScanAnimation()
     {
         var sequence = DOTween.Sequence();
         sequence.Join(
@@ -138,5 +138,5 @@ public class Phone : MonoBehaviour
             draggablePhone.enabled = true;
             ReturnedToStart?.Invoke();
         });
-    }
+    }*/
 }

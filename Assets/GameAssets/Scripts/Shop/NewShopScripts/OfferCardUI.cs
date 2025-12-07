@@ -86,12 +86,14 @@ public class OfferCardUI : MonoBehaviour
     {
         Debug.Log("Buying " + item.name);
         ShopManager.Instance.Purchase(item);
+        AudioManager.Instance.PlaySound(SoundType.UniversalClick);
     }
 
     private void OnMoreDetailedButtonClick(ShopItemConfig item)
     {
         var panel = Instantiate(moreDetailedUI, shopUI.gameObject.transform);
         panel.Initialize(item);
+        AudioManager.Instance.PlaySound(SoundType.UniversalClick);
     }
 
     private void OnDestroy()

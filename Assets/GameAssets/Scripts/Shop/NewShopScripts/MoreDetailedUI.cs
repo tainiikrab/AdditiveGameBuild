@@ -39,6 +39,7 @@ public class MoreDetailedUI : MonoBehaviour
     {
         CloseAnimation();
         ShopManager.Instance.Purchase(item);
+        AudioManager.Instance.PlaySound(SoundType.UniversalClick);
     }
 
     private void AppearAnimation()

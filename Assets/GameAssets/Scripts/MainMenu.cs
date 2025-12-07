@@ -38,6 +38,8 @@ public class MainMenu : MonoBehaviour
         creditsBody = creditsCanvasGroup.transform.GetChild(0).GetComponent<RectTransform>();
         ShowMainMenu();
         Time.timeScale = 1;
+        
+        AudioManager.Instance.PlayMusic(MusicType.MainMenuMusic);
     }
 
     public void ShowMainMenu()
@@ -72,6 +74,8 @@ public class MainMenu : MonoBehaviour
 
         Time.timeScale = 1; // resume gameplay
         isMenuOpen = false;
+        
+        AudioManager.Instance.PlayMusic(MusicType.BackgroundMusic);
     }
 
     public void ToggleCredits(bool value)

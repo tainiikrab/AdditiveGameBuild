@@ -22,6 +22,8 @@ public class BrushPainter : MonoBehaviour
 
             brushSizeSlider.onValueChanged.AddListener(OnBrushSizeChanged);
         }
+        // тут не совсем правильно начинать музыку, но времени на раздумья нет
+        AudioManager.Instance.PlayMusic(MusicType.BackgroundMusic);
     }
 
     void OnBrushSizeChanged(float value)
