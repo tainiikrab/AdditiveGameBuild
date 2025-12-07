@@ -34,7 +34,11 @@ public class LaptopUI : MonoBehaviour
 
     public void ToggleVisibility(bool toggle)
     {
-        if (toggle) gameObject.SetActive(true);
+        if (toggle)
+        {
+            gameObject.SetActive(true);
+            AudioManager.Instance.PlaySound(SoundType.OpenLaptop, 0.3f);
+        }
         canvasGroup.DOKill();
 
         canvasGroup.DOFade(toggle ? 1f : 0f, 0.3f)

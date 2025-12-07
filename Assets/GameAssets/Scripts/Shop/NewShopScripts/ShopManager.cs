@@ -24,17 +24,6 @@ public class ShopManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Чит для фарма монет
-    /// </summary>
-    private void Update()
-    {
-        if (Input.GetKey(KeyCode.P))
-        {
-            GameManager.Instance.points += 1000;
-        }
-    }
-
-    /// <summary>
     /// Словарь, где хранятся товары, отсортированные по категориям. 
     /// </summary>
     public Dictionary<string, List<ShopItemConfig>> offers;

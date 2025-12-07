@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class AudioManager : MonoBehaviour
 {
@@ -19,18 +20,25 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private Slider sfxSlider;
     [SerializeField] private Slider musicSlider;
 
+    [Header("Sound effects")]
     [SerializeField] private Sound[] sounds;
+    [Header("Music list")]
+    [SerializeField] private Music[] musics;
 
     private Dictionary<SoundType, AudioSource> soundSources;
+    private Dictionary<MusicType, AudioSource> musicSources;
 
     private const string SfxMixerGroup = "soundEffectsVolume";
     private const string MusicMixerGroup = "musicVolume";
+
+    private AudioSource currentMusicSource;
 
     private void Awake()
     {
         if (Instance == null) Instance = this;
 
         soundSources = new Dictionary<SoundType, AudioSource>();
+        musicSources = new Dictionary<MusicType, AudioSource>();
 
         foreach (var sound in sounds)
         {
@@ -43,18 +51,23 @@ public class AudioManager : MonoBehaviour
             var source = gameObject.AddComponent<AudioSource>();
             source.clip = sound.clip;
             soundSources[sound.soundType] = source;
+            source.outputAudioMixerGroup = sfxGroup;
+            source.loop = false;
+        }
 
-            if (sound.soundType == SoundType.BackgroundMusic)
+        foreach (var music in musics)
+        {
+            if (music.clip == null)
             {
-                source.outputAudioMixerGroup = musicGroup;
-                source.loop = true;
-                source.Play();
+                Debug.Log("Music clip is null");
+                continue;
             }
-            else
-            {
-                source.outputAudioMixerGroup = sfxGroup;
-                source.loop = false;
-            }
+
+            var source = gameObject.AddComponent<AudioSource>();
+            source.clip = music.clip;
+            musicSources[music.musicType] = source;
+            source.outputAudioMixerGroup = musicGroup;
+            source.loop = true;
         }
 
         sfxSlider.onValueChanged.AddListener(SetSfxVolume);
@@ -74,12 +87,48 @@ public class AudioManager : MonoBehaviour
         resetButton.onClick.RemoveListener(ResetVolumeSettings);
     }
 
-    public void PlaySound(SoundType soundType)
+    public void PlaySound(SoundType soundType, float volume = 1f)
     {
         if (soundSources.TryGetValue(soundType, out var sound))
+        {
             sound.Play();
+            sound.volume = volume;
+        }
         else
             Debug.LogWarning($"Sound {soundType} not found");
+    }
+
+    public void PlayMusic(MusicType musicType, float volume = 1f)
+    {
+        if (musicSources.TryGetValue(musicType, out var musicSource))
+        {
+            if (currentMusicSource == musicSource && musicSource.isPlaying)
+                return;
+
+            if (currentMusicSource != null && currentMusicSource.isPlaying)
+            {
+                currentMusicSource.Stop();
+                currentMusicSource.time = 0f;
+            }
+
+            currentMusicSource = musicSource;
+            musicSource.volume = volume;
+            musicSource.time = 0f;
+            musicSource.Play();
+        }
+        else
+        {
+            Debug.LogWarning($"Music {musicType} not found");
+        }
+    }
+
+    public void StopSound(SoundType soundType)
+    {
+        if (soundSources.TryGetValue(soundType, out var sound))
+        {
+            sound.Stop();
+            sound.time = 0f;
+        }
     }
 
     private void SetMusicVolume(float value)
@@ -113,11 +162,18 @@ public class AudioManager : MonoBehaviour
         public AudioClip clip;
         public SoundType soundType;
     }
+
+    [Serializable]
+    public class Music
+    {
+        public AudioClip clip;
+        public MusicType musicType;
+    }
 }
 
+// P.S. - Добавляйте новые элементы снизу, иначе всё съедет!
 public enum SoundType
 {
-    BackgroundMusic,
     Cancel,
     Scanning,
     Buy,
@@ -126,5 +182,12 @@ public enum SoundType
     Painting,
     Printing,
     Notification,
-    UniversalClick
+    UniversalClick,
+    OpenLaptop
+}
+
+public enum MusicType
+{
+    MainMenuMusic,
+    BackgroundMusic
 }

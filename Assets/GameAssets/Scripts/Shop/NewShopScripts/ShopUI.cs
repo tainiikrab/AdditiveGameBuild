@@ -73,6 +73,7 @@ public class ShopUI : MonoBehaviour
     {
         ShowOffers(category);
         categoryTitle.text = title;
+        AudioManager.Instance.PlaySound(SoundType.UniversalClick);
     }
 
     private void CloseLaptopUI()
