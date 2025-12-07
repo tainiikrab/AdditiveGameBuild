@@ -3373,7 +3373,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8286184332365443675, guid: ca40287af6edd56478cf57058e2e624b, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 28.22815
+      value: 28.228271
       objectReference: {fileID: 0}
     - target: {fileID: 8286184332365443675, guid: ca40287af6edd56478cf57058e2e624b, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -43647,13 +43647,14 @@ MonoBehaviour:
   printHeadSupport: {fileID: 6173346359666298921}
   display: {fileID: 4394465002032232349}
   modelFloor: {fileID: 1864186391}
-  defaultModel: {fileID: 919132149155446097, guid: 863422a8d009e0e4d84e6de5c9d81ba7, type: 3}
+  defaultModel: {fileID: 919132149155446097, guid: 377723d0a24b5f44ab6d107bea1009a8, type: 3}
   dissMaterial: {fileID: 2100000, guid: f0d9082216bf8794e922130bb86f8ca9, type: 2}
   hoverLight: {fileID: 1918453838}
   printerCamera: {fileID: 1276586553}
   moveSpeed: 15
   moveDistance: 0.2
   moveDuration: 20
+  epsilon: 1
   timerText: {fileID: 615367300}
   printEffect: {fileID: 1750212559}
 --- !u!23 &5010940151047804301

@@ -21,6 +21,8 @@ public class Printer : MonoBehaviour, IRaycastInteractable
     [SerializeField] private float moveDistance = 0.2f;
     [SerializeField] private float moveDuration = 3f;
 
+    [SerializeField] private float epsilon = 3f;
+
 
     [SerializeField] private TMP_Text timerText;
     [SerializeField] private VisualEffect printEffect;
@@ -135,14 +137,24 @@ public class Printer : MonoBehaviour, IRaycastInteractable
         if (defaultModel != null && modelFloor != null)
         {
             Vector3 spawnPosition = modelFloor.transform.position;
-            spawnedObj = Instantiate(defaultModel, spawnPosition, Quaternion.identity);
+            spawnedObj = Instantiate(defaultModel, spawnPosition, defaultModel.transform.rotation);
 
             spawnedObj.transform.localScale = Vector3.one * 0.5f;
 
             rend = spawnedObj.GetComponent<Renderer>();
+
+            if (rend == null)
+            {
+                rend = spawnedObj.AddComponent<MeshRenderer>();
+
+                if (spawnedObj.GetComponent<MeshFilter>() == null)
+                {
+                    spawnedObj.AddComponent<MeshFilter>();
+                }
+            }
+
             matInstance = new Material(dissMaterial);
             rend.material = matInstance;
-
             Bounds bounds = rend.bounds;
             minHeight = bounds.min.y;
             maxHeight = bounds.max.y;
@@ -200,10 +212,10 @@ public class Printer : MonoBehaviour, IRaycastInteractable
                 float dissolveValue = Mathf.Lerp(1f, 0f, t);
                 matInstance.SetFloat("_DissolveAmount", dissolveValue);
 
-                float linearGrowth = t;
+                float Growth = epsilon * epsilon * t;
 
                 Vector3 supportPos = printHeadSupport.transform.localPosition;
-                supportPos.z = startPointSupport.z + objectHeight * linearGrowth;
+                supportPos.z = startPointSupport.z + objectHeight * Growth;
                 printHeadSupport.transform.localPosition = supportPos;
             }
 
