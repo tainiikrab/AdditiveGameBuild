@@ -126,9 +126,4 @@ public class DebugTools : EditorWindow
     {
         Time.timeScale = 1f;
     }
-
-    private static void SetDefaultOrderIndex(int index)
-    {
-        OrderManager.defaultOrderIndex = index;
-    }
 }
