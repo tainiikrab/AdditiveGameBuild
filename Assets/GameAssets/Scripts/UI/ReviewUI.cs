@@ -91,7 +91,7 @@ public class ReviewUI : MonoBehaviour
 
     public void Hide()
     {
-        AudioManager.Instance.PlaySound(SoundType.Close);
+        //AudioManager.Instance.PlaySound(SoundType.Close);
         GameManager.Instance.points += reward;
         OrderManager.CompleteOrder();
         OrderManager.CreateRegularOrder(3);
