@@ -652,6 +652,7 @@ GameObject:
   - component: {fileID: 4513436483274883464}
   - component: {fileID: 435237662889220634}
   - component: {fileID: 408189759653214404}
+  - component: {fileID: 751678562428100085}
   m_Layer: 5
   m_Name: ShopCardUI
   m_TagString: Untagged
@@ -705,6 +706,26 @@ MonoBehaviour:
   buyButton: {fileID: 3461253373641241826}
   moreDetailedButton: {fileID: 5341953630034950540}
   moreDetailedUI: {fileID: 1220245408204637230, guid: b5e2e3c0656d64d4b8877ce5763bc502, type: 3}
+--- !u!114 &751678562428100085
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5946197328053603201}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.LayoutElement
+  m_IgnoreLayout: 0
+  m_MinWidth: 375
+  m_MinHeight: 475
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: -1
+  m_LayoutPriority: 1
 --- !u!1 &6276322420201239760
 GameObject:
   m_ObjectHideFlags: 0
