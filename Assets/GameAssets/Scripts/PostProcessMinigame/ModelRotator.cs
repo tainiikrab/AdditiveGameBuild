@@ -36,6 +36,7 @@ public class ModelRotator : MonoBehaviour
 
         Destroy(model.gameObject);
         var modelGO = Instantiate(OrderManager.orderData.config.mesh, transform);
+        modelGO.AddComponent<MeshCollider>();
         model = modelGO.transform;
     }
 
