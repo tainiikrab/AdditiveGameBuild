@@ -232,6 +232,7 @@ public class Printer : MonoBehaviour, IRaycastInteractable
         timerText.text = "00:00:00";
         isPrinting = false;
         printFinished = true;
+        OrderManager.goPrint = false;
     }
     private float headStartX;
     private float headEndX;

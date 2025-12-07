@@ -33,9 +33,9 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BrushSize: 0.010399994
+    - _BrushSize: 0.013700007
     m_Colors:
-    - _Center: {r: 0.4726144, g: 0.4941998, b: 0, a: 0}
-    - _Color: {r: 0.2, g: 0.2, b: 0, a: 1}
+    - _Center: {r: 0.38469574, g: 0.15849492, b: 0, a: 0}
+    - _Color: {r: 1, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

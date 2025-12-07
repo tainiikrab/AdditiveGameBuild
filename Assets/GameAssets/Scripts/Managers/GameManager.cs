@@ -55,7 +55,12 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         player.StopMovement();
-        if (OrderManager.goPrint){SetupPrinterPathActions();}
+        if (OrderManager.goPrint)
+        {
+            SetupPrinterPathActions();
+            printer.defaultModel = OrderManager.orderData.config.mesh;
+            player.StartMovement();
+        }
     }
 
     private void Update()
@@ -98,7 +103,6 @@ public class GameManager : MonoBehaviour
 
     public void OnOrderAccepted()
     {
-        printer.defaultModel = OrderManager.orderData.config.mesh;
         MinigameManager.Instance.OpenMinigame(MinigameType.Scanner);
         player.StartMovement();
     }
