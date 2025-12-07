@@ -11,6 +11,8 @@ public static class OrderManager
     public static List<OrderConfig> completedOrders = new();
     public static List<OrderConfig> declinedOrders = new();
 
+    public static bool goPrint = false;
+
     private static OrderData _defaultOrder = new(GlobalConfig.Instance.Orders[0]);
 
     public static OrderData defaultOrder

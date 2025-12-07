@@ -109,5 +109,6 @@ public enum SceneName
     MainScene,
     PostProcessMinigame,
     ScannerMinigame,
-    customizationMiniGame
+    customizationMiniGame,
+    scannerMiniGame
 }

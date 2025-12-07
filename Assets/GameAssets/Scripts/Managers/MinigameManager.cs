@@ -28,6 +28,9 @@ public class MinigameManager : MonoBehaviour
             case MinigameType.Slicer:
                 var slicerWindow = Instantiate(slicerWindowPF, laptopUI);
                 return;
+            case MinigameType.Scanner:
+                SceneSwitchManager.OpenScene(SceneName.scannerMiniGame);
+                return;
             case MinigameType.Postprocess:
                 SceneSwitchManager.OpenScene(SceneName.PostProcessMinigame);
                 return;
