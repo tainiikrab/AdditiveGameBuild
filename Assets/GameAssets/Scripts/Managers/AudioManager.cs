@@ -118,20 +118,13 @@ public class AudioManager : MonoBehaviour
 public enum SoundType
 {
     BackgroundMusic,
-    Switch,
-    Open,
-    Close,
-    Accept,
     Cancel,
     Scanning,
     Buy,
     OrderComplete,
-    OrderNotVeryWell,
     OrderFailed,
-    Nippers,
-    Sandpaper,
     Painting,
     Printing,
     Notification,
-    Other
+    UniversalClick
 }
