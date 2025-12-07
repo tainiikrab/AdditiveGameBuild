@@ -11,7 +11,7 @@ public static class OrderManager
     public static List<OrderConfig> completedOrders = new();
     public static List<OrderConfig> declinedOrders = new();
 
-    private static OrderData _defaultOrder = new(GlobalConfig.Instance.Orders[0]);
+    private static OrderData _defaultOrder = new(GlobalConfig.Instance.Orders[1]);
 
     public static OrderData defaultOrder
     {

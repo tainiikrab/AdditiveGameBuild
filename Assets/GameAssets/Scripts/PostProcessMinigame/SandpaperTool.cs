@@ -3,11 +3,14 @@ using UnityEngine;
 public class SandpaperTool : AbstractTool
 {
     [Header("Sandpaper Settings")] [SerializeField]
-    private LayerMask modelLayer; // слой модели
+    private LayerMask modelLayer;
 
-    [SerializeField] private float rayDistance = 1f; // дальность рейкаста
-    [SerializeField] private float smoothSpeed = 0.2f; // скорость "шлифовки"
-    [SerializeField] private string smoothnessProperty = "_Smoothness"; // имя параметра
+    [SerializeField] private float rayDistance = 1f;
+    [SerializeField] private float smoothSpeed = 0.2f;
+    [SerializeField] private string smoothnessProperty = "_Smoothness";
+
+    [Header("Mouse Control")] [SerializeField]
+    private float mouseSensitivity = 1.0f; // >1 = быстрее достигается макс скорость, <1 = сложнее
 
     private Material targetMaterial;
     private float defaultSmoothness = 0;
@@ -16,66 +19,79 @@ public class SandpaperTool : AbstractTool
     [SerializeField] private Animation animation;
     [SerializeField] private string animationName = "Sandpaper";
 
+    private bool isOnUse = true;
+    public static bool isSmoothing { get; private set; } = false;
+
+    public static float smoothnessDone { get; private set; } = 0f;
+    public static float requiredSmoothness { get; private set; } = 0.5f;
+
+    private void Awake()
+    {
+        requiredSmoothness = Random.Range(0.5f, 1f);
+    }
+
     protected override void OnActiveInstrument()
     {
-        // Debug.Log("OnUse()");
         if (Physics.Raycast(transform.position, transform.forward, out var hit, rayDistance, modelLayer))
         {
-            // Debug.Log("Raycast");
             var parent = hit.transform.parent;
             var renderer = parent.GetChild(parent.childCount - 1).GetComponentInChildren<Renderer>();
-            Debug.Log(renderer.gameObject.name);
-            if (renderer != null)
-                // if (targetMaterial == null)
-                //     // клонируем материал, чтобы не портить sharedMaterial
-                //     targetMaterial = renderer.material;
-                // Debug.Log("Renderer");
+            if (renderer != null && renderer.material.HasProperty(smoothnessProperty))
+            {
+                if (!isOnUse) return;
+                isSmoothing = true;
 
-                if (renderer.material.HasProperty(smoothnessProperty))
+                var current = renderer.material.GetFloat(smoothnessProperty);
+                if (defaultSmoothness == 0)
                 {
-                    if (!isOnUse) return;
-
-                    // Debug.Log("Smoothness");
-                    var current = renderer.material.GetFloat(smoothnessProperty);
-                    if (defaultSmoothness == 0)
-                    {
-                        defaultSmoothness = current;
-                        cachedRenderer = renderer;
-                    }
-
-                    var newValue = Mathf.Clamp01(current + smoothSpeed * Time.deltaTime);
-                    renderer.material.SetFloat(smoothnessProperty, newValue);
-                    renderer.material.SetFloat("_Metallic", newValue / 2);
-                    // звук шлифовки
-                    audioSource.volume = 1f;
-                    animation[animationName].speed = 1f;
-                    Debug.Log($"Material smoothness: {renderer.material.GetFloat(smoothnessProperty)}");
+                    defaultSmoothness = current;
+                    cachedRenderer = renderer;
                 }
+
+
+                var mouseDelta = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")).magnitude;
+
+                var adjustedDelta = mouseDelta * mouseSensitivity;
+
+                var effectiveSpeed = Mathf.Min(adjustedDelta, smoothSpeed);
+
+
+                var newValue = Mathf.Clamp01(current + effectiveSpeed * Time.deltaTime);
+                smoothnessDone = newValue;
+                renderer.material.SetFloat(smoothnessProperty, newValue);
+                renderer.material.SetFloat("_Metallic", newValue / 2);
+
+
+                audioSource.volume = 1f;
+                animation[animationName].speed = effectiveSpeed / smoothSpeed;
+
+                // Debug.Log(
+                //     $"Smoothness: {renderer.material.GetFloat(smoothnessProperty)} | Mouse speed: {mouseDelta} | Effective: {effectiveSpeed}");
+            }
         }
         else
         {
-            // Debug.Log("Else");
+            isSmoothing = false;
             audioSource.volume = 0f;
             animation[animationName].speed = 0f;
         }
     }
 
-    private bool isOnUse = false;
-
     protected override void OnUse()
     {
-        isOnUse = true;
+        ;
     }
 
-    protected override void OnStopUse()
-    {
-        isOnUse = false;
-        OnStopActiveInstrument();
-    }
+    // protected override void OnStopUse()
+    // {
+    //     isOnUse = false;
+    //     OnStopActiveInstrument();
+    // }
 
     protected override void OnStopActiveInstrument()
     {
         audioSource.volume = 0f;
+        isSmoothing = false;
         animation[animationName].speed = 0f;
     }
 

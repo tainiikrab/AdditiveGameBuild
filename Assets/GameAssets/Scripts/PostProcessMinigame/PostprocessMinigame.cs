@@ -24,11 +24,13 @@ public class PostprocessMinigame : MonoBehaviour
     private Bounds modelBounds;
     private float baseY;
     [SerializeField] private float minSupportSpacing = 0.5f; // world units
+    [SerializeField] private float bottomExclusionHeight = 0.005f;
+
 
     public static float sandpaperingAmount = 0f;
     public static int removedSupports = 0;
 
-    private void Awak()
+    private void Awake()
     {
         finishButton.onClick.AddListener(FinishGame);
         sandpaperingAmount = 0f;
@@ -74,73 +76,73 @@ public class PostprocessMinigame : MonoBehaviour
 
     private void SpawnSupportsOverhangs()
     {
-        var cosThreshold = Mathf.Cos(overhangAngleDeg * Mathf.Deg2Rad);
-        var spawnedPositions = new List<Vector3>();
-        var spawned = 0;
-
         var meshFilters = model.GetComponentsInChildren<MeshFilter>();
-        foreach (var mf in meshFilters)
+        if (meshFilters.Length == 0) return;
+
+        var spawned = 0;
+        var spawnedPositions = new List<Vector3>();
+
+        while (spawned < supportCount)
         {
-            if (spawned >= supportCount) break;
+            // pick a random mesh
+            var mf = meshFilters[Random.Range(0, meshFilters.Length)];
             var mesh = mf.sharedMesh;
             if (!mesh) continue;
 
             var verts = mesh.vertices;
-            var normals = mesh.normals;
             var tris = mesh.triangles;
-            if (normals == null || normals.Length == 0)
-            {
-                mesh.RecalculateNormals();
-                normals = mesh.normals;
-            }
 
-            for (var i = 0; i < tris.Length; i += 3)
-            {
-                if (spawned >= supportCount) break;
+            if (tris.Length < 3)
+                continue;
 
-                int i0 = tris[i], i1 = tris[i + 1], i2 = tris[i + 2];
-                var p0 = mf.transform.TransformPoint(verts[i0]);
-                var p1 = mf.transform.TransformPoint(verts[i1]);
-                var p2 = mf.transform.TransformPoint(verts[i2]);
-                var c = (p0 + p1 + p2) / 3f;
+            // Pick a valid triangle index (0, 3, 6, ...)
+            var triStart = Random.Range(0, tris.Length / 3) * 3;
 
-                var nLocal = (normals[i0] + normals[i1] + normals[i2]) / 3f;
-                var n = mf.transform.TransformDirection(nLocal).normalized;
+            // Safe vertex access USING triangles array
+            var p0 = mf.transform.TransformPoint(verts[tris[triStart]]);
+            var p1 = mf.transform.TransformPoint(verts[tris[triStart + 1]]);
+            var p2 = mf.transform.TransformPoint(verts[tris[triStart + 2]]);
 
-                var dotUp = Vector3.Dot(n, Vector3.up);
-                if (dotUp > cosThreshold) continue;
-                if (dotUp < -0.5f) continue;
+            // Random point inside this triangle
+            var randomPoint = RandomPointInTriangle(p0, p1, p2);
 
-                var rayOrigin = c + Vector3.up * 0.001f;
-                Vector3 basePos;
-                // if (Physics.Raycast(rayOrigin, Vector3.down, out var hit, Mathf.Infinity))
-                //     basePos = hit.point;
-                // else
-                //     basePos = new Vector3(c.x, baseY, c.z);
-                if (Physics.Raycast(rayOrigin, Vector3.down, out var hit, Mathf.Infinity))
-                    // If we hit something below, use that point
-                    basePos = hit.point;
-                else
-                    // Nothing below until bed → skip (don’t spawn at bottom)
-                    continue;
+            // Skip points too close to the bottom of the model
+            if (randomPoint.y - baseY < bottomExclusionHeight)
+                continue;
 
-                // Check spacing
-                var tooClose = false;
-                foreach (var pos in spawnedPositions)
-                    if (Vector2.Distance(new Vector2(pos.x, pos.z), new Vector2(basePos.x, basePos.z)) <
-                        minSupportSpacing)
-                    {
-                        tooClose = true;
-                        break;
-                    }
+            // Spacing check
+            var tooClose = false;
+            foreach (var pos in spawnedPositions)
+                if (Vector3.Distance(pos, randomPoint) < minSupportSpacing)
+                {
+                    tooClose = true;
+                    break;
+                }
 
-                if (tooClose) continue;
+            if (tooClose) continue;
 
-                SpawnSupportAt(basePos, c);
-                spawnedPositions.Add(basePos);
-                spawned++;
-            }
+            // Spawn support at that surface point
+            SpawnSupportAt(randomPoint, randomPoint);
+
+            spawnedPositions.Add(randomPoint);
+            spawned++;
         }
+    }
+
+
+    private Vector3 RandomPointInTriangle(Vector3 a, Vector3 b, Vector3 c)
+    {
+        var r1 = Random.value;
+        var r2 = Random.value;
+
+        // Ensure uniform distribution inside triangle
+        if (r1 + r2 > 1f)
+        {
+            r1 = 1f - r1;
+            r2 = 1f - r2;
+        }
+
+        return a + (b - a) * r1 + (c - a) * r2;
     }
 
     private void SpawnSupportAt(Vector3 basePos, Vector3 topPos)
@@ -171,8 +173,9 @@ public class PostprocessMinigame : MonoBehaviour
     private void FinishGame()
     {
         SceneSwitchManager.isMinigameFinished = true;
-        OrderManager.orderData.quality.supports = 100 - (supportCount - removedSupports) * 10;
-        OrderManager.orderData.quality.sandpapering = sandpaperingAmount * 100;
+        OrderManager.orderData.quality.supports = (float)removedSupports / supportCount * 100;
+        OrderManager.orderData.quality.sandpapering =
+            100 * Mathf.Abs(SandpaperTool.requiredSmoothness - SandpaperTool.smoothnessDone);
         SceneSwitchManager.OpenScene(SceneName.MainScene);
     }
 }

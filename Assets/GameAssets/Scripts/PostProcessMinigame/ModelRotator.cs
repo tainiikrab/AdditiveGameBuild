@@ -10,6 +10,7 @@ public class ModelRotator : MonoBehaviour
     private Vector3 lastMousePos;
     public Transform model;
 
+    [SerializeField] private int fallbackOrderIndex = 0;
 
     private void Awake()
     {
@@ -22,8 +23,9 @@ public class ModelRotator : MonoBehaviour
 
         if (OrderManager.orderData == null)
         {
-            Debug.LogWarning($"No current order. Fallback to {GlobalConfig.Instance.Orders[0].orderName}");
-            OrderManager.SetCurrentOrder(GlobalConfig.Instance.Orders[0]);
+            Debug.LogWarning(
+                $"No current order. Fallback to {GlobalConfig.Instance.Orders[fallbackOrderIndex].orderName}");
+            OrderManager.SetCurrentOrder(GlobalConfig.Instance.Orders[fallbackOrderIndex]);
         }
 
         if (OrderManager.orderData.config.mesh == null)
