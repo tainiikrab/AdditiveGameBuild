@@ -25,7 +25,7 @@ public class NippersTool : AbstractTool
             if (support != null)
             {
                 isCutting = true;
-                Debug.Log("Cutting");
+                // Debug.Log("Cutting");
                 if (supportModel == null || supportModel != support) OnTargetChanged?.Invoke();
 
                 supportModel = support;

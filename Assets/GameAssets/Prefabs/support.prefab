@@ -46,6 +46,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e11b29cd8b87444c9937155fcb38b557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SupportModel
+  upwardForce: 2
+  sideForce: 1
+  additionalTorque: {x: 0.02, y: 0.01, z: 0.01}
+  nonInteractableLayer:
+    serializedVersion: 2
+    m_Bits: 1024
 --- !u!65 &9057450257995816465
 BoxCollider:
   m_ObjectHideFlags: 0

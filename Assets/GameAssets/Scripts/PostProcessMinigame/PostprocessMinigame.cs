@@ -28,7 +28,7 @@ public class PostprocessMinigame : MonoBehaviour
 
 
     public static float sandpaperingAmount = 0f;
-    public static int removedSupports = 0;
+    public static float removedSupports = 0;
 
     private void Awake()
     {
@@ -175,7 +175,7 @@ public class PostprocessMinigame : MonoBehaviour
     private void FinishGame()
     {
         SceneSwitchManager.isMinigameFinished = true;
-        OrderManager.orderData.quality.supports = (float)removedSupports / supportCount * 100;
+        OrderManager.orderData.quality.supports = removedSupports / supportCount * 100;
         OrderManager.orderData.quality.sandpapering =
             100 * Mathf.Abs(SandpaperTool.requiredSmoothness - SandpaperTool.smoothnessDone);
         SceneSwitchManager.OpenScene(SceneName.MainScene);

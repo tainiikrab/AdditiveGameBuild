@@ -1095,7 +1095,7 @@ MonoBehaviour:
   finishButton: {fileID: 1020093704}
   modelRotator: {fileID: 1606104215}
   supportPrefab: {fileID: 3666429025128497904, guid: aa8847ec52c8014468eb9d5b815c08f4, type: 3}
-  supportCount: 10
+  supportCount: 15
   supportScale: 0.01
   overhangAngleDeg: 15
   minSupportHeight: 0.1
@@ -2353,11 +2353,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NewMonoBehaviourScript
   movingBall: {fileID: 1011333268}
   triangle: {fileID: 633383614}
+  ballImage: {fileID: 1011333269}
+  triangleImage: {fileID: 633383615}
   positionLimit: 0.2
   minSpeed: 0.6
   maxSpeed: 1
   canvasGroup: {fileID: 1155585551}
   freezeTime: 0.5
+  perfectThreshold: 0.802
+  goodThreshold: 0.604
+  poorThreshold: 0.369
 --- !u!225 &1155585551
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -4655,6 +4660,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3666429025128497904, guid: aa8847ec52c8014468eb9d5b815c08f4, type: 3}
+      propertyPath: upwardForce
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7693699911669031304, guid: aa8847ec52c8014468eb9d5b815c08f4, type: 3}
       propertyPath: m_Name
       value: support

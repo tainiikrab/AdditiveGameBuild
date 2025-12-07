@@ -27,7 +27,7 @@ public class SandpaperTool : AbstractTool
 
     private void Awake()
     {
-        requiredSmoothness = Random.Range(0.5f, 1f);
+        requiredSmoothness = Random.Range(0.1f, 1f);
     }
 
     protected override void OnActiveInstrument()
