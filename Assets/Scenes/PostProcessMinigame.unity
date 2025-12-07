@@ -3163,7 +3163,7 @@ MonoBehaviour:
   rotationSpeed: 0.15
   inertiaDamping: 5
   model: {fileID: 1592463592}
-  fallbackOrderIndex: 13
+  fallbackOrderIndex: 0
 --- !u!1 &1684362408
 GameObject:
   m_ObjectHideFlags: 0

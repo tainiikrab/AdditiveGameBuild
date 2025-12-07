@@ -20,6 +20,8 @@ public class NippersIndicator : MonoBehaviour
     private float currentSpeed;
     private int direction = 1; // 1 = right, -1 = left
 
+    private bool isFrozen = false;
+
     private void Awake()
     {
         canvasGroup.alpha = 0;
@@ -27,6 +29,9 @@ public class NippersIndicator : MonoBehaviour
         NippersTool.OnTargetChanged += PickNewSpeed;
         NippersTool.OnNippersUse += FreezeBall;
         wait = new WaitForSeconds(freezeTime);
+
+        // ADDED ANIMATION: small idle bob
+        movingBall.DOScale(1.05f, 1f).SetLoops(-1, LoopType.Yoyo).SetEase(Ease.InOutSine);
     }
 
     private void OnDestroy()
@@ -35,11 +40,10 @@ public class NippersIndicator : MonoBehaviour
         NippersTool.OnNippersUse -= FreezeBall;
     }
 
-    private bool isFrozen = false;
-
     private void Update()
     {
         if (isFrozen) return;
+
         if (!NippersTool.isCutting)
         {
             if (canvasGroup.alpha >= 0.99f)
@@ -56,7 +60,6 @@ public class NippersIndicator : MonoBehaviour
     private void MoveBall()
     {
         var newX = movingBall.anchoredPosition.x + direction * currentSpeed * Time.deltaTime;
-        Debug.Log(newX);
         movingBall.anchoredPosition = new Vector2(newX, movingBall.anchoredPosition.y);
 
         if (newX >= positionLimit)
@@ -67,6 +70,19 @@ public class NippersIndicator : MonoBehaviour
     private void FreezeBall()
     {
         isFrozen = true;
+
+        // ----------------------------------------------------------
+        // ADDED ANIMATION: impact punch + shake (won’t affect x movement)
+        // ----------------------------------------------------------
+        movingBall.DOKill(); // Stop only animation tweens, not position
+        movingBall.DOPunchScale(new Vector3(0.15f, 0.15f, 0), 0.2f, 10, 0.5f);
+
+        movingBall.DOShakeScale(0.15f, 0.15f, 20);
+
+        triangle.DOKill(true);
+        triangle.DOScale(1.15f, 0.08f).SetLoops(2, LoopType.Yoyo);
+        triangle.DORotate(new Vector3(0, 0, 10f), 0.1f).SetLoops(2, LoopType.Yoyo);
+
         StartCoroutine(UnfreezeBall());
     }
 
