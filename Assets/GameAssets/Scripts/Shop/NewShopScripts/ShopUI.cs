@@ -9,6 +9,7 @@ public class ShopUI : MonoBehaviour
     [SerializeField] private OfferCardUI offerCard;
     [SerializeField] private TextMeshProUGUI categoryTitle;
     [SerializeField] private TextMeshProUGUI pointsLabelText;
+    [SerializeField] private RectTransform scrollbarGroup;
     [SerializeField] private ButtonCategories[] buttonCategories;
 
     private LaptopUI laptopUI;
@@ -39,6 +40,11 @@ public class ShopUI : MonoBehaviour
         pointsLabelText.text = gm.points.ToString();
     }
 
+    private void SetScrollbarVisibility(bool visible)
+    {
+        scrollbarGroup.gameObject.SetActive(visible);
+    }
+
     /// <summary>
     /// Отображение товаров нужной категории
     /// </summary>
@@ -52,6 +58,7 @@ public class ShopUI : MonoBehaviour
             var createdCard = Instantiate(offerCard, offersContainer);
             createdCard.Initialize(offer);
         }
+        SetScrollbarVisibility(neededOffers.Count > 4);
     }
 
     private void ClearPreviousOffers()

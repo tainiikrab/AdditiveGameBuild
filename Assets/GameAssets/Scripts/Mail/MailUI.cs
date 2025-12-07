@@ -51,11 +51,11 @@ public class MailUI : MonoBehaviour
         OrderManager.SetCurrentOrder(orderConfig);
         Instance.MoveHeaderToCategory(header, Category.Completed);
         SaveManager.gameData.completedOrders.Add(orderConfig.id);
-        AudioManager.Instance.PlaySound(SoundType.Accept);
+       //AudioManager.Instance.PlaySound(SoundType.Accept);
 
         OrderManager.orderData.LoadNextMinigame();
         Instance.GetComponent<GUIWindow>().CloseWindow();
-        AudioManager.Instance.PlaySound(SoundType.Accept);
+        //AudioManager.Instance.PlaySound(SoundType.Accept);
     }
 
     public static void DeclineOrder(OrderConfig orderConfig, MailHeaderUI header)
@@ -146,7 +146,7 @@ public class MailUI : MonoBehaviour
             }
         }
 
-        AudioManager.Instance.PlaySound(SoundType.Switch);
+        //AudioManager.Instance.PlaySound(SoundType.Switch);
     }
 
     public void MoveHeaderToCategory(MailHeaderUI header, Category newCategory)
