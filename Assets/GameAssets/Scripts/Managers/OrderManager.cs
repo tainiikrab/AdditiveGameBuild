@@ -33,6 +33,7 @@ public static class OrderManager
     public static void SetCurrentOrder(OrderConfig order)
     {
         orderData = new OrderData(order);
+        Debug.Log("set current order to plot oreder");
         OnOrderAccepted?.Invoke();
     }
 

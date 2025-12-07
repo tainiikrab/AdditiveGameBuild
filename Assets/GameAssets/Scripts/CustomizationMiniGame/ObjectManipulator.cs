@@ -4,8 +4,8 @@ public class ObjectManipulator : MonoBehaviour
 {
     public float rotationSpeed = 2.5f;
     public float zoomSpeed = 10f;
-    public float minScale = 5f;
-    public float maxScale = 200f;
+    public float minScale = 0.5f;
+    public float maxScale = 5f;
 
     private Vector3 lastMousePosition;
     private bool isRotating = false;

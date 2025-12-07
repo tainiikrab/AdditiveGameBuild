@@ -32,7 +32,6 @@ public class ModelRotator : MonoBehaviour
             return;
         }
 
-        Destroy(model.gameObject);
         var modelGO = Instantiate(OrderManager.orderData.config.mesh, transform);
         model = modelGO.transform;
     }

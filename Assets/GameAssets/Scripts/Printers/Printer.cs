@@ -31,6 +31,7 @@ public class Printer : MonoBehaviour, IRaycastInteractable
     private float lightIntensity = 3f;
     private bool isCameraActive = false;
     private bool isPrinting = false;
+    private bool printFinished = false;
 
     private Vector3 startPosition;
 
@@ -93,6 +94,12 @@ public class Printer : MonoBehaviour, IRaycastInteractable
         Debug.Log("Printer camera activated");
     }
 
+    public void ActivateCameraWithPriority(int priority = 100)
+    {
+        printerCamera.Priority = priority;
+        isCameraActive = true;
+    }
+
     private void DeactivatePrinterCamera()
     {
         printerCamera.Priority = -100;
@@ -100,19 +107,15 @@ public class Printer : MonoBehaviour, IRaycastInteractable
 
         hoverLight.intensity = lightIntensity;
         Debug.Log("Printer camera deactivated");
+
+        if (printFinished)
+        {
+            MinigameManager.Instance.OpenMinigame(MinigameType.Postprocess);
+
+            printFinished = false;
+        }
     }
 
-    public void ActivateCameraWithPriority(int priority = 100)
-    {
-        printerCamera.Priority = priority;
-        isCameraActive = true;
-    }
-
-    public void DeactivateCamera()
-    {
-        printerCamera.Priority = -100;
-        isCameraActive = false;
-    }
 
     private string FormatTime(float timeSeconds)
     {
@@ -127,6 +130,7 @@ public class Printer : MonoBehaviour, IRaycastInteractable
     public IEnumerator PrintHeadMoveRoutine()
     {
         if (printHead == null || printHeadSupport == null) yield break;
+        ActivatePrinterCamera();
 
         GameObject spawnedObj = null;
         Renderer rend = null;
@@ -226,8 +230,8 @@ public class Printer : MonoBehaviour, IRaycastInteractable
         }
 
         timerText.text = "00:00:00";
-
         isPrinting = false;
+        printFinished = true;
     }
     private float headStartX;
     private float headEndX;

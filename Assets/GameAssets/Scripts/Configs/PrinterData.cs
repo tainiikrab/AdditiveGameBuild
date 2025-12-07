@@ -28,7 +28,8 @@ public enum MinigameType
     Slicer,
     Postprocess,
     Modelling,
-    Scanning
+    Scanning,
+    Customization
 }
 
 public class PrinterType

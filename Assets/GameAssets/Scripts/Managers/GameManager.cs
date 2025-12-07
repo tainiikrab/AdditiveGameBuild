@@ -99,9 +99,10 @@ public class GameManager : MonoBehaviour
     public void OnOrderAccepted()
     {
         printer.defaultModel = OrderManager.orderData.config.mesh;
-        player.SwitchPath(PathType.ToPrinter);
+        //MinigameManager.Instance.OpenMinigame(MinigameType.Slicer);
         player.StartMovement();
     }
+
 
     public void OnOrderRejected()
     {
@@ -110,7 +111,6 @@ public class GameManager : MonoBehaviour
     public void OnOrderComplete()
     {
     }
-
     private void SetupPrinterPathActions()
     {
         for (int i = 0; i < player.Paths.Length; i++)
@@ -121,11 +121,7 @@ public class GameManager : MonoBehaviour
                 
                 player.AddOnPathEndAction(i, () =>
                 {
-                    Debug.Log("Player reached printer - starting printing process");
-                    
-                    printer.TogglePrinterCamera();
-                    
-                    StartCoroutine(StartPrintingDelayed());
+                    StartCoroutine(printer.PrintHeadMoveRoutine());
                 });
                 
                 Debug.Log($"Setup printer actions for path index: {i}");
@@ -134,9 +130,4 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private IEnumerator StartPrintingDelayed()
-    {
-        yield return new WaitForSeconds(0.5f);
-        StartCoroutine(printer.PrintHeadMoveRoutine());
-    }
 }

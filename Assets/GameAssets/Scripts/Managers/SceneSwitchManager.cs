@@ -83,7 +83,7 @@ public class SceneSwitchManager : MonoBehaviour
 
         loadingScreen.SetActive(false);
 
-        if (isMinigameFinished) OpenReviewUI();
+        //if (isMinigameFinished) OpenReviewUI();
     }
 
 # if UNITY_EDITOR
@@ -108,5 +108,6 @@ public enum SceneName
 {
     MainScene,
     PostProcessMinigame,
-    ScannerMinigame
+    ScannerMinigame,
+    customizationMiniGame
 }

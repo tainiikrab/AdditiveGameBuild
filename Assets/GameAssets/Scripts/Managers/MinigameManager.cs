@@ -37,6 +37,9 @@ public class MinigameManager : MonoBehaviour
             case MinigameType.Scanning:
                 SceneSwitchManager.OpenScene(SceneName.ScannerMinigame);
                 return;
+            case MinigameType.Customization:
+                SceneSwitchManager.OpenScene(SceneName.customizationMiniGame);
+                return;
             default: return;
         }
     }
