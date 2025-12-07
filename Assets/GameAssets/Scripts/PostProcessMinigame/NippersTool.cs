@@ -1,4 +1,6 @@
+using System;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class NippersTool : AbstractTool
 {
@@ -9,7 +11,7 @@ public class NippersTool : AbstractTool
     [SerializeField] private Animation nippersAnimation;
     [SerializeField] private string cutAnimName = "Nippers";
 
-    private bool isCutting;
+    public static bool isCutting { get; private set; }
     private SupportModel supportModel;
     [SerializeField] private float waitTime = 0.65f;
 
@@ -24,6 +26,8 @@ public class NippersTool : AbstractTool
             {
                 isCutting = true;
                 Debug.Log("Cutting");
+                if (supportModel == null || supportModel != support) OnTargetChanged?.Invoke();
+
                 supportModel = support;
                 return;
             }
@@ -32,11 +36,21 @@ public class NippersTool : AbstractTool
         isCutting = false;
     }
 
+    public static event Action OnNippersUse;
+    public static event Action OnTargetChanged;
+
     protected override void OnUse()
     {
         if (!isCutting) return;
         nippersAnimation.Play(cutAnimName);
+        OnNippersUse?.Invoke();
+
         Invoke(nameof(FinishCut), waitTime);
+    }
+
+    protected override void OnStopActiveInstrument()
+    {
+        isCutting = false;
     }
 
     private void FinishCut()

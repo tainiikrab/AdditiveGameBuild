@@ -1,3 +1,4 @@
+using System;
 using System.Drawing;
 using UnityEngine;
 using Color = UnityEngine.Color;
@@ -14,16 +15,23 @@ public class SandpaperIndicator : MonoBehaviour
     [SerializeField] private Color badColor, goodColor;
     private Color currentColor;
 
+    [SerializeField] private CanvasGroup canvasGroup;
+
+    private void Awake()
+    {
+        canvasGroup.alpha = 0;
+    }
+
     public void Update()
     {
         if (!SandpaperTool.isSmoothing)
         {
-            if (indicatorImage.enabled)
-                indicatorImage.enabled = false;
+            if (canvasGroup.alpha >= 0.99f)
+                canvasGroup.DOFade(0, 0.2f);
             return;
         }
 
-        if (!indicatorImage.enabled) indicatorImage.enabled = true;
+        if (canvasGroup.alpha <= 0.01f) canvasGroup.DOFade(1, 0.2f);
 
         currentColor = Color.Lerp(badColor, goodColor, smoothnessDone / requiredSmoothness);
         indicatorImage.color = currentColor;
