@@ -1096,12 +1096,10 @@ MonoBehaviour:
   modelRotator: {fileID: 1606104215}
   supportPrefab: {fileID: 3666429025128497904, guid: aa8847ec52c8014468eb9d5b815c08f4, type: 3}
   supportCount: 15
-  supportScale: 0.01
-  overhangAngleDeg: 15
-  minSupportHeight: 0.1
-  placementGridSize: 0.01
+  supportScale: 0.2
   minSupportSpacing: 0.01
   bottomExclusionHeight: 0.1
+  MODEL_LAYER_NAME: SupportedModel
 --- !u!4 &592107655
 Transform:
   m_ObjectHideFlags: 0
@@ -1150,6 +1148,7 @@ MonoBehaviour:
   printer: {fileID: 0}
   openMinigameDelay: 0
   isUIOpened: 0
+  startingPoints: 300
   switchToNextMinigameDelay: 0.5
 --- !u!4 &613067103
 Transform:
@@ -3122,7 +3121,7 @@ Transform:
   m_GameObject: {fileID: 1606104212}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.08, y: 0.52, z: 1.039}
+  m_LocalPosition: {x: -0.007, y: 0.567, z: 1.039}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

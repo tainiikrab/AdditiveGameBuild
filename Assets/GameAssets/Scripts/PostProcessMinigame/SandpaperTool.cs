@@ -30,6 +30,8 @@ public class SandpaperTool : AbstractTool
         requiredSmoothness = Random.Range(0.1f, 1f);
     }
 
+    private bool isFirstContact = true;
+
     protected override void OnActiveInstrument()
     {
         if (Physics.Raycast(transform.position, transform.forward, out var hit, rayDistance, modelLayer))
@@ -41,7 +43,18 @@ public class SandpaperTool : AbstractTool
                 if (!isOnUse) return;
                 isSmoothing = true;
 
-                var current = renderer.material.GetFloat(smoothnessProperty);
+                float current;
+                if (isFirstContact)
+                {
+                    current = 0;
+                    isFirstContact = false;
+                }
+                else
+                {
+                    current = renderer.material.GetFloat(smoothnessProperty);
+                }
+
+                Debug.Log(current);
                 if (defaultSmoothness == 0)
                 {
                     defaultSmoothness = current;
