@@ -186,8 +186,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 1.3945923, y: -23.074402}
-  m_SizeDelta: {x: 119.3276, y: 258.8279}
+  m_AnchoredPosition: {x: -0.49978638, y: -22.914612}
+  m_SizeDelta: {x: 252.1633, y: 359.7211}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &976109622027306826
 CanvasRenderer:
@@ -360,8 +360,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2.0693, y: -11.6118}
-  m_SizeDelta: {x: 178.5641, y: 141.6334}
+  m_AnchoredPosition: {x: 0.6992, y: -10.5252}
+  m_SizeDelta: {x: 207.0409, y: 164.2206}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1174357053718161313
 GameObject:
@@ -1825,6 +1825,8 @@ MonoBehaviour:
   scanTime: 1
   phone: {fileID: 3313940265222369207}
   scanLine: {fileID: 8605207718669861965}
+  movementThreshold: 0.5
+  resumeDelay: 0.06
 --- !u!1 &4072897196819619542
 GameObject:
   m_ObjectHideFlags: 0
