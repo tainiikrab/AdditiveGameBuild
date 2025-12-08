@@ -18,6 +18,7 @@ public class Scanner : MonoBehaviour
 
     // last phone world position for movement detection
     private Vector3 lastPhonePosition;
+
     // минимальный сдвиг (в мировых координатах) для срабатывания возобновления
     [SerializeField] private float movementThreshold = 0.5f;
 
@@ -143,7 +144,7 @@ public class Scanner : MonoBehaviour
 
     private void FinishMinigame()
     {
-        SceneSwitchManager.isMinigameFinished = true;
+        // SceneSwitchManager.isMinigameFinished = true;
         OrderManager.orderData.chosenMaterial = currentPrintingMaterial;
         currentPrintingMaterial = null;
         OrderManager.goPrint = true;

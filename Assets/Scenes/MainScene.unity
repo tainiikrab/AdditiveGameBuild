@@ -4104,7 +4104,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9039137270145001471, guid: ca40287af6edd56478cf57058e2e624b, type: 3}
       propertyPath: m_AdditionalShaderChannelsFlag
-      value: 25
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -15993,7 +15993,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &845456592
 Transform:
   m_ObjectHideFlags: 0
@@ -19053,8 +19053,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   player: {fileID: 268913459}
+  printer: {fileID: 0}
   openMinigameDelay: 0
   isUIOpened: 0
+  switchToNextMinigameDelay: 2
 --- !u!1 &1037294037
 GameObject:
   m_ObjectHideFlags: 0

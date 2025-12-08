@@ -57,10 +57,20 @@ public class GameManager : MonoBehaviour
         player.StopMovement();
         if (OrderManager.goPrint)
         {
+            if (SceneSwitchManager.areMinigamesFinished) return;
             SetupPrinterPathActions();
-            printer.defaultModel = OrderManager.orderData.config.mesh;
+            // printer.defaultModel = OrderManager.orderData.config.mesh;
             player.StartMovement();
+            StartCoroutine(SwitchToNextMinigameAfterDelay());
         }
+    }
+
+    [Space(10)] [SerializeField] private float switchToNextMinigameDelay = 0.5f;
+
+    private IEnumerator SwitchToNextMinigameAfterDelay()
+    {
+        yield return new WaitForSeconds(switchToNextMinigameDelay);
+        OrderManager.orderData.LoadNextMinigame();
     }
 
     private void Update()
@@ -101,10 +111,10 @@ public class GameManager : MonoBehaviour
         SaveManager.Save();
     }
 
-    public void OnOrderAccepted()
+    public void OnDialogueFinished()
     {
-        MinigameManager.Instance.OpenMinigame(MinigameType.Scanner);
-        player.StartMovement();
+        // OrderManager.orderData.LoadNextMinigame();
+        // player.StartMovement();
     }
 
 
@@ -115,23 +125,18 @@ public class GameManager : MonoBehaviour
     public void OnOrderComplete()
     {
     }
+
     private void SetupPrinterPathActions()
     {
-        for (int i = 0; i < player.Paths.Length; i++)
-        {
+        for (var i = 0; i < player.Paths.Length; i++)
             if (player.Paths[i].Type == PathType.ToPrinter)
             {
                 player.ClearOnPathEndActions(i);
-                
-                player.AddOnPathEndAction(i, () =>
-                {
-                    StartCoroutine(printer.PrintHeadMoveRoutine());
-                });
-                
+
+                player.AddOnPathEndAction(i, () => { StartCoroutine(printer.PrintHeadMoveRoutine()); });
+
                 Debug.Log($"Setup printer actions for path index: {i}");
                 break;
             }
-        }
     }
-
 }

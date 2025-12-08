@@ -156,7 +156,7 @@ public class WayPointFollower : MonoBehaviour
                 currentPathIndex = 0;
 
             PlayAnimation("Walk");
-            Debug.Log("Продолжаем движение после остановки");
+            // Debug.Log("Продолжаем движение после остановки");
             OnContinueMovement?.Invoke(gameObject);
         }
     }

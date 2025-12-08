@@ -65,7 +65,7 @@ public class CustomerManager : MonoBehaviour
 
     private void OnOrderAccepted()
     {
-        gm.OnOrderAccepted();
+        gm.OnDialogueFinished();
         activeCustomer.ContinueMovement();
     }
 

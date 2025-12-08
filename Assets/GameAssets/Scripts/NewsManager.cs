@@ -37,6 +37,10 @@ public class NewsManager : MonoBehaviour
         teaserButtonEvents.Init(ShowNews);
     }
 
+    private void OnDestroy()
+    {
+        OrderManager.OnOrderFinished -= TryLoadNews;
+    }
 
 # if UNITY_EDITOR
     private void Update()
@@ -53,6 +57,12 @@ public class NewsManager : MonoBehaviour
     {
         if (GlobalConfig.Instance.News.Count < orderData.config.plotIndex) return;
         var newsConfig = GlobalConfig.Instance.News[orderData.config.plotIndex - 1];
+
+        if (newsImage == null || teaserImage == null)
+        {
+            Debug.LogWarning("NewsManager: image reference destroyed.");
+            return;
+        }
 
         newsText.text = newsConfig.text;
         newsHeader.text = newsConfig.header;

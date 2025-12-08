@@ -54,7 +54,7 @@ public class MaterialManager : MonoBehaviour
 
     private void ShowWarning()
     {
-        Debug.Log("Showed material warning");
+        // Debug.Log("Showed material warning");
         // materialWarningUI.gameObject.SetActive(true);
         // not implemented correctly yet
     }

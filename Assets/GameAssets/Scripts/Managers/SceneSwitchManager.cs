@@ -16,7 +16,7 @@ public class SceneSwitchManager : MonoBehaviour
 
     // [SerializeField] private ReviewUI reviewUI;
     public static SceneSwitchManager Instance { get; private set; }
-    public static bool isMinigameFinished = false;
+    public static bool areMinigamesFinished = false;
 
     public static SceneName currentScene { get; private set; }
 
@@ -65,7 +65,7 @@ public class SceneSwitchManager : MonoBehaviour
 
     private IEnumerator LoadSceneAsync(SceneName sceneName)
     {
-        Debug.Log("Loading async");
+        // Debug.Log("Loading async");
         loadingScreen.SetActive(true);
 
         if (loadingAnimation != null)
@@ -89,7 +89,7 @@ public class SceneSwitchManager : MonoBehaviour
 
         loadingScreen.SetActive(false);
 
-        //if (isMinigameFinished) OpenReviewUI();
+        if (areMinigamesFinished) OpenReviewUI();
     }
 
 # if UNITY_EDITOR
@@ -100,7 +100,6 @@ public class SceneSwitchManager : MonoBehaviour
 #endif
     private void OpenReviewUI()
     {
-        isMinigameFinished = false;
         if (reviewUI != null)
         {
             reviewUI.gameObject.SetActive(true);
@@ -115,5 +114,5 @@ public enum SceneName
     MainScene,
     PostProcessMinigame,
     ScannerMinigame,
-    customizationMiniGame
+    CustomizationMinigame
 }

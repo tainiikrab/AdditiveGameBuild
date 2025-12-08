@@ -176,10 +176,18 @@ public static class OrderManager
 
         public void LoadNextMinigame()
         {
+            if (currentMinigame == config.printerType.minigames.Count - 1)
+            {
+                Debug.LogWarning("No more minigames");
+                SceneSwitchManager.areMinigamesFinished = true;
+                SceneSwitchManager.OpenScene(SceneName.MainScene);
+                return;
+            }
+
             currentMinigame++;
             MinigameManager.Instance.OpenMinigame(config.printerType.minigames[currentMinigame]);
-            Debug.Log($"The next minigame is {config.printerType.minigames[currentMinigame]}");
-            Debug.Log($"Minigame index is {currentMinigame}");
+            // Debug.Log($"The next minigame is {config.printerType.minigames[currentMinigame]}");
+            // Debug.Log($"Minigame index is {currentMinigame}");
         }
     }
 }

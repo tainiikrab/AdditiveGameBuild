@@ -2,15 +2,15 @@ using UnityEngine;
 
 public class ObjectManipulator : MonoBehaviour
 {
-    public float rotationSpeed = 2.5f;
-    public float zoomSpeed = 10f;
+    public float rotationSpeed = 0.25f;
+    public float zoomSpeed = 1f;
     public float minScale = 0.5f;
-    public float maxScale = 5f;
+    public float maxScale = 2f;
 
     private Vector3 lastMousePosition;
     private bool isRotating = false;
 
-    void Update()
+    private void Update()
     {
         if (Input.GetMouseButtonDown(2))
         {
@@ -18,29 +18,26 @@ public class ObjectManipulator : MonoBehaviour
             lastMousePosition = Input.mousePosition;
         }
 
-        if (Input.GetMouseButtonUp(2))
-        {
-            isRotating = false;
-        }
+        if (Input.GetMouseButtonUp(2)) isRotating = false;
 
         if (isRotating)
         {
-            Vector3 currentMousePos = Input.mousePosition;
-            Vector3 delta = currentMousePos - lastMousePosition;
+            var currentMousePos = Input.mousePosition;
+            var delta = currentMousePos - lastMousePosition;
 
             if (delta.magnitude < 10000f)
             {
                 transform.Rotate(Vector3.up, -delta.x * rotationSpeed, Space.World);
-                transform.Rotate(Vector3.right, delta.y * rotationSpeed, Space.Self);
+                transform.Rotate(Vector3.right, -delta.y * rotationSpeed, Space.Self);
             }
 
             lastMousePosition = currentMousePos;
         }
 
-        float scroll = Input.GetAxis("ZoomAxis");
+        var scroll = Input.GetAxis("ZoomAxis");
         if (Mathf.Abs(scroll) > 0.0001f)
         {
-            Vector3 scale = transform.localScale;
+            var scale = transform.localScale;
             scale += Vector3.one * scroll * zoomSpeed;
             scale = ClampVector3(scale, minScale, maxScale);
             transform.localScale = scale;

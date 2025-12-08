@@ -17,8 +17,8 @@ public class ShopManager : MonoBehaviour
 
         ParseOffers();
         sceneObjects = FindObjectsByType<SceneObject>(FindObjectsInactive.Include, FindObjectsSortMode.None).ToList();
-        foreach (var sceneObject in sceneObjects)
-            Debug.Log(sceneObject.name);
+        // foreach (var sceneObject in sceneObjects)
+        //     Debug.Log(sceneObject.name);
 
         ShowPurchasedSceneObjects(sceneObjects);
     }

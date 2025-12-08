@@ -73,7 +73,7 @@ public class Slicer : MonoBehaviour
 
     private float CalculateQuality()
     {
-        Debug.Log($"Density: {fillDensity.value}, orderDensity: {order.fillDensity}");
+        // Debug.Log($"Density: {fillDensity.value}, orderDensity: {order.fillDensity}");
         var quality = OrderManager.orderData.quality;
         quality.fillDensity =
             Mathf.Clamp(100 - Mathf.Abs((fillDensity.value - order.fillDensity) * fillDensity.scoreModifier), 0, 100);
@@ -82,8 +82,8 @@ public class Slicer : MonoBehaviour
         quality.printSpeed =
             Mathf.Clamp(100 - Mathf.Abs((printSpeed.value - order.printSpeed) * printSpeed.scoreModifier), 0, 100);
 
-        Debug.Log(
-            $"Quality: density: {quality.fillDensity}, height: {quality.layerHeight}, speed: {quality.printSpeed}");
+        // Debug.Log(
+        //     $"Quality: density: {quality.fillDensity}, height: {quality.layerHeight}, speed: {quality.printSpeed}");
         return (quality.fillDensity + quality.layerHeight + quality.printSpeed) / 3f;
     }
 

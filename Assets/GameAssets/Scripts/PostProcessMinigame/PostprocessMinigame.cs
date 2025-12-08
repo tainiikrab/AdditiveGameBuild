@@ -174,7 +174,7 @@ public class PostprocessMinigame : MonoBehaviour
 
     private void FinishGame()
     {
-        SceneSwitchManager.isMinigameFinished = true;
+        // SceneSwitchManager.isMinigameFinished = true;
         OrderManager.orderData.quality.supports = removedSupports / supportCount * 100;
         OrderManager.orderData.quality.sandpapering =
             100 * Mathf.Abs(SandpaperTool.requiredSmoothness - SandpaperTool.smoothnessDone);
