@@ -5705,14 +5705,6 @@ MonoBehaviour:
   teaserImage: {fileID: 1561766300}
   teaserLowerPosition: -300
   TeaserButton: {fileID: 120167241}
-  m_GameObject: {fileID: 261895388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30d7e422d49ae27409573d09e92f9202, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SceneObject
-  category: 1
-  sceneObjectId: aquarium
 --- !u!1 &267329155
 GameObject:
   m_ObjectHideFlags: 0
@@ -7782,6 +7774,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FishSwiming
   bobbingDistance: 0.05
   bobbingDuration: 2.5
+  minWaitTime: 2
+  maxWaitTime: 5
+  rotationAmount: 45
+  rotationDuration: 0.5
 --- !u!1001 &425371813
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -12499,7 +12495,7 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: edd02e504c12ea841ab4f3b68ac86a40, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 261895390}
+      addedObject: {fileID: 665782531}
     - targetCorrespondingSourceObject: {fileID: 7021381634448884703, guid: edd02e504c12ea841ab4f3b68ac86a40, type: 3}
       insertIndex: -1
       addedObject: {fileID: 416879298}
@@ -12507,6 +12503,30 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1601374977}
   m_SourcePrefab: {fileID: 100100000, guid: edd02e504c12ea841ab4f3b68ac86a40, type: 3}
+--- !u!4 &665782529 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: edd02e504c12ea841ab4f3b68ac86a40, type: 3}
+  m_PrefabInstance: {fileID: 665782528}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &665782530 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: edd02e504c12ea841ab4f3b68ac86a40, type: 3}
+  m_PrefabInstance: {fileID: 665782528}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &665782531
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 665782530}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30d7e422d49ae27409573d09e92f9202, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneObject
+  category: 1
+  sceneObjectId: aquarium
 --- !u!1 &668269765
 GameObject:
   m_ObjectHideFlags: 0
@@ -29805,6 +29825,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FishSwiming
   bobbingDistance: 0.04
   bobbingDuration: 2
+  minWaitTime: 2
+  maxWaitTime: 5
+  rotationAmount: 45
+  rotationDuration: 0.5
 --- !u!1001 &1601893855
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38703,14 +38727,14 @@ PrefabInstance:
       insertIndex: 21
       addedObject: {fileID: 1384847663}
     - targetCorrespondingSourceObject: {fileID: 3168620875446319547, guid: f0736941b72642d468a79805b85e514d, type: 3}
-      insertIndex: 0
-      addedObject: {fileID: 261895389}
-    - targetCorrespondingSourceObject: {fileID: 3168620875446319547, guid: f0736941b72642d468a79805b85e514d, type: 3}
       insertIndex: 7
       addedObject: {fileID: 2127430169}
     - targetCorrespondingSourceObject: {fileID: 3168620875446319547, guid: f0736941b72642d468a79805b85e514d, type: 3}
       insertIndex: 8
       addedObject: {fileID: 942845718}
+    - targetCorrespondingSourceObject: {fileID: 3168620875446319547, guid: f0736941b72642d468a79805b85e514d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 665782529}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 2562860790700429256, guid: f0736941b72642d468a79805b85e514d, type: 3}
       insertIndex: -1
