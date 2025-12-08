@@ -14,156 +14,153 @@ public class PostprocessMinigame : MonoBehaviour
     [SerializeField] private int supportCount = 20;
     [SerializeField] private float supportScale = 0.2f;
 
-    [Header("Raycast Spawn Settings")] [SerializeField]
-    private float minSupportSpacing = 0.5f;
+    [Header("Overhang Settings")] [SerializeField]
+    private float overhangAngleDeg = 45f; // printable angle threshold
+
+    [SerializeField] private float minSupportHeight = 0.01f; // avoid micro supports
+    [SerializeField] private float placementGridSize = 0.01f;
 
     private Transform model;
     private Bounds modelBounds;
     private float baseY;
+    [SerializeField] private float minSupportSpacing = 0.5f; // world units
     [SerializeField] private float bottomExclusionHeight = 0.005f;
+
 
     public static float sandpaperingAmount = 0f;
     public static float removedSupports = 0;
-
-    [SerializeField] private string MODEL_LAYER_NAME = "ModelSurface";
 
     private void Awake()
     {
         finishButton.onClick.AddListener(FinishGame);
         sandpaperingAmount = 0f;
         removedSupports = 0;
-
+        
         AudioManager.Instance.PlayMusic(MusicType.BackgroundMusic);
     }
 
     private void Start()
     {
         model = modelRotator.model;
-        supportScale = 1 / Mathf.Max(model.transform.localScale.x, 0.0001f);
+        supportScale = 1 / model.transform.localScale.x;
 
-        SetupBounds();
-        SetupColliders();
-        SetupLayer();
-
-        SpawnSupportsViaRaycasts();
-    }
-
-    // -------------------------------------------------------------------------
-    // BOUNDS
-    // -------------------------------------------------------------------------
-    private void SetupBounds()
-    {
         var renderers = model.GetComponentsInChildren<Renderer>();
-        if (renderers.Length == 0) return;
+        if (renderers.Length > 0)
+        {
+            var combinedBounds = renderers[0].bounds;
+            for (var i = 1; i < renderers.Length; i++)
+                combinedBounds.Encapsulate(renderers[i].bounds);
 
-        var combinedBounds = renderers[0].bounds;
-        for (var i = 1; i < renderers.Length; i++)
-            combinedBounds.Encapsulate(renderers[i].bounds);
+            modelBounds = combinedBounds;
+            baseY = ComputeModelLowestY(model);
 
-        modelBounds = combinedBounds;
-        baseY = modelBounds.min.y;
+            SpawnSupportsOverhangs();
+        }
     }
 
-    // -------------------------------------------------------------------------
-    // COLLIDER SETUP
-    // -------------------------------------------------------------------------
-    private void SetupColliders()
+    private float ComputeModelLowestY(Transform root)
     {
-        // Ensure every mesh under the model has a MeshCollider
-        foreach (var mf in model.GetComponentsInChildren<MeshFilter>())
+        var lowest = float.PositiveInfinity;
+        var meshFilters = root.GetComponentsInChildren<MeshFilter>();
+        foreach (var mf in meshFilters)
         {
-            var mc = mf.GetComponent<MeshCollider>();
-            if (mc == null)
+            var mesh = mf.sharedMesh;
+            if (!mesh) continue;
+            foreach (var v in mesh.vertices)
             {
-                mc = mf.gameObject.AddComponent<MeshCollider>();
-                mc.sharedMesh = mf.sharedMesh;
-                mc.convex = false; // must be non-convex to get full geometry hits
+                var w = mf.transform.TransformPoint(v);
+                if (w.y < lowest) lowest = w.y;
             }
         }
+
+        return float.IsPositiveInfinity(lowest) ? modelBounds.min.y : lowest;
     }
 
-    // -------------------------------------------------------------------------
-    // LAYER SETUP
-    // -------------------------------------------------------------------------
-    private void SetupLayer()
+    private void SpawnSupportsOverhangs()
     {
-        var layer = LayerMask.NameToLayer(MODEL_LAYER_NAME);
-        if (layer == -1)
-        {
-            Debug.LogWarning("Layer 'ModelSurface' does not exist! Create it in Project Settings → Tags & Layers.");
-            layer = 0;
-        }
+        var meshFilters = model.GetComponentsInChildren<MeshFilter>();
+        if (meshFilters.Length == 0) return;
 
-        foreach (var t in model.GetComponentsInChildren<Transform>())
-            t.gameObject.layer = layer;
-    }
-
-    // -------------------------------------------------------------------------
-    // SUPPORT SPAWNING (NEW RAYCAST LOGIC)
-    // -------------------------------------------------------------------------
-    private void SpawnSupportsViaRaycasts()
-    {
-        var layerMask = 1 << LayerMask.NameToLayer(MODEL_LAYER_NAME);
-        var rayDistance = modelBounds.extents.magnitude * 4f;
-
-        List<Vector3> spawnedPositions = new();
         var spawned = 0;
-        var attempts = 0;
-        var maxAttempts = supportCount * 40;
+        var spawnedPositions = new List<Vector3>();
 
-        while (spawned < supportCount && attempts < maxAttempts)
+        while (spawned < supportCount)
         {
-            attempts++;
+            // pick a random mesh
+            var mf = meshFilters[Random.Range(0, meshFilters.Length)];
+            var mesh = mf.sharedMesh;
+            if (!mesh) continue;
 
-            // origin on sphere
-            var origin =
-                modelBounds.center + Random.onUnitSphere * modelBounds.extents.magnitude * 2f;
-            // aim at random point inside bounds
-            var randomTarget = new Vector3(
-                Random.Range(modelBounds.min.x, modelBounds.max.x),
-                Random.Range(modelBounds.min.y, modelBounds.max.y),
-                Random.Range(modelBounds.min.z, modelBounds.max.z)
-            );
+            var verts = mesh.vertices;
+            var tris = mesh.triangles;
 
-            var dir = (randomTarget - origin).normalized;
+            if (tris.Length < 3)
+                continue;
 
-            if (Physics.Raycast(origin, dir, out var hit, rayDistance, layerMask))
-            {
-                // bottom exclusion
-                if (hit.point.y - baseY < bottomExclusionHeight)
-                    continue;
+            // Pick a valid triangle index (0, 3, 6, ...)
+            var triStart = Random.Range(0, tris.Length / 3) * 3;
 
-                // spacing check
-                var tooClose = false;
-                foreach (var pos in spawnedPositions)
-                    if (Vector3.Distance(pos, hit.point) < minSupportSpacing)
-                    {
-                        tooClose = true;
-                        break;
-                    }
+            // Safe vertex access USING triangles array
+            var p0 = mf.transform.TransformPoint(verts[tris[triStart]]);
+            var p1 = mf.transform.TransformPoint(verts[tris[triStart + 1]]);
+            var p2 = mf.transform.TransformPoint(verts[tris[triStart + 2]]);
 
-                if (tooClose) continue;
+            // Random point inside this triangle
+            var randomPoint = RandomPointInTriangle(p0, p1, p2);
 
-                // spawn support
-                SpawnSupportAt(hit.point);
+            // Skip points too close to the bottom of the model
+            if (randomPoint.y - baseY < bottomExclusionHeight)
+                continue;
 
-                spawnedPositions.Add(hit.point);
-                spawned++;
-            }
+            // Spacing check
+            var tooClose = false;
+            foreach (var pos in spawnedPositions)
+                if (Vector3.Distance(pos, randomPoint) < minSupportSpacing)
+                {
+                    tooClose = true;
+                    break;
+                }
+
+            if (tooClose) continue;
+
+            // Spawn support at that surface point
+            SpawnSupportAt(randomPoint, randomPoint);
+
+            spawnedPositions.Add(randomPoint);
+            spawned++;
+        }
+    }
+
+
+    private Vector3 RandomPointInTriangle(Vector3 a, Vector3 b, Vector3 c)
+    {
+        var r1 = Random.value;
+        var r2 = Random.value;
+
+        // Ensure uniform distribution inside triangle
+        if (r1 + r2 > 1f)
+        {
+            r1 = 1f - r1;
+            r2 = 1f - r2;
         }
 
-        Debug.Log($"Spawned {spawned}/{supportCount} supports.");
+        return a + (b - a) * r1 + (c - a) * r2;
     }
 
-    // -------------------------------------------------------------------------
-    // SUPPORT INSTANTIATION (unchanged)
-    // -------------------------------------------------------------------------
-    private void SpawnSupportAt(Vector3 pos)
+    private void SpawnSupportAt(Vector3 basePos, Vector3 topPos)
     {
-        Instantiate(supportPrefab, pos, Quaternion.identity, model);
+        // Just place the prefab at the base position
+        var support = Instantiate(supportPrefab, basePos, Quaternion.identity, model);
+
+        // Do not modify its scale at all
+        // support.transform.localScale = Vector3.one * supportScale; // <-- remove this line
+
+        // If you want the support to visually connect to the overhang,
+        // you can instead stretch it via a script on SupportModel itself,
+        // or design the prefab so it already has the right proportions.
     }
 
-    // -------------------------------------------------------------------------
+
     private bool IsTransformInHierarchy(Transform t, Transform root)
     {
         while (t != null)
@@ -177,10 +174,10 @@ public class PostprocessMinigame : MonoBehaviour
 
     private void FinishGame()
     {
-        OrderManager.orderData.quality.supports = removedSupports / supportCount * 100f;
+        // SceneSwitchManager.isMinigameFinished = true;
+        OrderManager.orderData.quality.supports = removedSupports / supportCount * 100;
         OrderManager.orderData.quality.sandpapering =
             100 * Mathf.Abs(SandpaperTool.requiredSmoothness - SandpaperTool.smoothnessDone);
-
         SceneSwitchManager.OpenScene(SceneName.MainScene);
     }
 }
