@@ -25,7 +25,7 @@ public class GameManager : MonoBehaviour
         set => _globalConfig = value;
     }
 
-    private int _points;
+    private static int _points = -1;
 
     public event Action<int> OnPointsChanged;
 
@@ -39,6 +39,8 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    [SerializeField] private int startingPoints = 300;
+
     private void Awake()
     {
         if (Instance != null)
@@ -49,7 +51,8 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
         globalConfig = GlobalConfig.Instance;
-        _points = 2200;
+        if (_points == -1)
+            _points = startingPoints;
     }
 
     private void Start()

@@ -18738,6 +18738,7 @@ MonoBehaviour:
   printer: {fileID: 0}
   openMinigameDelay: 0
   isUIOpened: 0
+  startingPoints: 300
   switchToNextMinigameDelay: 2
 --- !u!1 &1037294037
 GameObject:

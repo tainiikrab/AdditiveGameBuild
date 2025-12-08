@@ -30,6 +30,7 @@ public class Tutorial : MonoBehaviour
     [SerializeField] private RectTransform closeImage;
     public static bool hasTutorialFired = false;
     public static Tutorial instance { get; private set; }
+    [SerializeField] private int calledOrderPlotIndex = 1;
 
     private float workplaceLightIntensity;
 
@@ -157,7 +158,7 @@ public class Tutorial : MonoBehaviour
 
             case TutorialScene.CallCustomer:
                 currentScene = TutorialScene.CallCustomer;
-                OrderManager.CreatePlotOrder(1);
+                OrderManager.CreatePlotOrder(calledOrderPlotIndex);
                 // OrderManager.orderData.currentMinigame = 0;
 
                 WayPointFollower.OnContinueMovement -= HandleAfterCustomer;
