@@ -17,6 +17,19 @@ public class Customer : WayPointFollower
     public void Initialize(CustomerConfig customerConfig, OrderConfig orderConfig,
         List<IndexActionTriple> indexActionPairs)
     {
+        if (indexActionPairs == null)
+            Debug.LogError("indexActionPairs is NULL");
+
+        if (Paths == null)
+            Debug.LogError("Paths list is NULL");
+
+        else if (Paths.Length == 0)
+            Debug.LogError("Paths list is EMPTY");
+
+        foreach (var iap in indexActionPairs)
+            if (iap.PathIndex >= Paths.Length)
+                Debug.LogError($"Invalid PathIndex {iap.PathIndex}, Paths.Count = {Paths.Length}");
+
         this.orderConfig = orderConfig;
         this.customerConfig = customerConfig;
 

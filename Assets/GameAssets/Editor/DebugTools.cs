@@ -53,7 +53,7 @@ public class DebugTools : EditorWindow
 
         GUILayout.Space(10);
         GUILayout.Label("Orders", EditorStyles.boldLabel);
-        if (GUILayout.Button("Create Regular Order   [O]")) OrderManager.CreateRegularOrder();
+        // if (GUILayout.Button("Create Regular Order   [O]")) OrderManager.CreateRegularOrder();
 
         // currentPlotIndex = EditorGUILayout.IntField("Plot Index", currentPlotIndex);
         if (GUILayout.Button("Create Plot Order   [Shift+P]")) CreatePlotOrder();
@@ -111,8 +111,8 @@ public class DebugTools : EditorWindow
     [MenuItem("Tools/Debug/Create Regular Order _o")]
     private static void CreateRegularOrder()
     {
-        if (EditorApplication.isPlaying)
-            OrderManager.CreateRegularOrder();
+        // if (EditorApplication.isPlaying)
+        //     OrderManager.CreateRegularOrder();
     }
 
     [MenuItem("Tools/Debug/Create Plot Order #p")]

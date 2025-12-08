@@ -158,7 +158,7 @@ public class Tutorial : MonoBehaviour
             case TutorialScene.CallCustomer:
                 currentScene = TutorialScene.CallCustomer;
                 OrderManager.CreatePlotOrder(1);
-                OrderManager.orderData.currentMinigame = 0;
+                // OrderManager.orderData.currentMinigame = 0;
 
                 WayPointFollower.OnContinueMovement -= HandleAfterCustomer;
                 WayPointFollower.OnContinueMovement += HandleAfterCustomer;

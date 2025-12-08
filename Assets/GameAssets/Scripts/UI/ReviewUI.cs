@@ -59,10 +59,16 @@ public class ReviewUI : MonoBehaviour
         reward = Mathf.Max(0, Mathf.CeilToInt(reward * (score / 90f)));
         rewardAmountLabel.text = reward.ToString();
 
+        orderName.text = orderData.config.orderName;
+        if (orderData.config.customerConfig == null)
+        {
+            customerName.text = orderData.config.customerMail;
+            return;
+        }
+
         if (orderData.config.customerConfig.icon != null)
             customerImage.sprite = orderData.config.customerConfig.icon;
         customerName.text = orderData.config.customerConfig.name;
-        orderName.text = orderData.config.orderName;
 
 
         var index = Mathf.RoundToInt(score / 20f) - 1;
@@ -95,7 +101,7 @@ public class ReviewUI : MonoBehaviour
         //AudioManager.Instance.PlaySound(SoundType.Close);
         GameManager.Instance.points += reward;
         OrderManager.CompleteOrder();
-        OrderManager.CreateRegularOrder(3);
+        // OrderManager.CreateRegularOrder(3);
 
         canvasGroup.DOFade(0, 0.5f).OnComplete(() => { gameObject.SetActive(false); });
     }

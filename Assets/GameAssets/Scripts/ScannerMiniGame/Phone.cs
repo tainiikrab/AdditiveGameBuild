@@ -7,12 +7,14 @@ using DG.Tweening;
 public class Phone : MonoBehaviour
 {
     [SerializeField] private GameObject screen;
+
     //[SerializeField] private RectTransform phonePositionWithUI;
     [SerializeField] private RectTransform phoneStartPosition;
     [SerializeField] private Image shading;
 
-    [Space(10), Header("Material UI elements")]
-    [SerializeField] private Image materialIcon;
+    [Space(10)] [Header("Material UI elements")] [SerializeField]
+    private Image materialIcon;
+
     [SerializeField] private TextMeshProUGUI materialTitle;
     [SerializeField] private TextMeshProUGUI materialDescription;
     [SerializeField] private Button acceptButton;
@@ -24,8 +26,9 @@ public class Phone : MonoBehaviour
     private DraggablePhone draggablePhone;
     private RectTransform rectTransform;
 
-    [Space(10), Header("Animation Settings")]
-    [SerializeField] private float normalScale = 1f;
+    [Space(10)] [Header("Animation Settings")] [SerializeField]
+    private float normalScale = 1f;
+
     [SerializeField] private float bigScale = 1.5f;
     [SerializeField] private float duration = 2f;
     [SerializeField] private float shadingAlpha = 0.065f;
@@ -63,7 +66,7 @@ public class Phone : MonoBehaviour
 
         ClearOldProperties(materialPropertiesContainer);
 
-        if (prompt != null) prompt.text = OrderManager.currentPlotOrder?.plasticPrompt ?? "";
+        if (prompt != null) prompt.text = OrderManager.orderData.config.plasticPrompt;
 
         foreach (var property in material.GoodProperties)
         {
@@ -95,10 +98,7 @@ public class Phone : MonoBehaviour
     private void ClearOldProperties(RectTransform container)
     {
         if (container.childCount == 0) return;
-        for (int i = container.childCount - 1; i >= 0; i--)
-        {
-            Destroy(container.GetChild(i).gameObject);
-        }
+        for (var i = container.childCount - 1; i >= 0; i--) Destroy(container.GetChild(i).gameObject);
     }
 
     /*private void OnScannedAnimation()

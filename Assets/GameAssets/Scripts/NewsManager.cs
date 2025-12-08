@@ -20,6 +20,8 @@ public class NewsManager : MonoBehaviour
 
     [SerializeField] private Button TeaserButton;
 
+    [SerializeField] private UIPopup mailHintPopup;
+
     private void Awake()
     {
         OrderManager.OnOrderFinished += TryLoadNews;
@@ -53,10 +55,13 @@ public class NewsManager : MonoBehaviour
     }
 #endif
 
+    private int plotIndex;
+
     private void TryLoadNews(OrderManager.OrderData orderData)
     {
         if (GlobalConfig.Instance.News.Count < orderData.config.plotIndex) return;
-        var newsConfig = GlobalConfig.Instance.News[orderData.config.plotIndex - 1];
+        plotIndex = orderData.config.plotIndex;
+        var newsConfig = GlobalConfig.Instance.News[plotIndex - 1];
 
         if (newsImage == null || teaserImage == null)
         {
@@ -105,7 +110,13 @@ public class NewsManager : MonoBehaviour
 
     public void HideNews()
     {
-        newsPanel.DOFade(0, 0.5f).OnComplete(() => newsPanel.gameObject.SetActive(false));
+        if (plotIndex == 1) mailHintPopup.Show();
+        newsPanel.DOFade(0, 0.5f).OnComplete(() =>
+        {
+            newsPanel.gameObject.SetActive(false);
+            if (plotIndex == 1) mailHintPopup.Show();
+        });
+        OrderManager.CreatePlotOrder();
     }
 }
 

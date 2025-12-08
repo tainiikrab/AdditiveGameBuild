@@ -53,7 +53,7 @@ public class MailUI : MonoBehaviour
         SaveManager.gameData.completedOrders.Add(orderConfig.id);
        //AudioManager.Instance.PlaySound(SoundType.Accept);
 
-        OrderManager.orderData.LoadNextMinigame();
+        // OrderManager.orderData.LoadNextMinigame();
         Instance.GetComponent<GUIWindow>().CloseWindow();
         //AudioManager.Instance.PlaySound(SoundType.Accept);
     }

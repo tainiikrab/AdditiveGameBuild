@@ -50,14 +50,11 @@ public static class OrderManager
     public static event Action<OrderConfig> OnRegularOrderCreated;
 
 
-    public static void CreateRegularOrder(int amount = 1)
+    public static void CreateMailOrder(int plotIndex)
     {
-        for (var i = 0; i < amount; i++)
-        {
-            var createdOrder = GetRandomAvailableOrder();
-            availableOrders.Add(createdOrder);
-            OnRegularOrderCreated?.Invoke(createdOrder);
-        }
+        var createdOrder = GetPlotOrder(plotIndex);
+        availableOrders.Add(createdOrder);
+        OnRegularOrderCreated?.Invoke(createdOrder);
     }
 
     public static int currentPlotIndex { get; set; } = 0;
@@ -65,6 +62,13 @@ public static class OrderManager
     public static void CreatePlotOrder(int plotIndex = -1)
     {
         currentPlotIndex = plotIndex == -1 ? currentPlotIndex + 1 : plotIndex;
+
+        var orderConfig = GetPlotOrder(currentPlotIndex);
+        if (string.IsNullOrEmpty(orderConfig.customerID))
+        {
+            CreateMailOrder(currentPlotIndex);
+            return;
+        }
 
         OnOrderPlotCreated?.Invoke(GetPlotOrder(currentPlotIndex));
         SetCurrentOrder(GetPlotOrder(currentPlotIndex));

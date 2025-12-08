@@ -97,7 +97,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(0);
 
-        OrderManager.CreateRegularOrder(3);
+        // OrderManager.CreateRegularOrder(3);
     }
 
     private void OnDestroy()

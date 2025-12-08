@@ -19,33 +19,33 @@ public class ScreenShoter : MonoBehaviour
 
     IEnumerator Capture()
     {
-        // Создаем RenderTexture
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ RenderTexture
         RenderTexture rt = new RenderTexture(resolutionWidth, resolutionHeight, 24);
         screenshotCamera.targetTexture = rt;
         screenshotCamera.Render();
 
         RenderTexture.active = rt;
 
-        // Создаем текстуру
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         lastScreenshot = new Texture2D(resolutionWidth, resolutionHeight, TextureFormat.RGB24, false);
         
-        // Читаем пиксели
+        // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         lastScreenshot.ReadPixels(new Rect(0, 0, resolutionWidth, resolutionHeight), 0, 0);
         lastScreenshot.Apply();
 
-        // Очищаем
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         screenshotCamera.targetTexture = null;
         RenderTexture.active = null;
         Destroy(rt);
 
-        // Создаем спрайт
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         Sprite previewSprite = Sprite.Create(
             lastScreenshot,
             new Rect(0, 0, lastScreenshot.width, lastScreenshot.height),
             new Vector2(0.5f, 0.5f)
         );
 
-        // Устанавливаем в UI
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ UI
         ScreenShotPreview.sprite = previewSprite;
         ScreenShotPreview.preserveAspect = true;
         ScreenShotPreview.gameObject.SetActive(true);
@@ -80,8 +80,8 @@ public class ScreenShoter : MonoBehaviour
         string filename = "Screenshot_" + System.DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png";
         string fullPath = Path.Combine(folderPath, filename);
 
-        // Сохраняем текстуру
-        File.WriteAllBytes(fullPath, lastScreenshot.EncodeToPNG());
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        // File.WriteAllBytes(fullPath, lastScreenshot.EncodeToPNG());
         ScreenShotPreview.gameObject.SetActive(false);
         Debug.Log("Screenshot saved: " + fullPath);
         SceneSwitchManager.OpenScene(SceneName.MainScene);

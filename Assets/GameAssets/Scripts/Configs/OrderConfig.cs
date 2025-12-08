@@ -31,7 +31,7 @@ public class OrderConfig : IConfig
     public string slicerPrompt;
     public string plasticPrompt;
 
-
+    public string customerMail;
     [SerializeField] private string _id;
 
     private string[] _answerLines;
