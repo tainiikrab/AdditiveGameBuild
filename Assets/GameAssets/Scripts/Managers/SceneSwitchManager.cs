@@ -12,6 +12,8 @@ public class SceneSwitchManager : MonoBehaviour
 
     [SerializeField] private ReviewUI reviewUI;
 
+    private Canvas canvas;
+
     // [SerializeField] private ReviewUI reviewUI;
     public static SceneSwitchManager Instance { get; private set; }
     public static bool isMinigameFinished = false;
@@ -26,6 +28,8 @@ public class SceneSwitchManager : MonoBehaviour
             return;
         }
 
+        canvas = GetComponentInChildren<Canvas>(true);
+        canvas.gameObject.SetActive(true);
         DontDestroyOnLoad(gameObject);
         Instance = this;
         currentScene = SceneName.MainScene;

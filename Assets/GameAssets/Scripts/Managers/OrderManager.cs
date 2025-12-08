@@ -11,9 +11,9 @@ public static class OrderManager
     public static List<OrderConfig> completedOrders = new();
     public static List<OrderConfig> declinedOrders = new();
 
-    private static OrderData _defaultOrder = new(GlobalConfig.Instance.Orders[1]);
+    private static OrderData _defaultOrder = new(GlobalConfig.Instance.Orders[0]);
 
-    public static OrderData defaultOrder
+    public static OrderData defaultOrderData
     {
         get
         {
@@ -89,7 +89,7 @@ public static class OrderManager
     }
 
     public static event Action<OrderConfig> OnOrderCompleted;
-    public static event Action OnOrderFinished;
+    public static event Action<OrderData> OnOrderFinished;
 
     public static void CompleteOrder()
     {
@@ -104,8 +104,9 @@ public static class OrderManager
         completedOrders.Add(orderData.config);
         availableOrders.Remove(orderData.config);
         OnOrderCompleted?.Invoke(orderData.config);
+        OnOrderFinished?.Invoke(orderData);
         orderData = null;
-        OnOrderFinished?.Invoke();
+
 
         FillOrders();
     }

@@ -75,7 +75,7 @@ public class CustomerManager : MonoBehaviour
         activeCustomer.ContinueMovement();
     }
 
-    private void OnOrderComplete()
+    private void OnOrderComplete(OrderManager.OrderData orderData)
     {
         gm.OnOrderComplete();
     }

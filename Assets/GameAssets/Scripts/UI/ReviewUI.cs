@@ -34,7 +34,7 @@ public class ReviewUI : MonoBehaviour
         int score;
         if (orderData == null)
         {
-            orderData = OrderManager.defaultOrder;
+            orderData = OrderManager.defaultOrderData;
             score = defaultScore;
         }
         else

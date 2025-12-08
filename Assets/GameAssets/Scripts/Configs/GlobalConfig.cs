@@ -8,6 +8,7 @@ public class GlobalConfig
     public List<CustomerConfig> Customers;
     public List<ShopItemConfig> ShopItems;
     public List<PrintingMaterialConfig> PrintingMaterials;
+    public List<NewsConfig> News;
 
     private static GlobalConfig _instance;
 
