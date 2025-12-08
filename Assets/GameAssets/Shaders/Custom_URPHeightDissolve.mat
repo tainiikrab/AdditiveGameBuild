@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: StampMat
-  m_Shader: {fileID: 4800000, guid: e7b38e4a0622dd64dbca64c0142e62e1, type: 3}
+  m_Name: Custom_URPHeightDissolve
+  m_Shader: {fileID: 4800000, guid: 86417640f7efbb4418c33b14e6f851af, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
@@ -23,19 +23,21 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _BrushTex:
-        m_Texture: {fileID: 2800000, guid: 5be9e94e8aec26041b3c4f11329d033d, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - _MainTex:
+    - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BrushSize: 0.013700007
+    - _DissolveAmount: 1
+    - _EdgeWidth: 0.05
+    - _MaxHeight: 3
+    - _Metallic: 0
+    - _MinHeight: 0
+    - _Smoothness: 0.5
+    - _Threshold: 0.00000001
     m_Colors:
-    - _Center: {r: 0.38469574, g: 0.15849492, b: 0, a: 0}
-    - _Color: {r: 1, g: 0, b: 0, a: 1}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _EdgeColor: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

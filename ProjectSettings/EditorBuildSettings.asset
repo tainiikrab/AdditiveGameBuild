@@ -11,6 +11,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PostProcessMinigame.unity
     guid: 87a6ef05f5513564d9bf5bb203cb1dcd
+  - enabled: 1
+    path: Assets/Scenes/ScannerMinigame.unity
+    guid: 9b8b3d8f8ac269f418a3db6fd78a3076
+  - enabled: 1
+    path: Assets/Scenes/customizationMiniGame.unity
+    guid: d474d4c73033239428681cc563fbb2d0
   m_configObjects:
     com.unity.dt.app-ui: {fileID: 11400000, guid: 1b1c20d82303e4b5781c3ef50ac1449f, type: 2}
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}

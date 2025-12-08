@@ -11,6 +11,8 @@ public static class OrderManager
     public static List<OrderConfig> completedOrders = new();
     public static List<OrderConfig> declinedOrders = new();
 
+    public static bool goPrint = false;
+
     private static OrderData _defaultOrder = new(GlobalConfig.Instance.Orders[0]);
 
     public static OrderData defaultOrderData
@@ -33,6 +35,7 @@ public static class OrderManager
     public static void SetCurrentOrder(OrderConfig order)
     {
         orderData = new OrderData(order);
+        Debug.Log("set current order to plot oreder");
         OnOrderAccepted?.Invoke();
     }
 

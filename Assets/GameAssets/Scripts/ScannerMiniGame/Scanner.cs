@@ -146,6 +146,7 @@ public class Scanner : MonoBehaviour
         SceneSwitchManager.isMinigameFinished = true;
         OrderManager.orderData.chosenMaterial = currentPrintingMaterial;
         currentPrintingMaterial = null;
+        OrderManager.goPrint = true;
         SceneSwitchManager.OpenScene(SceneName.MainScene);
     }
 

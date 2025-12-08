@@ -181,10 +181,11 @@ public class DialogUI : MonoBehaviour
 
     public void HideDialog()
     {
+        OnOrderAccepted?.Invoke();
+        OnDialogClosed?.Invoke();
         ToggleVisibility(false);
         Blur.SetActive(false);
         gameObject.SetActive(false);
-        OnDialogClosed?.Invoke();
     }
 
     /// <summary>

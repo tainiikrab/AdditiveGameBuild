@@ -19,30 +19,33 @@ public class ScreenShoter : MonoBehaviour
 
     IEnumerator Capture()
     {
+        // Создаем RenderTexture
         RenderTexture rt = new RenderTexture(resolutionWidth, resolutionHeight, 24);
         screenshotCamera.targetTexture = rt;
         screenshotCamera.Render();
 
         RenderTexture.active = rt;
 
-        Texture2D image = new Texture2D(resolutionWidth, resolutionHeight, TextureFormat.RGB24, false);
-        image.ReadPixels(new Rect(0, 0, resolutionWidth, resolutionHeight), 0, 0);
-        image.Apply();
+        // Создаем текстуру
+        lastScreenshot = new Texture2D(resolutionWidth, resolutionHeight, TextureFormat.RGB24, false);
+        
+        // Читаем пиксели
+        lastScreenshot.ReadPixels(new Rect(0, 0, resolutionWidth, resolutionHeight), 0, 0);
+        lastScreenshot.Apply();
 
+        // Очищаем
         screenshotCamera.targetTexture = null;
         RenderTexture.active = null;
         Destroy(rt);
 
-        lastScreenshot = image;
-
-        Texture2D flipped = FlipTextureVertically(image);
-
+        // Создаем спрайт
         Sprite previewSprite = Sprite.Create(
-            flipped,
-            new Rect(0, 0, flipped.width, flipped.height),
+            lastScreenshot,
+            new Rect(0, 0, lastScreenshot.width, lastScreenshot.height),
             new Vector2(0.5f, 0.5f)
         );
 
+        // Устанавливаем в UI
         ScreenShotPreview.sprite = previewSprite;
         ScreenShotPreview.preserveAspect = true;
         ScreenShotPreview.gameObject.SetActive(true);
@@ -50,26 +53,16 @@ public class ScreenShoter : MonoBehaviour
         yield return null;
     }
 
-    private Texture2D FlipTextureVertically(Texture2D original)
-    {
-        int w = original.width;
-        int h = original.height;
-
-        Texture2D flipped = new Texture2D(w, h, original.format, false);
-
-        for (int y = 0; y < h; y++)
-            flipped.SetPixels(0, h - 1 - y, w, 1, original.GetPixels(0, y, w, 1));
-
-        flipped.Apply();
-        return flipped;
-    }
-
     public void RestartScreenshotPreview()
     {
         ScreenShotPreview.sprite = null;
         ScreenShotPreview.gameObject.SetActive(false);
 
-        lastScreenshot = null;
+        if (lastScreenshot != null)
+        {
+            Destroy(lastScreenshot);
+            lastScreenshot = null;
+        }
     }
 
     public void SaveCurrentScreenshot()
@@ -87,8 +80,10 @@ public class ScreenShoter : MonoBehaviour
         string filename = "Screenshot_" + System.DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".png";
         string fullPath = Path.Combine(folderPath, filename);
 
+        // Сохраняем текстуру
         File.WriteAllBytes(fullPath, lastScreenshot.EncodeToPNG());
         ScreenShotPreview.gameObject.SetActive(false);
         Debug.Log("Screenshot saved: " + fullPath);
+        SceneSwitchManager.OpenScene(SceneName.MainScene);
     }
 }

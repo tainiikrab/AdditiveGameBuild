@@ -28,6 +28,9 @@ public class MinigameManager : MonoBehaviour
             case MinigameType.Slicer:
                 var slicerWindow = Instantiate(slicerWindowPF, laptopUI);
                 return;
+            case MinigameType.Scanner:
+                SceneSwitchManager.OpenScene(SceneName.ScannerMinigame);
+                return;
             case MinigameType.Postprocess:
                 SceneSwitchManager.OpenScene(SceneName.PostProcessMinigame);
                 return;
@@ -36,6 +39,9 @@ public class MinigameManager : MonoBehaviour
                 return;
             case MinigameType.Scanning:
                 SceneSwitchManager.OpenScene(SceneName.ScannerMinigame);
+                return;
+            case MinigameType.Customization:
+                SceneSwitchManager.OpenScene(SceneName.customizationMiniGame);
                 return;
             default: return;
         }
