@@ -11,7 +11,7 @@ Shader "Hidden/StampBrush_URP"
 
     SubShader
     {
-        Tags { "RenderPipeline"="UniversalRenderPipeline" "RenderType"="Opaque" }
+        Tags { "RenderPipeline" = "UniversalPipeline" "RenderType" = "Opaque" }
         Pass
         {
             ZWrite Off
