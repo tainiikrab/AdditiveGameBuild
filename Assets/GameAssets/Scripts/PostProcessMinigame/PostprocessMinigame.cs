@@ -36,7 +36,7 @@ public class PostprocessMinigame : MonoBehaviour
         sandpaperingAmount = 0f;
         removedSupports = 0;
         
-        AudioManager.Instance.PlayMusic(MusicType.BackgroundMusic);
+        //AudioManager.Instance.PlayMusic(MusicType.BackgroundMusic);
     }
 
     private void Start()
